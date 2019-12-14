@@ -2,9 +2,7 @@ import React from 'react'
 import data from './products'
 import './index.css'
 
-const App = () => {
-
-  return (
+const App = () => (
 		<div className='shop'>
 			<h1>Список товаров</h1>
 			<ul>
@@ -12,5 +10,4 @@ const App = () => {
 			</ul>
 		</div>
   )
-}
 export default App
