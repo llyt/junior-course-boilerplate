@@ -3,11 +3,12 @@ import data from './products'
 import './index.css'
 
 const App = () => {
+
   return (
 		<div className='shop'>
 			<h1>Список товаров</h1>
 			<ul>
-				{ data.map((product, index) => index < 3 ? <li>{product.name}</li> : null) }
+				{ data.slice(0, 3).map(product => <li>{product.name}</li>) }
 			</ul>
 		</div>
   )
