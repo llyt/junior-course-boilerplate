@@ -1,6 +1,11 @@
 .ProductList {
+	width: 800px;
 	margin: 56px 0 0;
-	padding-left: 18px;
+}
+
+.ProductList ul {
+	margin: 56px 0 0;
+	padding: 0;
 	list-style: none;
 }
 

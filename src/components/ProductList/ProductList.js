@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './ProductList.module.css'
 import ProductItem from '../../containers/ProductItem/ProductItem'
+import H1Item from '../../components/UI/H1Item/H1Item'
 import data from '../../products'
 import pic1 from '../../img/1.jpg'
 import pic2 from '../../img/2.jpg'
@@ -29,11 +30,12 @@ const goodsList = data.map((item, index) => {
 })
 
 const ProductList = props => (
-		<ul className={styles.ProductList}>
-			{goodsList.map(liItem => 
-				(<li>{liItem}</li>)
-			)}
-		</ul>
+		<div className={styles.ProductList}>
+			<H1Item content='Список товаров'/>
+			<ul>
+				{ goodsList.map((liItem, index) => <li key={index}>{liItem}</li>) }
+			</ul>
+		</div>
 	)
 	
 export default ProductList
