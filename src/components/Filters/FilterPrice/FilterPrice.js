@@ -10,12 +10,14 @@ const FilterPrice = props => {
 				<Input 
 					htmlFor="from"
 					label="от"
-					value={100}
+					value={props.defaultPrices.min}
+					handleInput={props.handlePrice.from}
 				/>
 				<Input 
 					htmlFor="to"
 					label="до"
-					value={30000}
+					value={props.defaultPrices.max}
+					handleInput={props.handlePrice.to}
 				/>
 			</div>
 		</div>

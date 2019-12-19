@@ -5,7 +5,10 @@ import FilterPrice from '../Filters/FilterPrice/FilterPrice'
 const Filters = props => {
 	return ( 
 		<div className={styles.Filters}>
-			<FilterPrice />
+			<FilterPrice 
+				handlePrice={props.handlePrice}
+				defaultPrices={props.defaultPrices}
+			/>
 		</div>
 	 );
 }
