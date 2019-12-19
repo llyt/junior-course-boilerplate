@@ -1,4 +1,17 @@
 import React from 'react'
-import ProductPage from './containers/ProductPage/ProductPage'
+import './index.css'
+import Title from './components/UI/Title/Title'
+import ProductList from './components/ProductList/ProductList'
 
-export default () => <ProductPage />
+class App extends React.Component {
+	render() {
+		return (
+			<div className="ProductPage">
+				<Title>Список товаров</Title>
+				<ProductList />
+			</div>
+		) 
+	}
+}
+
+export default App

@@ -1,10 +1,13 @@
 .ProductList {
 	width: 800px;
 	margin: 56px 0 0;
+<<<<<<< HEAD
 }
 
 .ProductList ul {
 	margin: 56px 0 0;
+=======
+>>>>>>> Fixes after marks
 	padding: 0;
 	list-style: none;
 }
