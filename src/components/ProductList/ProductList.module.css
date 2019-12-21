@@ -1,0 +1,10 @@
+.ProductList {
+	margin: 56px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ProductList li {
+	display: inline-block;
+	margin: 0 15px 45px;
+}

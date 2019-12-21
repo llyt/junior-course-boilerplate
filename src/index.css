@@ -1,24 +1,10 @@
-.shop {
-	margin: 0 auto;
-	width: 500px;
-	padding-top: 80px;
+body {
 	font-family: 'Open Sans', sans-serif;
+}
+
+.ProductPage {
+	margin: 0 auto;
+	width: 800px;
+	padding-top: 80px;
 	color: #323C48
-}
-
-.shop h1 {
-	font-size: 36px;
-	line-height: 48px;
-	font-weight: 300;
-}
-
-.shop ul {
-	margin: 56px 0 0;
-	padding-left: 18px;
-}
-
-.shop ul li{
-	margin-top: 8px;
-	font-size: 16px;
-	line-height: 32px;
 }

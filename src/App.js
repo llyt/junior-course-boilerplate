@@ -1,13 +1,17 @@
 import React from 'react'
-import data from './products'
 import './index.css'
+import Title from './components/UI/Title/Title'
+import ProductList from './components/ProductList/ProductList'
 
-const App = () => (
-		<div className='shop'>
-			<h1>Список товаров</h1>
-			<ul>
-				{ data.slice(0, 3).map(product => <li>{product.name}</li>) }
-			</ul>
-		</div>
-  )
+class App extends React.Component {
+	render() {
+		return (
+			<div className="ProductPage">
+				<Title>Список товаров</Title>
+				<ProductList />
+			</div>
+		) 
+	}
+}
+
 export default App
