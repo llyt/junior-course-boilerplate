@@ -3,8 +3,9 @@ body {
 }
 
 .ProductPage {
+	display: flex;
+	justify-content: center;
 	margin: 0 auto;
-	width: 800px;
 	padding-top: 80px;
 	color: #323C48
 }

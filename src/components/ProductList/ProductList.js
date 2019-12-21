@@ -11,8 +11,12 @@ import pic5 from '../../img/5.jpg'
 import pic6 from '../../img/6.jpg'
 =======
 import ProductItem from 'csssr-school-product-card'
+<<<<<<< HEAD
 import data from '../../products'
 >>>>>>> Fixes after marks
+=======
+import Title from '../UI/Title/Title'
+>>>>>>> Merge prev task
 
 const ratingStarStyles = {display: "inline-block", marginRight: 6}
 
@@ -52,6 +56,7 @@ const ProductList = props => {
 =======
 const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 
+<<<<<<< HEAD
 const ProductList = props => <ul className={styles.ProductList}>{ data.map((item, index) => {
 				return (
 					<li key={index}>
@@ -71,4 +76,28 @@ const ProductList = props => <ul className={styles.ProductList}>{ data.map((item
 			}
 		</ul>
 >>>>>>> Fixes after marks
+=======
+const ProductList = props => (
+	<ul className={styles.ProductList}>
+		<Title>Список товаров</Title>
+		{ props.products.map((item, index) => {
+		return (
+			<li key={index}>
+				<ProductItem 
+					isInStock={item.isInStock}
+					img={item.img}
+					title={item.title}
+					price={priceWithSpaces(item.price)}
+					subPriceContent={priceWithSpaces(item.subPriceContent)}
+					maxRating={item.maxRating}
+					rating={item.rating}
+					ratingComponent={ratingComponent}
+				/>
+			</li>
+		)
+		}) 
+	}
+</ul>
+)
+>>>>>>> Merge prev task
 export default ProductList

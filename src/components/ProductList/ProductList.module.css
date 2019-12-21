@@ -1,5 +1,6 @@
 .ProductList {
 	width: 800px;
+<<<<<<< HEAD
 	margin: 56px 0 0;
 <<<<<<< HEAD
 }
@@ -8,8 +9,15 @@
 	margin: 56px 0 0;
 =======
 >>>>>>> Fixes after marks
+=======
+	margin: 56px 0 0 15px;
+>>>>>>> Merge prev task
 	padding: 0;
 	list-style: none;
+}
+
+.ProductList h1 {
+	margin-bottom: 35px;
 }
 
 .ProductList li {
