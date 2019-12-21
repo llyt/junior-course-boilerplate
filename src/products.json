@@ -4,8 +4,8 @@
 			"img": "./img/1.jpg" ,
 			"title": "Название первого товара",
 			"isInStock": true,
-			"price": 23000,
-			"subPriceContent": 23000,
+			"price": 4500,
+			"subPriceContent": 4500,
 			"maxRating": 5,
 			"rating": 4
     },
@@ -14,8 +14,8 @@
 			"img": "./img/2.jpg",
 			"title": "Название второго товара",
 			"isInStock": false,
-			"price": 23000,
-			"subPriceContent": 23000,
+			"price": 17700,
+			"subPriceContent": 17700,
 			"maxRating": 5,
 			"rating": 3.5
     },
@@ -24,8 +24,8 @@
 			"img": "../img/3.jpg",
 			"title": "Название третьего товара",
 			"isInStock": true,
-			"price": 23000,
-			"subPriceContent": 23000,
+			"price": 11300,
+			"subPriceContent": 11300,
 			"maxRating": 5,
 			"rating": 3.5
     },
@@ -34,8 +34,8 @@
 			"img": "./img/4.jpg",
 			"title": "Название четвертого товара",
 			"isInStock": true,
-			"price": 23000,
-			"subPriceContent": 23000,
+			"price": 1500,
+			"subPriceContent": 1500,
 			"maxRating": 5,
 			"rating": 3.5
     },
@@ -54,8 +54,8 @@
 			"img": "../../img/6.jpg",
 			"title": "Название шестого товара",
 			"isInStock": false,
-			"price": 23000,
-			"subPriceContent": 23000,
+			"price": 42900,
+			"subPriceContent": 42900,
 			"maxRating": 5,
 			"rating": 3.5
     }

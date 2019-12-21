@@ -1,0 +1,37 @@
+.FilterPrice {
+	display: flex;
+	flex-direction: column;
+}
+
+.FilterPrice h3{
+	font-size: 22px;
+}
+
+.FilterPrice > div {
+	display: flex;
+	width: 280px;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.FilterPrice > div > div{
+	
+}
+
+.FilterPrice label {
+	font-size: 14px;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.FilterPrice input {
+	height: 20px;
+	width: 70px;
+	padding: 5px 15px;
+	font-size: 14px;
+}
+
+.FilterPrice button {
+	margin-top: 12px;
+	padding: 6px 10px;
+}
