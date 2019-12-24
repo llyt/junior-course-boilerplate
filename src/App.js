@@ -5,24 +5,20 @@ import Title from './components/UI/Title/Title'
 import ProductList from './components/ProductList/ProductList'
 import data from './products'
 
-const products = data.reduce((acc, product) => [...acc, product], [])
-
-const prices = products.reduce(
-	(acc, item) => {
+const prices = data.reduce((acc, item) => {
 		acc.max = acc.max < item.price ? item.price : acc.max
 		if (!acc.min) {
 			acc.min = acc.max
 		}
 		acc.min = acc.min > item.price ? item.price : acc.min
 		return acc
-	}, {min: null, max: 0} 
-)
+	}, { min: null, max: 0 })
 
 class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			products, // [{}, {}, {}]
+			products: data, // [{}, {}, {}]
 			prices: {
 				min: prices.min,
 				max: prices.max
@@ -37,7 +33,8 @@ class App extends React.Component {
 			norlmalizeMaxPrice = minPrice + 10
 		}
 
-		const filteredItems = products.filter(product => product.price >= minPrice && product.price <= norlmalizeMaxPrice)
+		const filteredItems = data.filter(product => product.price >= minPrice && product.price <= norlmalizeMaxPrice)
+
 		this.setState({
 			products: filteredItems,
 			prices: {

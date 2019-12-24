@@ -15,7 +15,7 @@ class FilterPrice extends React.Component {
 		return true
 	}
 
-	handleInputPrices = (event) => {
+	handleInputPrices = event => {
 		event.preventDefault();
 		const minPrice = this.minPrice.current.value > 0 ? parseInt(this.minPrice.current.value) : undefined
 		const maxPrice = this.maxPrice.current.value > 0 ? parseInt(this.maxPrice.current.value) : undefined
