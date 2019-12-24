@@ -1,12 +1,11 @@
 .ProductList {
 	width: 800px;
-	margin: 56px 0 0;
+	padding: 0 0 0 20px;
+	margin: 0;
 }
 
-.ProductList ul {
-	margin: 56px 0 0;
-	padding: 0;
-	list-style: none;
+.ProductList h1 {
+	margin-bottom: 35px;
 }
 
 .ProductList li {

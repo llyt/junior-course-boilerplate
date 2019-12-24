@@ -1,3 +1,11 @@
 body {
 	font-family: 'Open Sans', sans-serif;
 }
+
+.ProductPage {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+	padding-top: 80px;
+	color: #323C48
+}
