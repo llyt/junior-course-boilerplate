@@ -12,11 +12,15 @@ import pic6 from '../../img/6.jpg'
 =======
 import ProductItem from 'csssr-school-product-card'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import data from '../../products'
 >>>>>>> Fixes after marks
 =======
 import Title from '../UI/Title/Title'
 >>>>>>> Merge prev task
+=======
+import logRender from '../../hoc/logRender'
+>>>>>>> Fixes after marks
 
 const ratingStarStyles = {display: "inline-block", marginRight: 6}
 
@@ -56,6 +60,7 @@ const ProductList = props => {
 =======
 const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 const ProductList = props => <ul className={styles.ProductList}>{ data.map((item, index) => {
 				return (
@@ -101,3 +106,33 @@ const ProductList = props => (
 )
 >>>>>>> Merge prev task
 export default ProductList
+=======
+class ProductList extends React.Component {
+
+	render() {
+		return (
+		<ul className={styles.ProductList}>
+			<Title level="1">Список товаров</Title>
+			{ this.props.products.map((item, index) => {
+			return (
+				<li key={index}>
+					<ProductItem 
+						isInStock={item.isInStock}
+						img={item.img}
+						title={item.title}
+						price={priceWithSpaces(item.price)}
+						subPriceContent={priceWithSpaces(item.subPriceContent)}
+						maxRating={item.maxRating}
+						rating={item.rating}
+						ratingComponent={ratingComponent}
+					/>
+				</li>
+			)
+			}) 
+		}
+	</ul>)
+	}
+}
+
+export default logRender(ProductList)
+>>>>>>> Fixes after marks
