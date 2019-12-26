@@ -6,6 +6,7 @@ import data from './products'
 import { maxBy, minBy } from 'csssr-school-utils'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const products = data.reduce((acc, product) => [...acc, product], [])
 
 const defaultPrices = products.reduce(
@@ -29,6 +30,8 @@ const defaultPrices = products.reduce(
 // 	}, { min: null, max: 0 })
 >>>>>>> Fixes after marks
 
+=======
+>>>>>>> Delete comments
 class App extends React.Component {
 	constructor(props) {
 		super(props);
