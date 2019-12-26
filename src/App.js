@@ -6,15 +6,6 @@ import ProductList from './components/ProductList/ProductList'
 import data from './products'
 import { maxBy, minBy } from 'csssr-school-utils'
 
-// const prices = data.reduce((acc, item) => {
-// 		acc.max = acc.max < item.price ? item.price : acc.max
-// 		if (!acc.min) {
-// 			acc.min = acc.max
-// 		}
-// 		acc.min = acc.min > item.price ? item.price : acc.min
-// 		return acc
-// 	}, { min: null, max: 0 })
-
 class App extends React.Component {
 	constructor(props) {
 		super(props)
