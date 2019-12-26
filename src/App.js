@@ -4,15 +4,16 @@ import Filters from './components/Filters/Filters'
 import Title from './components/UI/Title/Title'
 import ProductList from './components/ProductList/ProductList'
 import data from './products'
+import { maxBy, minBy } from 'csssr-school-utils'
 
-const prices = data.reduce((acc, item) => {
-		acc.max = acc.max < item.price ? item.price : acc.max
-		if (!acc.min) {
-			acc.min = acc.max
-		}
-		acc.min = acc.min > item.price ? item.price : acc.min
-		return acc
-	}, { min: null, max: 0 })
+// const prices = data.reduce((acc, item) => {
+// 		acc.max = acc.max < item.price ? item.price : acc.max
+// 		if (!acc.min) {
+// 			acc.min = acc.max
+// 		}
+// 		acc.min = acc.min > item.price ? item.price : acc.min
+// 		return acc
+// 	}, { min: null, max: 0 })
 
 class App extends React.Component {
 	constructor(props) {
@@ -20,8 +21,8 @@ class App extends React.Component {
 		this.state = {
 			products: data, // [{}, {}, {}]
 			prices: {
-				min: prices.min,
-				max: prices.max
+				min: minBy(product => product.price, data).price,
+				max: maxBy(product => product.price, data).price
 			}
 		}
 	}
@@ -53,8 +54,8 @@ class App extends React.Component {
 					/>
 					{
 						this.state.products.length === 0 
-							? <div style={{width: 800, paddingLeft: 35}}>
-									<Title>Список товаров</Title>
+							? <div className='nothing'>
+									<Title level="1">Список товаров</Title>
 									Ничего не найдено
 								</div> 
 							: <ProductList products={this.state.products}/>

@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './ProductList.module.css'
 import Title from '../UI/Title/Title'
 import ProductItem from 'csssr-school-product-card'
-import logger from 'react-logger'
+import logRender from '../../hoc/logRender'
 
 const ratingStarStyles = {display: "inline-block", marginRight: 6}
 
@@ -12,15 +12,10 @@ const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 
 class ProductList extends React.Component {
 
-	shouldComponentUpdate(nextProps, nextState) {
-		logger.log(this, this.state, nextProps, nextState);
-		return true
-	}
-
 	render() {
 		return (
 		<ul className={styles.ProductList}>
-			<Title>Список товаров</Title>
+			<Title level="1">Список товаров</Title>
 			{ this.props.products.map((item, index) => {
 			return (
 				<li key={index}>
@@ -42,4 +37,4 @@ class ProductList extends React.Component {
 	}
 }
 
-export default ProductList
+export default logRender(ProductList)

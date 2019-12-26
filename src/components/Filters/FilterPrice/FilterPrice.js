@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './FilterPrice.module.css'
-import logger from 'react-logger'
+import Title from '../../UI/Title/Title'
+import logRender from '../../../hoc/logRender'
 
 class FilterPrice extends React.Component {
 	constructor(props) {
@@ -8,11 +9,6 @@ class FilterPrice extends React.Component {
 
 		this.minPrice = React.createRef()
 		this.maxPrice = React.createRef()
-	}
-
-	shouldComponentUpdate(nextProps, nextState) {
-		logger.log(this, this.state, nextProps, nextState);
-		return true
 	}
 
 	handleInputPrices = event => {
@@ -26,7 +22,7 @@ class FilterPrice extends React.Component {
 	render() {
 		return (
 			<div className={styles.FilterPrice}>
-			<h3>Цена</h3>
+			<Title level="3">Цена</Title>
 				<form onSubmit={this.handleInputPrices}>
 					<div>
 						<label htmlFor='from'>от</label>
@@ -51,4 +47,4 @@ class FilterPrice extends React.Component {
 	}
 }
 
-export default FilterPrice;
+export default logRender(FilterPrice);
