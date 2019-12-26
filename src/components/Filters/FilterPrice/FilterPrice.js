@@ -32,10 +32,18 @@ import styles from './FilterPrice.module.css'
 import Input from '../../UI/Input/Input'
 =======
 import Title from '../../UI/Title/Title'
+<<<<<<< HEAD
 import logRender from '../../../hoc/logRender'
 >>>>>>> Fixes after marks
 
 const FilterPrice = props => {
+=======
+import logRender from '../../logRender'
+
+class FilterPrice extends logRender {
+	constructor(props) {
+		super(props)
+>>>>>>> Using logRender via inheritance
 
 	// let currentPrices = {
 	// 	from: props.defaultPrices.min,
@@ -112,5 +120,9 @@ const FilterPrice = props => {
 export default FilterPrice;
 =======
 
+<<<<<<< HEAD
 export default logRender(FilterPrice);
 >>>>>>> Fixes after marks
+=======
+export default FilterPrice
+>>>>>>> Using logRender via inheritance

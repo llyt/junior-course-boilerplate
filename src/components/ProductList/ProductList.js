@@ -13,6 +13,7 @@ import pic6 from '../../img/6.jpg'
 import ProductItem from 'csssr-school-product-card'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import data from '../../products'
 >>>>>>> Fixes after marks
 =======
@@ -21,6 +22,9 @@ import Title from '../UI/Title/Title'
 =======
 import logRender from '../../hoc/logRender'
 >>>>>>> Fixes after marks
+=======
+import logRender from '../logRender'
+>>>>>>> Using logRender via inheritance
 
 const ratingStarStyles = {display: "inline-block", marginRight: 6}
 
@@ -60,6 +64,7 @@ const ProductList = props => {
 =======
 const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 const ProductList = props => <ul className={styles.ProductList}>{ data.map((item, index) => {
@@ -108,6 +113,9 @@ const ProductList = props => (
 export default ProductList
 =======
 class ProductList extends React.Component {
+=======
+class ProductList extends logRender {
+>>>>>>> Using logRender via inheritance
 
 	render() {
 		return (
@@ -134,5 +142,9 @@ class ProductList extends React.Component {
 	}
 }
 
+<<<<<<< HEAD
 export default logRender(ProductList)
 >>>>>>> Fixes after marks
+=======
+export default ProductList
+>>>>>>> Using logRender via inheritance
