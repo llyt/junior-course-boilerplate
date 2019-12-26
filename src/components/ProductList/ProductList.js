@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './ProductList.module.css'
 import Title from '../UI/Title/Title'
 import ProductItem from 'csssr-school-product-card'
-import logRender from '../../hoc/logRender'
+import logRender from '../logRender'
 
 const ratingStarStyles = {display: "inline-block", marginRight: 6}
 
@@ -10,7 +10,7 @@ const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyle
 
 const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 
-class ProductList extends React.Component {
+class ProductList extends logRender {
 
 	render() {
 		return (
@@ -37,4 +37,4 @@ class ProductList extends React.Component {
 	}
 }
 
-export default logRender(ProductList)
+export default ProductList

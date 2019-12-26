@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './FilterPrice.module.css'
 import Title from '../../UI/Title/Title'
-import logRender from '../../../hoc/logRender'
+import logRender from '../../logRender'
 
-class FilterPrice extends React.Component {
+class FilterPrice extends logRender {
 	constructor(props) {
 		super(props)
 
@@ -47,4 +47,4 @@ class FilterPrice extends React.Component {
 	}
 }
 
-export default logRender(FilterPrice);
+export default FilterPrice
