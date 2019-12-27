@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './ProductList.module.css'
+import Title from '../UI/Title/Title'
 import ProductItem from 'csssr-school-product-card'
-import data from '../../products'
+import logRender from '../logRender'
 
 const ratingStarStyles = {display: "inline-block", marginRight: 6}
 
@@ -9,22 +10,31 @@ const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyle
 
 const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 
-const ProductList = props => <ul className={styles.ProductList}>{ data.map((item, index) => {
-				return (
-					<li key={index}>
-						<ProductItem 
-							isInStock={item.isInStock}
-							img={item.img}
-							title={item.title}
-							price={priceWithSpaces(item.price)}
-							subPriceContent={priceWithSpaces(item.subPriceContent)}
-							maxRating={item.maxRating}
-							rating={item.rating}
-							ratingComponent={ratingComponent}
-						/>
-					</li>
-				)
-				}) 
-			}
-		</ul>
+class ProductList extends logRender {
+
+	render() {
+		return (
+		<ul className={styles.ProductList}>
+			<Title level="1">Список товаров</Title>
+			{ this.props.products.map((item, index) => {
+			return (
+				<li key={index}>
+					<ProductItem 
+						isInStock={item.isInStock}
+						img={item.img}
+						title={item.title}
+						price={priceWithSpaces(item.price)}
+						subPriceContent={priceWithSpaces(item.subPriceContent)}
+						maxRating={item.maxRating}
+						rating={item.rating}
+						ratingComponent={ratingComponent}
+					/>
+				</li>
+			)
+			}) 
+		}
+	</ul>)
+	}
+}
+
 export default ProductList
