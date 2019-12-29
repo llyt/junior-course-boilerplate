@@ -4,8 +4,11 @@ import Filters from './components/Filters/Filters'
 <<<<<<< HEAD
 =======
 import Title from './components/UI/Title/Title'
+<<<<<<< HEAD
 import Loader from './components/UI/Loader/Loader'
 >>>>>>> Made controlled inputs and instant reloading
+=======
+>>>>>>> Delete loader and timeout before update state
 import ProductList from './components/ProductList/ProductList'
 import data from './products'
 import { maxBy, minBy } from 'csssr-school-utils'
@@ -52,6 +55,7 @@ class App extends React.Component {
 				min: minBy(product => product.price, data).price,
 				max: maxBy(product => product.price, data).price
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Fixes after marks
 			}
 		};
@@ -67,6 +71,9 @@ class App extends React.Component {
 =======
 			},
 			loading: false
+=======
+			}
+>>>>>>> Delete loader and timeout before update state
 		}
 	}
 
@@ -82,10 +89,6 @@ class App extends React.Component {
 			maxPrice = event.target.value > 0 ? parseInt(event.target.value) : undefined
 		}
 
-		this.setState({
-			loading: true
-		})
-		
 		this.filterPrice(minPrice, maxPrice)
 
 	}
@@ -113,12 +116,13 @@ class App extends React.Component {
 =======
 		const filteredItems = data.filter(product => product.price >= minPrice && product.price <= norlmalizeMaxPrice)
 
-		setTimeout(() => {
-			this.setState({
-				products: filteredItems,
-				loading: false
-			})
-		}, 350)
+		this.setState({
+			products: filteredItems,
+			prices: {
+				min: minPrice,
+				max: maxPrice
+			}
+		})
 	}
 >>>>>>> Fix state value of max price
 
@@ -142,10 +146,7 @@ class App extends React.Component {
 									<Title level="1">Список товаров</Title>
 									Ничего не найдено
 								</div> 
-							: this.state.loading
-									? <div className='loading'>
-										<Loader /></div>
-									: <ProductList products={this.state.products}/>
+							: <ProductList products={this.state.products}/>
 					}
 >>>>>>> Fixes after marks
 			</div>
