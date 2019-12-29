@@ -67,6 +67,7 @@ class App extends React.Component {
 	// 	})
 	// }
 
+<<<<<<< HEAD
 	// handleInputTo = event => {
 	// 	// console.log('Changed To', event.target.value)
 	// 	const filteredItems = products.filter(product => product.price < event.target.value)
@@ -74,6 +75,18 @@ class App extends React.Component {
 	// 		products: filteredItems
 	// 	})
 	// }
+=======
+		const filteredItems = data.filter(product => product.price >= minPrice && product.price <= norlmalizeMaxPrice)
+
+		this.setState({
+			products: filteredItems,
+			prices: {
+				min: minPrice,
+				max: norlmalizeMaxPrice
+			}
+		})
+	}
+>>>>>>> Fix state value of max price
 
 	render() {
 		return (
