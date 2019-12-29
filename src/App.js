@@ -2,7 +2,6 @@ import React from 'react'
 import './index.css'
 import Filters from './components/Filters/Filters'
 import Title from './components/UI/Title/Title'
-import Loader from './components/UI/Loader/Loader'
 import ProductList from './components/ProductList/ProductList'
 import data from './products'
 import { maxBy, minBy } from 'csssr-school-utils'
@@ -15,8 +14,7 @@ class App extends React.Component {
 			prices: {
 				min: minBy(product => product.price, data).price,
 				max: maxBy(product => product.price, data).price
-			},
-			loading: false
+			}
 		}
 	}
 
@@ -32,10 +30,6 @@ class App extends React.Component {
 			maxPrice = event.target.value > 0 ? parseInt(event.target.value) : undefined
 		}
 
-		this.setState({
-			loading: true
-		})
-		
 		this.filterPrice(minPrice, maxPrice)
 
 	}
@@ -49,12 +43,13 @@ class App extends React.Component {
 
 		const filteredItems = data.filter(product => product.price >= minPrice && product.price <= norlmalizeMaxPrice)
 
-		setTimeout(() => {
-			this.setState({
-				products: filteredItems,
-				loading: false
-			})
-		}, 350)
+		this.setState({
+			products: filteredItems,
+			prices: {
+				min: minPrice,
+				max: maxPrice
+			}
+		})
 	}
 
 	render() {
@@ -70,10 +65,7 @@ class App extends React.Component {
 									<Title level="1">Список товаров</Title>
 									Ничего не найдено
 								</div> 
-							: this.state.loading
-									? <div className='loading'>
-										<Loader /></div>
-									: <ProductList products={this.state.products}/>
+							: <ProductList products={this.state.products}/>
 					}
 			</div>
 		) 
