@@ -31,7 +31,7 @@ class App extends React.Component {
 			products: filteredItems,
 			prices: {
 				min: minPrice,
-				max: maxPrice
+				max: norlmalizeMaxPrice
 			}
 		})
 	}
