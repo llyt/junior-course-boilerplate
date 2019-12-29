@@ -10,7 +10,15 @@ body {
 	color: #323C48
 }
 
-.nothing {
+.nothing, .loading {
 	width: 800px; 
 	padding-left: 35px;
+}
+
+.loading {
+	text-align: center;
+}
+
+.loading h1 {
+	margin-bottom: 40px;
 }

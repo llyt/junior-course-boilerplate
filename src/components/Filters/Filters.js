@@ -7,7 +7,7 @@ const Filters = props => {
 		<div className={styles.Filters}>
 			<FilterPrice 
 				prices={props.prices}
-				handleFilterPrice={props.handleFilterPrice}
+				changeFilterPrice={props.changeFilterPrice}
 			/>
 		</div>
 	 );
