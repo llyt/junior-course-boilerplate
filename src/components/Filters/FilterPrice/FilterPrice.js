@@ -33,6 +33,7 @@ import Input from '../../UI/Input/Input'
 =======
 import Title from '../../UI/Title/Title'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import logRender from '../../../hoc/logRender'
 >>>>>>> Fixes after marks
 
@@ -86,29 +87,34 @@ class FilterPrice extends logRender {
 
 		this.props.handleFilterPrice(minPrice, maxPrice)
 	}
+=======
+import InputNumber from '../../UI/InputNumber/InputNumber'
+import logRender from '../../logRender'
+
+class FilterPrice extends logRender {
+>>>>>>> Made controlled inputs and instant reloading
 
 	render() {
 		return (
 			<div className={styles.FilterPrice}>
 			<Title level="3">Цена</Title>
-				<form onSubmit={this.handleInputPrices}>
+				<form>
 					<div>
 						<label htmlFor='from'>от</label>
-						<input 
-							ref={this.minPrice} 
-							type="text" 
-							name="from" 
-							defaultValue={this.props.prices.min}
+						<InputNumber 
+							type="text"
+							name="from"
+							value={this.props.prices.min}
+							changePrice={this.props.changeFilterPrice}
 						/>
 						<label htmlFor='to'>до</label>
-						<input 
-							ref={this.maxPrice} 
-							type="text" 
-							name="to" 
-							defaultValue={this.props.prices.max}
+						<InputNumber 
+							type="text"
+							name="to"
+							value={this.props.prices.max}
+							changePrice={this.props.changeFilterPrice}
 						/>
 					</div>
-					<input type='submit' value="Применить" />
 				</form>
 >>>>>>> Fixes after marks
 		</div>

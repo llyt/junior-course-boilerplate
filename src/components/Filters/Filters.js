@@ -23,7 +23,12 @@ const Filters = props => {
 	return ( 
 		<div className={styles.Filters}>
 			<FilterPrice 
+<<<<<<< HEAD
 				defaultPrices={props.defaultPrices}
+=======
+				prices={props.prices}
+				changeFilterPrice={props.changeFilterPrice}
+>>>>>>> Made controlled inputs and instant reloading
 			/>
 		</div>
 	 );

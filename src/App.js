@@ -1,6 +1,11 @@
 import React from 'react'
 import './index.css'
 import Filters from './components/Filters/Filters'
+<<<<<<< HEAD
+=======
+import Title from './components/UI/Title/Title'
+import Loader from './components/UI/Loader/Loader'
+>>>>>>> Made controlled inputs and instant reloading
 import ProductList from './components/ProductList/ProductList'
 import data from './products'
 import { maxBy, minBy } from 'csssr-school-utils'
@@ -46,6 +51,7 @@ class App extends React.Component {
 			prices: {
 				min: minBy(product => product.price, data).price,
 				max: maxBy(product => product.price, data).price
+<<<<<<< HEAD
 >>>>>>> Fixes after marks
 			}
 		};
@@ -58,6 +64,35 @@ class App extends React.Component {
 	// 	})
 	// 	return
 	// }
+=======
+			},
+			loading: false
+		}
+	}
+
+	changeFilterPrice = event => {
+		event.preventDefault();
+
+		let minPrice = this.state.prices.min
+		let maxPrice = this.state.prices.max
+
+		if (event.target.name === 'from') {
+			minPrice = event.target.value > 0 ? parseInt(event.target.value) : undefined
+		} else {
+			maxPrice = event.target.value > 0 ? parseInt(event.target.value) : undefined
+		}
+
+		this.setState({
+			loading: true
+		})
+		
+		this.filterPrice(minPrice, maxPrice)
+
+	}
+
+	filterPrice = (minPrice = 0, maxPrice = this.state.prices.max) => {
+		let norlmalizeMaxPrice = maxPrice
+>>>>>>> Made controlled inputs and instant reloading
 
 	// handleInputFrom = event => {
 	// 	// console.log('Changed From', event.target.value)
@@ -78,13 +113,12 @@ class App extends React.Component {
 =======
 		const filteredItems = data.filter(product => product.price >= minPrice && product.price <= norlmalizeMaxPrice)
 
-		this.setState({
-			products: filteredItems,
-			prices: {
-				min: minPrice,
-				max: norlmalizeMaxPrice
-			}
-		})
+		setTimeout(() => {
+			this.setState({
+				products: filteredItems,
+				loading: false
+			})
+		}, 350)
 	}
 >>>>>>> Fix state value of max price
 
@@ -92,7 +126,12 @@ class App extends React.Component {
 		return (
 			<div className="ProductPage">
 				<Filters 
+<<<<<<< HEAD
 					defaultPrices={defaultPrices}
+=======
+					prices={this.state.prices}
+					changeFilterPrice={this.changeFilterPrice}
+>>>>>>> Made controlled inputs and instant reloading
 					/>
 <<<<<<< HEAD
 				<ProductList products={this.state.products}/>
@@ -103,7 +142,10 @@ class App extends React.Component {
 									<Title level="1">Список товаров</Title>
 									Ничего не найдено
 								</div> 
-							: <ProductList products={this.state.products}/>
+							: this.state.loading
+									? <div className='loading'>
+										<Loader /></div>
+									: <ProductList products={this.state.products}/>
 					}
 >>>>>>> Fixes after marks
 			</div>
