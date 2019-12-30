@@ -57,8 +57,13 @@
 
 .FilterPrice input {
 	height: 20px;
+<<<<<<< HEAD
 	width: 70px;
 	padding: 5px 15px;
+=======
+	width: 60px;
+	padding: 5px 8px 5px 15px;
+>>>>>>> Added number mask for price filter
 	font-size: 14px;
 }
 

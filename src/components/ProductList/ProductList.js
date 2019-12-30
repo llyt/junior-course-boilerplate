@@ -119,26 +119,27 @@ class ProductList extends logRender {
 
 	render() {
 		return (
-		<ul className={styles.ProductList}>
-			<Title level="1">Список товаров</Title>
-			{ this.props.products.map((item, index) => {
-			return (
-				<li key={index}>
-					<ProductItem 
-						isInStock={item.isInStock}
-						img={item.img}
-						title={item.title}
-						price={priceWithSpaces(item.price)}
-						subPriceContent={priceWithSpaces(item.subPriceContent)}
-						maxRating={item.maxRating}
-						rating={item.rating}
-						ratingComponent={ratingComponent}
-					/>
-				</li>
-			)
-			}) 
-		}
-	</ul>)
+			<ul className={styles.ProductList}>
+				<Title level="1">Список товаров</Title>
+				{ this.props.products.map((item, index) => {
+				return (
+					<li key={index}>
+						<ProductItem 
+							isInStock={item.isInStock}
+							img={item.img}
+							title={item.title}
+							price={priceWithSpaces(item.price)}
+							subPriceContent={priceWithSpaces(item.subPriceContent)}
+							maxRating={item.maxRating}
+							rating={item.rating}
+							ratingComponent={ratingComponent}
+						/>
+					</li>
+				)
+				}) 
+				}
+			</ul>
+		)
 	}
 }
 

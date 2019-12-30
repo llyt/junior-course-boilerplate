@@ -11,7 +11,9 @@ import Loader from './components/UI/Loader/Loader'
 >>>>>>> Delete loader and timeout before update state
 import ProductList from './components/ProductList/ProductList'
 import data from './products'
-import { maxBy, minBy } from 'csssr-school-utils'
+import { maxBy } from 'csssr-school-utils'
+
+const maxPriceFromData = maxBy(product => product.price, data).price
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -41,6 +43,7 @@ const defaultPrices = products.reduce(
 =======
 >>>>>>> Delete comments
 class App extends React.Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -52,11 +55,16 @@ class App extends React.Component {
 =======
 			products: data, // [{}, {}, {}]
 			prices: {
+<<<<<<< HEAD
 				min: minBy(product => product.price, data).price,
 				max: maxBy(product => product.price, data).price
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> Fixes after marks
+=======
+				min: 0,
+				max: maxPriceFromData
+>>>>>>> Added number mask for price filter
 			}
 		};
 	}
@@ -77,23 +85,14 @@ class App extends React.Component {
 		}
 	}
 
-	changeFilterPrice = event => {
-		event.preventDefault();
-
-		let minPrice = this.state.prices.min
-		let maxPrice = this.state.prices.max
-
-		if (event.target.name === 'from') {
-			minPrice = event.target.value > 0 ? parseInt(event.target.value) : undefined
-		} else {
-			maxPrice = event.target.value > 0 ? parseInt(event.target.value) : undefined
-		}
-
-		this.filterPrice(minPrice, maxPrice)
-
+	isNumber = value => {
+		const numRegExp = /^[0-9\b]+$/
+		return numRegExp.test(value)
 	}
 
-	filterPrice = (minPrice = 0, maxPrice = this.state.prices.max) => {
+	filterProducts = (minPrice = 0, maxPrice = maxPriceFromData) => data.filter(product => product.price >= minPrice && product.price <= maxPrice)
+
+	handleFilterPrice = (minPrice, maxPrice) => {
 		let norlmalizeMaxPrice = maxPrice
 >>>>>>> Made controlled inputs and instant reloading
 
@@ -106,6 +105,7 @@ class App extends React.Component {
 	// }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// handleInputTo = event => {
 	// 	// console.log('Changed To', event.target.value)
 	// 	const filteredItems = products.filter(product => product.price < event.target.value)
@@ -115,16 +115,64 @@ class App extends React.Component {
 	// }
 =======
 		const filteredItems = data.filter(product => product.price >= minPrice && product.price <= norlmalizeMaxPrice)
+=======
+		const filteredItems = this.filterProducts(minPrice, norlmalizeMaxPrice)
+>>>>>>> Added number mask for price filter
 
 		this.setState({
 			products: filteredItems,
 			prices: {
 				min: minPrice,
-				max: maxPrice
+				max: norlmalizeMaxPrice
 			}
 		})
 	}
 >>>>>>> Fix state value of max price
+
+	onBlurHandleInput = event => {
+		const {name, value} = event.target
+
+		if (value === '' || this.isNumber(value)) {
+			return
+		}
+
+		if (name === 'from') {
+			console.log('Need to set min price to 0')
+			return this.setState({
+				...this.state,
+				prices: {
+					min: 0,
+					max: this.state.prices.max
+				}
+			})
+		} else {
+			console.log('Need to set max price to max price')
+			return this.setState({
+				...this.state,
+				prices: {
+					min:	this.state.prices.min,
+					max: maxPriceFromData
+				}
+			})
+		}
+	}
+
+	handlePriceInput = event => {
+		event.preventDefault()
+
+		const {name, value} = event.target
+
+		let minPrice = this.state.prices.min
+		let maxPrice = this.state.prices.max
+
+		if (name === 'from') {
+			minPrice = value > 0 ? parseInt(value) : undefined
+		} else {
+			maxPrice = value > 0 ? parseInt(value) : undefined
+		}
+
+		return (value === '' || this.isNumber(value)) ? this.handleFilterPrice(minPrice, maxPrice) : null
+	}
 
 	render() {
 		return (
@@ -134,6 +182,7 @@ class App extends React.Component {
 					defaultPrices={defaultPrices}
 =======
 					prices={this.state.prices}
+<<<<<<< HEAD
 					changeFilterPrice={this.changeFilterPrice}
 >>>>>>> Made controlled inputs and instant reloading
 					/>
@@ -149,6 +198,19 @@ class App extends React.Component {
 							: <ProductList products={this.state.products}/>
 					}
 >>>>>>> Fixes after marks
+=======
+					handlePriceInput={this.handlePriceInput}
+					onBlurHandleInput={this.onBlurHandleInput}
+				/>
+				{
+					this.state.products.length === 0 
+						? <div className='nothing'>
+								<Title level="1">Список товаров</Title>
+								<p>Ничего не найдено</p>
+							</div> 
+						: <ProductList products={this.state.products}/>
+				}
+>>>>>>> Added number mask for price filter
 			</div>
 		) 
 	}

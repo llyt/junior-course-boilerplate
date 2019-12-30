@@ -27,11 +27,16 @@ const Filters = props => {
 				defaultPrices={props.defaultPrices}
 =======
 				prices={props.prices}
+<<<<<<< HEAD
 				changeFilterPrice={props.changeFilterPrice}
 >>>>>>> Made controlled inputs and instant reloading
+=======
+				handlePriceInput={props.handlePriceInput}
+				onBlurHandleInput={props.onBlurHandleInput}
+>>>>>>> Added number mask for price filter
 			/>
 		</div>
-	 );
+	 )
 }
  
 >>>>>>> Merge prev task
