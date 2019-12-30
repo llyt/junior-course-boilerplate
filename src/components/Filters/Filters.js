@@ -7,10 +7,11 @@ const Filters = props => {
 		<div className={styles.Filters}>
 			<FilterPrice 
 				prices={props.prices}
-				changeFilterPrice={props.changeFilterPrice}
+				handlePriceInput={props.handlePriceInput}
+				onBlurHandleInput={props.onBlurHandleInput}
 			/>
 		</div>
-	 );
+	 )
 }
  
 export default Filters;

@@ -13,18 +13,21 @@ class FilterPrice extends logRender {
 				<form>
 					<div>
 						<label htmlFor='from'>от</label>
-						<InputNumber 
+						<InputNumber
 							type="text"
 							name="from"
 							value={this.props.prices.min}
-							changePrice={this.props.changeFilterPrice}
+							changePrice={this.props.handlePriceInput}
+							onBlurHandleInput={this.props.onBlurHandleInput}
 						/>
+
 						<label htmlFor='to'>до</label>
 						<InputNumber 
 							type="text"
 							name="to"
 							value={this.props.prices.max}
-							changePrice={this.props.changeFilterPrice}
+							changePrice={this.props.handlePriceInput}
+							onBlurHandleInput={this.props.onBlurHandleInput}
 						/>
 					</div>
 				</form>
