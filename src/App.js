@@ -14,7 +14,6 @@ import data from './products'
 import { maxBy } from 'csssr-school-utils'
 
 const defaultMaxPrice = maxBy(product => product.price, data).price
-const isNumber = value => (/^[0-9\b]+$/).test(value)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -92,12 +91,23 @@ class App extends React.Component {
 		}
 	}
 
-	filterInputMap = {
-		"from": value => this.applyPriceFrom(value),
-		"to": value => this.applyPriceTo(value),
-		"sale": value => this.applyPriceSale(value)
+	hocDispatch = {
+		"from": value => this.setState({
+			prices:{
+				min: parseInt(value) || 0, 
+				max: this.state.prices.max
+			}
+		}),
+		"to": value => this.setState({
+			prices:{
+				min: this.state.prices.min,
+				max: parseInt(value) || 0
+			}
+		}),
+		"sale": value => this.setState({discount: parseInt(value) || 0})
 	}
 
+<<<<<<< HEAD
 	filterProducts = (minPrice = 0, maxPrice = defaultMaxPrice, discount = this.state.discount) => {
 		return data.filter(product => product.price >= minPrice && product.price <= maxPrice * (1 - discount / 100))
 	} 
@@ -182,17 +192,16 @@ class App extends React.Component {
 				discount: parseInt(value) || 0
 			})
 		}		
+=======
+	handleHOC = (name, value) => {
+		this.hocDispatch[name](value)
+>>>>>>> Added HOC for inputs
 	}
 
-	handleFilterInput = event => {
-		event.preventDefault()
-
-		const {name, value} = event.target
-
-		this.filterInputMap[name](value)
-	}
+	filterProducts = () => data.filter(product => product.price >= this.state.prices.min && product.price <= this.state.prices.max * (1 - this.state.discount / 100))
 
 	render() {
+		const productList = this.filterProducts()
 		return (
 			<div className="ProductPage">
 				<Filters 
@@ -222,16 +231,20 @@ class App extends React.Component {
 					onBlurHandleInput={this.onBlurHandleInput}
 =======
 					discount={this.state.discount}
+<<<<<<< HEAD
 					handleFilterInput={this.handleFilterInput}
 >>>>>>> Added discount filter
+=======
+					inputChange={this.handleHOC}
+>>>>>>> Added HOC for inputs
 				/>
 				{
-					this.state.products.length === 0 
-						? <div className='nothing'>
+					productList.length !== 0
+						? <ProductList products={productList}/>
+						: <div className='nothing'>
 								<Title level="1">Список товаров</Title>
 								<p>Ничего не найдено</p>
-							</div> 
-						: <ProductList products={this.state.products}/>
+							</div>
 				}
 >>>>>>> Added number mask for price filter
 			</div>

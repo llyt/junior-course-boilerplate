@@ -19,6 +19,9 @@ import React from 'react';
 import styles from './Filters.module.css'
 import FilterPrice from '../Filters/FilterPrice/FilterPrice'
 import DiscountForm from 'csssr-school-input-discount'
+import Input from '../../hoc/Input/Input'
+
+const HoccedComponent = Input(DiscountForm)
 
 const Filters = props => {
 	return ( 
@@ -30,6 +33,7 @@ const Filters = props => {
 				prices={props.prices}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				changeFilterPrice={props.changeFilterPrice}
 >>>>>>> Made controlled inputs and instant reloading
 =======
@@ -38,13 +42,20 @@ const Filters = props => {
 >>>>>>> Added number mask for price filter
 =======
 				handleFilterInput={props.handleFilterInput}
+=======
+				inputChange={props.inputChange}
+>>>>>>> Added HOC for inputs
 			/>
-			<DiscountForm 
+			<HoccedComponent 
 				title="Скидка"
 				name="sale"
 				value={props.discount}
+<<<<<<< HEAD
 				onChange={props.handleFilterInput}
 >>>>>>> Added discount filter
+=======
+				inputChange={props.inputChange}
+>>>>>>> Added HOC for inputs
 			/>
 		</div>
 	 )
