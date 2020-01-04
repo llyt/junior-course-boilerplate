@@ -9,29 +9,25 @@ class FilterPrice extends logRender {
 	render() {
 		return (
 			<div className={styles.FilterPrice}>
-			<Title level="3">Цена</Title>
+				<Title level="3">Цена</Title>
 				<form>
 					<div>
 						<label htmlFor='from'>от</label>
 						<InputNumber
-							type="text"
 							name="from"
 							value={this.props.prices.min}
-							changePrice={this.props.handlePriceInput}
-							onBlurHandleInput={this.props.onBlurHandleInput}
+							changePrice={this.props.handleFilterInput}
 						/>
 
 						<label htmlFor='to'>до</label>
 						<InputNumber 
-							type="text"
 							name="to"
 							value={this.props.prices.max}
-							changePrice={this.props.handlePriceInput}
-							onBlurHandleInput={this.props.onBlurHandleInput}
+							changePrice={this.props.handleFilterInput}
 						/>
 					</div>
 				</form>
-		</div>
+			</div>
 		)
 	}
 }

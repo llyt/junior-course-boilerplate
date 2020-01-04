@@ -6,7 +6,8 @@ import ProductList from './components/ProductList/ProductList'
 import data from './products'
 import { maxBy } from 'csssr-school-utils'
 
-const maxPriceFromData = maxBy(product => product.price, data).price
+const defaultMaxPrice = maxBy(product => product.price, data).price
+const isNumber = value => (/^[0-9\b]+$/).test(value)
 
 class App extends React.Component {
 
@@ -16,79 +17,71 @@ class App extends React.Component {
 			products: data, // [{}, {}, {}]
 			prices: {
 				min: 0,
-				max: maxPriceFromData
-			}
+				max: defaultMaxPrice
+			},
+			discount: 0
 		}
 	}
 
-	isNumber = value => {
-		const numRegExp = /^[0-9\b]+$/
-		return numRegExp.test(value)
+	filterInputMap = {
+		"from": value => this.applyPriceFrom(value),
+		"to": value => this.applyPriceTo(value),
+		"sale": value => this.applyPriceSale(value)
 	}
 
-	filterProducts = (minPrice = 0, maxPrice = maxPriceFromData) => data.filter(product => product.price >= minPrice && product.price <= maxPrice)
+	filterProducts = (minPrice = 0, maxPrice = defaultMaxPrice, discount = this.state.discount) => {
+		return data.filter(product => product.price >= minPrice && product.price <= maxPrice * (1 - discount / 100))
+	} 
 
-	handleFilterPrice = (minPrice, maxPrice) => {
-		let norlmalizeMaxPrice = maxPrice
+	applyPriceFrom = value => {
+		if (value === '' || isNumber(value)) {
+			const minPrice = value > 0 ? parseInt(value) : 0
+			const maxPrice = this.state.prices.max <= minPrice ? minPrice + 10 : this.state.prices.max
 
-		if (minPrice > maxPrice) {
-			norlmalizeMaxPrice = minPrice + 10
-		}
-
-		const filteredItems = this.filterProducts(minPrice, norlmalizeMaxPrice)
-
-		this.setState({
-			products: filteredItems,
-			prices: {
-				min: minPrice,
-				max: norlmalizeMaxPrice
-			}
-		})
-	}
-
-	onBlurHandleInput = event => {
-		const {name, value} = event.target
-
-		if (value === '' || this.isNumber(value)) {
-			return
-		}
-
-		if (name === 'from') {
-			console.log('Need to set min price to 0')
+			const filteredItems = this.filterProducts(minPrice, maxPrice)
 			return this.setState({
-				...this.state,
+				products: filteredItems,
 				prices: {
-					min: 0,
-					max: this.state.prices.max
+					min: minPrice,
+					max: maxPrice
 				}
 			})
-		} else {
-			console.log('Need to set max price to max price')
+		}	
+}
+
+	applyPriceTo = value => {
+		if (value === '' || isNumber(value)) {
+			const minPrice = this.state.prices.min >= value ? 0 : this.state.prices.min
+			const maxPrice = value > 0 ? parseInt(value) : 0
+
+			const filteredItems = this.filterProducts(minPrice, maxPrice)
+
 			return this.setState({
-				...this.state,
+				products: filteredItems,
 				prices: {
-					min:	this.state.prices.min,
-					max: maxPriceFromData
+					min: minPrice,
+					max: maxPrice
 				}
 			})
-		}
+		}		
 	}
 
-	handlePriceInput = event => {
+	applyPriceSale = value => {
+		if (value === '' || isNumber(value)) {
+			const filteredItems = this.filterProducts(this.state.prices.min, this.state.prices.max, value)
+			return this.setState({
+				products: filteredItems,
+				discount: parseInt(value) || 0
+			})
+		}		
+	}
+
+	handleFilterInput = event => {
 		event.preventDefault()
 
 		const {name, value} = event.target
 
-		let minPrice = this.state.prices.min
-		let maxPrice = this.state.prices.max
-
-		if (name === 'from') {
-			minPrice = value > 0 ? parseInt(value) : undefined
-		} else {
-			maxPrice = value > 0 ? parseInt(value) : undefined
-		}
-
-		return (value === '' || this.isNumber(value)) ? this.handleFilterPrice(minPrice, maxPrice) : null
+		this.filterInputMap[name](value)
 	}
 
 	render() {
@@ -96,8 +89,8 @@ class App extends React.Component {
 			<div className="ProductPage">
 				<Filters 
 					prices={this.state.prices}
-					handlePriceInput={this.handlePriceInput}
-					onBlurHandleInput={this.onBlurHandleInput}
+					discount={this.state.discount}
+					handleFilterInput={this.handleFilterInput}
 				/>
 				{
 					this.state.products.length === 0 
