@@ -3,12 +3,11 @@ import styles from './InputNumber.module.css'
 
 const InputNumber = props => (
 	<input className={styles.input}
-			type={props.type || "text"} 
-			name={props.name} 
-			placeholder={props.value}
-			onChange={props.changePrice}
-			onBlur={props.onBlurHandleInput}>
-	</input>
+		type={props.type || "text"} 
+		name={props.name} 
+		value={props.value}
+		onChange={props.changePrice}
+	/>
 )
  
-export default InputNumber;
+export default InputNumber

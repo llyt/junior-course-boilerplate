@@ -18,6 +18,7 @@ const Filters = props => {
 import React from 'react';
 import styles from './Filters.module.css'
 import FilterPrice from '../Filters/FilterPrice/FilterPrice'
+import DiscountForm from 'csssr-school-input-discount'
 
 const Filters = props => {
 	return ( 
@@ -28,12 +29,22 @@ const Filters = props => {
 =======
 				prices={props.prices}
 <<<<<<< HEAD
+<<<<<<< HEAD
 				changeFilterPrice={props.changeFilterPrice}
 >>>>>>> Made controlled inputs and instant reloading
 =======
 				handlePriceInput={props.handlePriceInput}
 				onBlurHandleInput={props.onBlurHandleInput}
 >>>>>>> Added number mask for price filter
+=======
+				handleFilterInput={props.handleFilterInput}
+			/>
+			<DiscountForm 
+				title="Скидка"
+				name="sale"
+				value={props.discount}
+				onChange={props.handleFilterInput}
+>>>>>>> Added discount filter
 			/>
 		</div>
 	 )
