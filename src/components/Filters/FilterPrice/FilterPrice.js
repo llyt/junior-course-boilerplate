@@ -3,8 +3,11 @@ import styles from './FilterPrice.module.css'
 import Title from '../../UI/Title/Title'
 import InputNumber from '../../UI/InputNumber/InputNumber'
 import logRender from '../../logRender'
+import Input from '../../../hoc/Input/Input'
 
 class FilterPrice extends logRender {
+
+	HoccedComponent = Input(InputNumber)
 
 	render() {
 		return (
@@ -13,17 +16,17 @@ class FilterPrice extends logRender {
 				<form>
 					<div>
 						<label htmlFor='from'>от</label>
-						<InputNumber
+						<this.HoccedComponent
 							name="from"
 							value={this.props.prices.min}
-							changePrice={this.props.handleFilterInput}
+							inputChange={this.props.inputChange}
 						/>
 
 						<label htmlFor='to'>до</label>
-						<InputNumber 
+						<this.HoccedComponent 
 							name="to"
 							value={this.props.prices.max}
-							changePrice={this.props.handleFilterInput}
+							inputChange={this.props.inputChange}
 						/>
 					</div>
 				</form>
