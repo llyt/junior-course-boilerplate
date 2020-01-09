@@ -14,35 +14,19 @@ class App extends React.Component {
 		super(props)
 		this.state = {
 			products: data, // [{}, {}, {}]
-			prices: {
-				min: 0,
-				max: defaultMaxPrice
-			},
+			minPrice: 0,
+			maxPrice: defaultMaxPrice,
 			discount: 0
 		}
 	}
 
-	hocDispatch = {
-		"from": value => this.setState({
-			prices:{
-				min: parseInt(value) || 0, 
-				max: this.state.prices.max
-			}
-		}),
-		"to": value => this.setState({
-			prices:{
-				min: this.state.prices.min,
-				max: parseInt(value) || 0
-			}
-		}),
-		"sale": value => this.setState({discount: parseInt(value) || 0})
+	handleFilterForm = (name, value) => {
+		this.setState(state => ({...state, [name]: value}))
 	}
 
-	handleHOC = (name, value) => {
-		this.hocDispatch[name](value)
-	}
-
-	filterProducts = () => data.filter(product => product.price >= this.state.prices.min && product.price <= this.state.prices.max * (1 - this.state.discount / 100))
+	filterProducts = () => data.filter(product => (
+		product.price >= this.state.minPrice && product.price <= this.state.maxPrice * (1 - this.state.discount / 100))
+	)
 
 	render() {
 		const productList = this.filterProducts()
@@ -50,8 +34,10 @@ class App extends React.Component {
 			<div className="ProductPage">
 				<Filters 
 					prices={this.state.prices}
+					minPrice={this.state.minPrice}
+					maxPrice={this.state.maxPrice}
 					discount={this.state.discount}
-					inputChange={this.handleHOC}
+					inputChange={this.handleFilterForm}
 				/>
 				{
 					productList.length !== 0

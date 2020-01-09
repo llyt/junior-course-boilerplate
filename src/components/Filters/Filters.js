@@ -1,21 +1,35 @@
 import React from 'react';
 import styles from './Filters.module.css'
-import FilterPrice from '../Filters/FilterPrice/FilterPrice'
+import Title from '../UI/Title/Title'
+import PriceInput from '../UI/PriceInput/PriceInput'
 import DiscountForm from 'csssr-school-input-discount'
-import Input from '../../hoc/Input/Input'
+import withValidateNumber from '../../hoc/withValidateNumber/withValidateNumber'
 
-const HoccedComponent = Input(DiscountForm)
+const DiscountHOC = withValidateNumber(DiscountForm)
 
 const Filters = props => {
 	return ( 
 		<div className={styles.Filters}>
-			<FilterPrice 
-				prices={props.prices}
-				inputChange={props.inputChange}
-			/>
-			<HoccedComponent 
+			<div className={styles.FilterPrice}>
+				<Title level="3">Цена</Title>
+				<form>
+					<label htmlFor="minPrice">от</label>
+					<PriceInput 
+						name="minPrice" 
+						value={props.minPrice}
+						inputChange={props.inputChange}
+					/>
+					<label htmlFor="maxPrice">до</label>
+					<PriceInput 
+						name="maxPrice" 
+						value={props.maxPrice}
+						inputChange={props.inputChange}
+					/>
+				</form>
+			</div>
+			<DiscountHOC 
 				title="Скидка"
-				name="sale"
+				name="discount"
 				value={props.discount}
 				inputChange={props.inputChange}
 			/>
@@ -23,4 +37,4 @@ const Filters = props => {
 	 )
 }
  
-export default Filters;
+export default Filters
