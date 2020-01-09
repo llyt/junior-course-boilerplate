@@ -54,6 +54,7 @@ class App extends React.Component {
 				max: defaultPrices.max
 =======
 			products: data, // [{}, {}, {}]
+<<<<<<< HEAD
 			prices: {
 <<<<<<< HEAD
 				min: minBy(product => product.price, data).price,
@@ -86,27 +87,20 @@ class App extends React.Component {
 =======
 				max: defaultMaxPrice
 			},
+=======
+			minPrice: 0,
+			maxPrice: defaultMaxPrice,
+>>>>>>> Fix after marks
 			discount: 0
 >>>>>>> Added discount filter
 		}
 	}
 
-	hocDispatch = {
-		"from": value => this.setState({
-			prices:{
-				min: parseInt(value) || 0, 
-				max: this.state.prices.max
-			}
-		}),
-		"to": value => this.setState({
-			prices:{
-				min: this.state.prices.min,
-				max: parseInt(value) || 0
-			}
-		}),
-		"sale": value => this.setState({discount: parseInt(value) || 0})
+	handleFilterForm = (name, value) => {
+		this.setState(state => ({...state, [name]: value}))
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	filterProducts = (minPrice = 0, maxPrice = defaultMaxPrice, discount = this.state.discount) => {
 		return data.filter(product => product.price >= minPrice && product.price <= maxPrice * (1 - discount / 100))
@@ -199,6 +193,11 @@ class App extends React.Component {
 	}
 
 	filterProducts = () => data.filter(product => product.price >= this.state.prices.min && product.price <= this.state.prices.max * (1 - this.state.discount / 100))
+=======
+	filterProducts = () => data.filter(product => (
+		product.price >= this.state.minPrice && product.price <= this.state.maxPrice * (1 - this.state.discount / 100))
+	)
+>>>>>>> Fix after marks
 
 	render() {
 		const productList = this.filterProducts()
@@ -209,6 +208,7 @@ class App extends React.Component {
 					defaultPrices={defaultPrices}
 =======
 					prices={this.state.prices}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 					changeFilterPrice={this.changeFilterPrice}
@@ -237,6 +237,12 @@ class App extends React.Component {
 =======
 					inputChange={this.handleHOC}
 >>>>>>> Added HOC for inputs
+=======
+					minPrice={this.state.minPrice}
+					maxPrice={this.state.maxPrice}
+					discount={this.state.discount}
+					inputChange={this.handleFilterForm}
+>>>>>>> Fix after marks
 				/>
 				{
 					productList.length !== 0

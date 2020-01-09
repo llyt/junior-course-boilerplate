@@ -8,5 +8,40 @@
 	margin-top: 120px;
 	display: flex;
 	flex-direction: column;
+<<<<<<< HEAD
 >>>>>>> Merge prev task
+=======
+}
+
+.FilterPrice {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 25px;
+}
+
+.FilterPrice h3{
+	font-size: 22px;
+}
+
+.FilterPrice form {
+	display: flex;
+	align-items: center;
+}
+
+.FilterPrice label {
+	font-size: 14px;
+	margin: 0 8px 0 12px;
+	font-weight: bold;
+}
+
+.FilterPrice label:first-child {
+	margin-left: 0;
+}
+
+.FilterPrice input {
+	height: 20px;
+	width: 60px;
+	padding: 5px 8px 5px 15px;
+	font-size: 14px;
+>>>>>>> Fix after marks
 }
