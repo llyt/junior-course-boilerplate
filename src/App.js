@@ -21,15 +21,16 @@ class App extends React.Component {
 	}
 
 	handleFilterForm = (name, value) => {
-		this.setState(state => ({...state, [name]: value}))
+		return this.state[name] !== value
+			? this.setState(state => ({...state, [name]: value}))
+			: ''
 	}
 
-	filterProducts = () => data.filter(product => (
-		product.price >= this.state.minPrice && product.price <= this.state.maxPrice * (1 - this.state.discount / 100))
-	)
+	getProducts = () => data.filter(product => (
+		product.price >= this.state.minPrice && product.price <= this.state.maxPrice * (1 - this.state.discount / 100)))
 
 	render() {
-		const productList = this.filterProducts()
+		const productList = this.getProducts()
 		return (
 			<div className="ProductPage">
 				<Filters 

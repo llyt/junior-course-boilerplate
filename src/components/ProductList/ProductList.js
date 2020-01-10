@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './ProductList.module.css'
 import Title from '../UI/Title/Title'
 import ProductItem from 'csssr-school-product-card'
-import logRender from '../logRender'
+import logRender from '../../hoc/logRender/logRender'
 
 const ratingStarStyles = {display: "inline-block", marginRight: 6}
 
@@ -10,7 +10,9 @@ const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyle
 
 const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 
-class ProductList extends logRender {
+const ProductItemHOC = logRender(ProductItem)
+
+class ProductList extends React.PureComponent {
 
 	render() {
 		return (
@@ -19,7 +21,7 @@ class ProductList extends logRender {
 				{ this.props.products.map((item, index) => {
 				return (
 					<li key={index}>
-						<ProductItem 
+						<ProductItemHOC 
 							isInStock={item.isInStock}
 							img={item.img}
 							title={item.title}
@@ -38,4 +40,4 @@ class ProductList extends logRender {
 	}
 }
 
-export default ProductList
+export default logRender(ProductList)
