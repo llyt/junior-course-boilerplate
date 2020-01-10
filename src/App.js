@@ -97,9 +97,12 @@ class App extends React.Component {
 	}
 
 	handleFilterForm = (name, value) => {
-		this.setState(state => ({...state, [name]: value}))
+		return this.state[name] !== value
+			? this.setState(state => ({...state, [name]: value}))
+			: ''
 	}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	filterProducts = (minPrice = 0, maxPrice = defaultMaxPrice, discount = this.state.discount) => {
@@ -198,9 +201,13 @@ class App extends React.Component {
 		product.price >= this.state.minPrice && product.price <= this.state.maxPrice * (1 - this.state.discount / 100))
 	)
 >>>>>>> Fix after marks
+=======
+	getProducts = () => data.filter(product => (
+		product.price >= this.state.minPrice && product.price <= this.state.maxPrice * (1 - this.state.discount / 100)))
+>>>>>>> Added shallow compare
 
 	render() {
-		const productList = this.filterProducts()
+		const productList = this.getProducts()
 		return (
 			<div className="ProductPage">
 				<Filters 

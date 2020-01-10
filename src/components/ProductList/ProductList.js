@@ -14,6 +14,7 @@ import ProductItem from 'csssr-school-product-card'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import data from '../../products'
 >>>>>>> Fixes after marks
 =======
@@ -25,6 +26,9 @@ import logRender from '../../hoc/logRender'
 =======
 import logRender from '../logRender'
 >>>>>>> Using logRender via inheritance
+=======
+import logRender from '../../hoc/logRender/logRender'
+>>>>>>> Added shallow compare
 
 const ratingStarStyles = {display: "inline-block", marginRight: 6}
 
@@ -64,6 +68,7 @@ const ProductList = props => {
 =======
 const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -116,6 +121,11 @@ class ProductList extends React.Component {
 =======
 class ProductList extends logRender {
 >>>>>>> Using logRender via inheritance
+=======
+const ProductItemHOC = logRender(ProductItem)
+
+class ProductList extends React.PureComponent {
+>>>>>>> Added shallow compare
 
 	render() {
 		return (
@@ -124,7 +134,7 @@ class ProductList extends logRender {
 				{ this.props.products.map((item, index) => {
 				return (
 					<li key={index}>
-						<ProductItem 
+						<ProductItemHOC 
 							isInStock={item.isInStock}
 							img={item.img}
 							title={item.title}
@@ -144,8 +154,12 @@ class ProductList extends logRender {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export default logRender(ProductList)
 >>>>>>> Fixes after marks
 =======
 export default ProductList
 >>>>>>> Using logRender via inheritance
+=======
+export default logRender(ProductList)
+>>>>>>> Added shallow compare
