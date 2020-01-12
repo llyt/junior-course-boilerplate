@@ -19,34 +19,34 @@ class App extends React.Component {
 			discount: 0
 		}
 	}
+	
 
-	handleFilterForm = (name, value) => {
-		return this.state[name] !== value
-			? this.setState(state => ({...state, [name]: value}))
-			: ''
+	handleFilterForm = (name, value) => this.setState(state => ({...state, [name]: value}))
+
+	getProducts = () => {
+		const { minPrice, maxPrice, discount } = this.state
+		return data.filter(product => (
+			product.price >= minPrice && product.price <= maxPrice * (1 - discount / 100)))
 	}
 
-	getProducts = () => data.filter(product => (
-		product.price >= this.state.minPrice && product.price <= this.state.maxPrice * (1 - this.state.discount / 100)))
-
 	render() {
+		const { minPrice, maxPrice, discount } = this.state
 		const productList = this.getProducts()
 		return (
 			<div className="ProductPage">
 				<Filters 
-					prices={this.state.prices}
-					minPrice={this.state.minPrice}
-					maxPrice={this.state.maxPrice}
-					discount={this.state.discount}
+					minPrice={minPrice}
+					maxPrice={maxPrice}
+					discount={discount}
 					inputChange={this.handleFilterForm}
 				/>
 				{
 					productList.length !== 0
-						? <ProductList products={productList}/>
-						: <div className='nothing'>
-								<Title level="1">Список товаров</Title>
-								<p>Ничего не найдено</p>
-							</div>
+					? <ProductList products={productList}/>
+					: <div className='nothing'>
+							<Title level="1">Список товаров</Title>
+							<p>Ничего не найдено</p>
+						</div>
 				}
 			</div>
 		) 

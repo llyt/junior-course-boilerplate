@@ -1,7 +1,7 @@
 import React from 'react'
 import { toInt } from 'csssr-school-utils'
 
-export default OriginalComponent => class Input extends React.Component {
+export default OriginalComponent => class withValidateNumber extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -15,11 +15,13 @@ export default OriginalComponent => class Input extends React.Component {
 
 		const filteredValue = toInt(value) // Allow only numbers
 
-		this.props.inputChange(name, filteredValue)	// Push new value to App.js
-
+		if (value !== '') {
+			this.props.inputChange(name, filteredValue) // Push new value to App.js
+		}
 		return this.setState({
 			value: filteredValue
-		})	
+		})
+	
 	}
 
 	render() {
