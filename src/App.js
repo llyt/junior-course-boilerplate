@@ -95,13 +95,11 @@ class App extends React.Component {
 >>>>>>> Added discount filter
 		}
 	}
+	
 
-	handleFilterForm = (name, value) => {
-		return this.state[name] !== value
-			? this.setState(state => ({...state, [name]: value}))
-			: ''
-	}
+	handleFilterForm = (name, value) => this.setState(state => ({...state, [name]: value}))
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -205,12 +203,21 @@ class App extends React.Component {
 	getProducts = () => data.filter(product => (
 		product.price >= this.state.minPrice && product.price <= this.state.maxPrice * (1 - this.state.discount / 100)))
 >>>>>>> Added shallow compare
+=======
+	getProducts = () => {
+		const { minPrice, maxPrice, discount } = this.state
+		return data.filter(product => (
+			product.price >= minPrice && product.price <= maxPrice * (1 - discount / 100)))
+	}
+>>>>>>> Fixes after 2nd marks
 
 	render() {
+		const { minPrice, maxPrice, discount } = this.state
 		const productList = this.getProducts()
 		return (
 			<div className="ProductPage">
 				<Filters 
+<<<<<<< HEAD
 <<<<<<< HEAD
 					defaultPrices={defaultPrices}
 =======
@@ -248,16 +255,21 @@ class App extends React.Component {
 					minPrice={this.state.minPrice}
 					maxPrice={this.state.maxPrice}
 					discount={this.state.discount}
+=======
+					minPrice={minPrice}
+					maxPrice={maxPrice}
+					discount={discount}
+>>>>>>> Fixes after 2nd marks
 					inputChange={this.handleFilterForm}
 >>>>>>> Fix after marks
 				/>
 				{
 					productList.length !== 0
-						? <ProductList products={productList}/>
-						: <div className='nothing'>
-								<Title level="1">Список товаров</Title>
-								<p>Ничего не найдено</p>
-							</div>
+					? <ProductList products={productList}/>
+					: <div className='nothing'>
+							<Title level="1">Список товаров</Title>
+							<p>Ничего не найдено</p>
+						</div>
 				}
 >>>>>>> Added number mask for price filter
 			</div>
