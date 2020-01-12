@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './InputNumber.module.css'
+import logRender from '../../../hoc/logRender/logRender'
 
 const InputNumber = props => (
 	<input className={styles.input}
@@ -9,5 +10,5 @@ const InputNumber = props => (
 		onChange={props.onChange}
 	/>
 )
- 
-export default InputNumber
+
+export default logRender(InputNumber)

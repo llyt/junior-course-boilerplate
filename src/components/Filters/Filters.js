@@ -23,7 +23,7 @@ import DiscountForm from 'csssr-school-input-discount'
 import withValidateNumber from '../../hoc/withValidateNumber/withValidateNumber'
 import logRender from '../../hoc/logRender/logRender'
 
-const DiscountHOC = withValidateNumber(DiscountForm)
+const DiscountHOC = withValidateNumber(logRender(DiscountForm))
 
 <<<<<<< HEAD
 const Filters = props => {
