@@ -4,53 +4,50 @@ import Filters from './components/Filters/Filters'
 import Title from './components/UI/Title/Title'
 import ProductList from './components/ProductList/ProductList'
 import data from './products'
-import { maxBy, minBy } from 'csssr-school-utils'
+import { maxBy } from 'csssr-school-utils'
+
+const defaultMaxPrice = maxBy(product => product.price, data).price
 
 class App extends React.Component {
+
 	constructor(props) {
 		super(props)
 		this.state = {
 			products: data, // [{}, {}, {}]
-			prices: {
-				min: minBy(product => product.price, data).price,
-				max: maxBy(product => product.price, data).price
-			}
+			minPrice: 0,
+			maxPrice: defaultMaxPrice,
+			discount: 0
 		}
 	}
+	
 
-	filterPrice = (minPrice = 0, maxPrice = this.state.prices.max) => {
-		let norlmalizeMaxPrice = maxPrice
+	handleFilterForm = (name, value) => this.setState(state => ({...state, [name]: value}))
 
-		if (minPrice > maxPrice) {
-			norlmalizeMaxPrice = minPrice + 10
-		}
-
-		const filteredItems = data.filter(product => product.price >= minPrice && product.price <= norlmalizeMaxPrice)
-
-		this.setState({
-			products: filteredItems,
-			prices: {
-				min: minPrice,
-				max: maxPrice
-			}
-		})
+	getProducts = () => {
+		const { minPrice, maxPrice, discount } = this.state
+		return data.filter(product => (
+			product.price >= minPrice && product.price <= maxPrice * (1 - discount / 100)))
 	}
 
 	render() {
+		const { minPrice, maxPrice, discount } = this.state
+		const productList = this.getProducts()
 		return (
 			<div className="ProductPage">
 				<Filters 
-					prices={this.state.prices}
-					handleFilterPrice={this.filterPrice}
-					/>
-					{
-						this.state.products.length === 0 
-							? <div className='nothing'>
-									<Title level="1">Список товаров</Title>
-									Ничего не найдено
-								</div> 
-							: <ProductList products={this.state.products}/>
-					}
+					minPrice={minPrice}
+					maxPrice={maxPrice}
+					discount={discount}
+					inputChange={this.handleFilterForm}
+				/>
+				{
+					productList.length !== 0
+					? <ProductList products={productList}/>
+					: <div className='nothing'>
+							<Title level="1">Список товаров</Title>
+							<p>Ничего не найдено</p>
+						</div>
+				}
 			</div>
 		) 
 	}
