@@ -1,4 +1,5 @@
 [
+<<<<<<< HEAD
   {
     "id": 1,
     "title": "Название первого товара",
@@ -54,3 +55,72 @@
     "rating": 3.5
   }
 ]
+=======
+    {
+			"id": 1,
+			"category": "clothes",
+			"img": "./img/1.jpg" ,
+			"title": "Название первого товара",
+			"isInStock": true,
+			"price": 4500,
+			"subPriceContent": 4500,
+			"maxRating": 5,
+			"rating": 4
+    },
+    {
+			"id": 2,
+			"category": "clothes",
+			"img": "./img/2.jpg",
+			"title": "Название второго товара",
+			"isInStock": false,
+			"price": 17700,
+			"subPriceContent": 17700,
+			"maxRating": 5,
+			"rating": 3.5
+    },
+    {
+			"id": 3,
+			"category": "books",
+			"img": "../img/3.jpg",
+			"title": "Название третьего товара",
+			"isInStock": true,
+			"price": 11300,
+			"subPriceContent": 11300,
+			"maxRating": 5,
+			"rating": 3.5
+    },
+    {
+			"id": 4,
+			"category": "books",
+			"img": "./img/4.jpg",
+			"title": "Название четвертого товара",
+			"isInStock": true,
+			"price": 1500,
+			"subPriceContent": 1500,
+			"maxRating": 5,
+			"rating": 3.5
+    },
+    {
+			"id": 5,
+			"category": "clothes",
+			"img": "./img/5.jpg",
+			"title": "Название пятого товара",
+			"isInStock": true,
+			"price": 23000,
+			"subPriceContent": 23000,
+			"maxRating": 5,
+			"rating": 3.5
+    },
+    {
+			"id": 6,
+			"category": "books",
+			"img": "../../img/6.jpg",
+			"title": "Название шестого товара",
+			"isInStock": false,
+			"price": 42900,
+			"subPriceContent": 42900,
+			"maxRating": 5,
+			"rating": 3.5
+		}
+]
+>>>>>>> Added reset state button

@@ -17,6 +17,7 @@ const defaultMaxPrice = maxBy(product => product.price, data).price
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const products = data.reduce((acc, product) => [...acc, product], [])
 
 const defaultPrices = products.reduce(
@@ -94,11 +95,42 @@ class App extends React.Component {
 			discount: 0
 >>>>>>> Added discount filter
 		}
+=======
+const getDefaultCategories = () => data.reduce((acc, {category}) => {
+	if (category && !acc.find(categoryObj => categoryObj.name === category)) {
+		const categoryObj = {
+			name: category,
+			isActive: false
+		}
+		acc.push(categoryObj)
 	}
-	
+	return acc
+}, [])
 
+export const AppContext = React.createContext()
+
+const INITIAL_STATE = {
+	categories: getDefaultCategories(), // [{name, status}, ...]
+	minPrice: 0,
+	maxPrice: defaultMaxPrice,
+	discount: 0
+}
+
+class App extends React.Component {
+
+	constructor(props) {
+		super(props)
+		this.state = INITIAL_STATE
+>>>>>>> Added reset state button
+	}
+
+	hasFilterCategory = () => this.state.categories.find(categoryObj => categoryObj.isActive)
+
+	resetFilters = () => this.setState({...INITIAL_STATE, categories: getDefaultCategories()})
+	
 	handleFilterForm = (name, value) => this.setState(state => ({...state, [name]: value}))
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -204,18 +236,44 @@ class App extends React.Component {
 		product.price >= this.state.minPrice && product.price <= this.state.maxPrice * (1 - this.state.discount / 100)))
 >>>>>>> Added shallow compare
 =======
+=======
+	handleFilterCategory = event => {
+		const categoryName = event.target.innerHTML.toLowerCase()
+		let { categories } = this.state
+
+		const targetObj = categories.findIndex((obj => obj.name === categoryName))
+
+		categories[targetObj].isActive = !categories[targetObj].isActive
+
+		return this.setState({
+			categories
+		})
+
+	}
+
+>>>>>>> Added reset state button
 	getProducts = () => {
-		const { minPrice, maxPrice, discount } = this.state
-		return data.filter(product => (
-			product.price >= minPrice && product.price <= maxPrice * (1 - discount / 100)))
+		const { minPrice, maxPrice, discount, categories } = this.state
+
+		const filteredByCategory = this.hasFilterCategory()
+			? data.filter(({category}) =>
+				categories.find(categoryObj => 
+						categoryObj.name === category && categoryObj.isActive))
+			: data
+		const filteredByPrice = filteredByCategory.filter(({price}) => price >= minPrice && price <= maxPrice)
+		const filteredByDiscount = filteredByPrice.filter(({price}) => price <= maxPrice * (1 - discount / 100))
+
+		return filteredByDiscount
 	}
 >>>>>>> Fixes after 2nd marks
 
 	render() {
+		console.log(window.location.search)
 		const { minPrice, maxPrice, discount } = this.state
 		const productList = this.getProducts()
 		return (
 			<div className="ProductPage">
+<<<<<<< HEAD
 				<Filters 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -263,6 +321,22 @@ class App extends React.Component {
 					inputChange={this.handleFilterForm}
 >>>>>>> Fix after marks
 				/>
+=======
+				<AppContext.Provider 
+					value={{
+						categories: this.state.categories,
+						handleCategoryFoo: this.handleFilterCategory,
+						resetFoo: this.resetFilters
+					}}
+				>
+					<Filters 
+						minPrice={minPrice}
+						maxPrice={maxPrice}
+						discount={discount}
+						inputChange={this.handleFilterForm}
+					/>
+				</AppContext.Provider>
+>>>>>>> Added reset state button
 				{
 					productList.length !== 0
 					? <ProductList products={productList}/>
