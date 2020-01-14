@@ -1,6 +1,7 @@
 [
     {
 			"id": 1,
+			"category": "clothes",
 			"img": "./img/1.jpg" ,
 			"title": "Название первого товара",
 			"isInStock": true,
@@ -11,6 +12,7 @@
     },
     {
 			"id": 2,
+			"category": "clothes",
 			"img": "./img/2.jpg",
 			"title": "Название второго товара",
 			"isInStock": false,
@@ -21,6 +23,7 @@
     },
     {
 			"id": 3,
+			"category": "books",
 			"img": "../img/3.jpg",
 			"title": "Название третьего товара",
 			"isInStock": true,
@@ -31,6 +34,7 @@
     },
     {
 			"id": 4,
+			"category": "books",
 			"img": "./img/4.jpg",
 			"title": "Название четвертого товара",
 			"isInStock": true,
@@ -41,6 +45,7 @@
     },
     {
 			"id": 5,
+			"category": "clothes",
 			"img": "./img/5.jpg",
 			"title": "Название пятого товара",
 			"isInStock": true,
@@ -51,6 +56,7 @@
     },
     {
 			"id": 6,
+			"category": "books",
 			"img": "../../img/6.jpg",
 			"title": "Название шестого товара",
 			"isInStock": false,
@@ -58,5 +64,5 @@
 			"subPriceContent": 42900,
 			"maxRating": 5,
 			"rating": 3.5
-    }
+		}
 ]
