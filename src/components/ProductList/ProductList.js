@@ -124,31 +124,35 @@ class ProductList extends logRender {
 =======
 const ProductItemHOC = logRender(ProductItem)
 
+<<<<<<< HEAD
 class ProductList extends React.PureComponent {
 >>>>>>> Added shallow compare
+=======
+class ProductList extends React.Component {
+>>>>>>> Added sort for category
 
 	render() {
 		return (
-			<ul className={styles.ProductList}>
+			<div className={styles.ProductList}>
 				<Title level="1">Список товаров</Title>
-				{ this.props.products.map((item, index) => {
-				return (
-					<li key={index}>
-						<ProductItemHOC 
-							isInStock={item.isInStock}
-							img={item.img}
-							title={item.title}
-							price={priceWithSpaces(item.price)}
-							subPriceContent={priceWithSpaces(item.subPriceContent)}
-							maxRating={item.maxRating}
-							rating={item.rating}
-							ratingComponent={ratingComponent}
-						/>
-					</li>
-				)
-				}) 
-				}
-			</ul>
+					<ul>
+					{ this.props.products.map((item, index) => {
+					return (
+						<li key={index}>
+							<ProductItemHOC 
+								isInStock={item.isInStock}
+								img={item.img}
+								title={item.title}
+								price={priceWithSpaces(item.price)}
+								subPriceContent={priceWithSpaces(item.subPriceContent)}
+								maxRating={item.maxRating}
+								rating={item.rating}
+								ratingComponent={ratingComponent}
+							/>
+						</li>
+					)})}
+					</ul>
+			</div>
 		)
 	}
 }

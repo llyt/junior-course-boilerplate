@@ -1,4 +1,5 @@
 .ProductList {
+<<<<<<< HEAD
 	width: 800px;
 <<<<<<< HEAD
 	margin: 56px 0 0;
@@ -14,6 +15,11 @@
 >>>>>>> Merge prev task
 	padding: 0;
 	list-style: none;
+=======
+	width: 810px;
+	padding: 0 0 0 20px;
+	margin: 0 0 60px;
+>>>>>>> Added sort for category
 }
 
 .ProductList h1 {
