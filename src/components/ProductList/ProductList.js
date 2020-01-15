@@ -12,30 +12,30 @@ const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 
 const ProductItemHOC = logRender(ProductItem)
 
-class ProductList extends React.PureComponent {
+class ProductList extends React.Component {
 
 	render() {
 		return (
-			<ul className={styles.ProductList}>
+			<div className={styles.ProductList}>
 				<Title level="1">Список товаров</Title>
-				{ this.props.products.map((item, index) => {
-				return (
-					<li key={index}>
-						<ProductItemHOC 
-							isInStock={item.isInStock}
-							img={item.img}
-							title={item.title}
-							price={priceWithSpaces(item.price)}
-							subPriceContent={priceWithSpaces(item.subPriceContent)}
-							maxRating={item.maxRating}
-							rating={item.rating}
-							ratingComponent={ratingComponent}
-						/>
-					</li>
-				)
-				}) 
-				}
-			</ul>
+					<ul>
+					{ this.props.products.map((item, index) => {
+					return (
+						<li key={index}>
+							<ProductItemHOC 
+								isInStock={item.isInStock}
+								img={item.img}
+								title={item.title}
+								price={priceWithSpaces(item.price)}
+								subPriceContent={priceWithSpaces(item.subPriceContent)}
+								maxRating={item.maxRating}
+								rating={item.rating}
+								ratingComponent={ratingComponent}
+							/>
+						</li>
+					)})}
+					</ul>
+			</div>
 		)
 	}
 }

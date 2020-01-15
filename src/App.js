@@ -6,25 +6,30 @@ import ProductList from './components/ProductList/ProductList'
 import data from './products'
 import { maxBy } from 'csssr-school-utils'
 
-const defaultMaxPrice = maxBy(product => product.price, data).price
+const getTotalCategories = () => {
 
-const getDefaultCategories = () => data.reduce((acc, {category}) => {
-	if (category && !acc.find(categoryObj => categoryObj.name === category)) {
-		const categoryObj = {
-			name: category,
-			isActive: false
+	const unSortedList = data.reduce((acc, {category}) => {
+		if (category && !acc.find(categoryObj => categoryObj.name === category)) {
+			const categoryObj = {
+				name: category,
+				isActive: false
+			}
+			acc.push(categoryObj)
 		}
-		acc.push(categoryObj)
-	}
-	return acc
-}, [])
+		return acc
+	}, [])
+
+	return unSortedList.sort((a, b) => (a.name > b.name ? 1 : -1) || 0)
+}
 
 export const AppContext = React.createContext()
 
+const defaultCategoies = getTotalCategories()
+
 const INITIAL_STATE = {
-	categories: getDefaultCategories(), // [{name, status}, ...]
+	categories: defaultCategoies, // [{name, status}, ...]
 	minPrice: 0,
-	maxPrice: defaultMaxPrice,
+	maxPrice: maxBy(product => product.price, data).price,
 	discount: 0
 }
 
@@ -37,7 +42,7 @@ class App extends React.Component {
 
 	hasFilterCategory = () => this.state.categories.find(categoryObj => categoryObj.isActive)
 
-	resetFilters = () => this.setState({...INITIAL_STATE, categories: getDefaultCategories()})
+	resetFilters = () => this.setState({...INITIAL_STATE, categories: getTotalCategories()})
 	
 	handleFilterForm = (name, value) => this.setState(state => ({...state, [name]: value}))
 
@@ -56,7 +61,7 @@ class App extends React.Component {
 	}
 
 	getProducts = () => {
-		const { minPrice, maxPrice, discount, categories } = this.state
+		const {minPrice, maxPrice, discount, categories } = this.state
 
 		const filteredByCategory = this.hasFilterCategory()
 			? data.filter(({category}) =>
@@ -70,7 +75,6 @@ class App extends React.Component {
 	}
 
 	render() {
-		console.log(window.location.search)
 		const { minPrice, maxPrice, discount } = this.state
 		const productList = this.getProducts()
 		return (
