@@ -11,8 +11,10 @@ import Loader from './components/UI/Loader/Loader'
 >>>>>>> Delete loader and timeout before update state
 import ProductList from './components/ProductList/ProductList'
 import data from './products'
-import { maxBy } from 'csssr-school-utils'
+import { getInitialState, AppContext } from './AppContext'
+import queryString from 'query-string'
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 const defaultMaxPrice = maxBy(product => product.price, data).price
 
@@ -119,29 +121,52 @@ const getTotalCategories = () => {
 
 	return unSortedList.sort((a, b) => (a.name > b.name ? 1 : -1) || 0)
 }
-
-export const AppContext = React.createContext()
-
-const defaultCategoies = getTotalCategories()
-
-const INITIAL_STATE = {
-	categories: defaultCategoies, // [{name, status}, ...]
-	minPrice: 0,
-	maxPrice: maxBy(product => product.price, data).price,
-	discount: 0
-}
-
+=======
 class App extends React.Component {
+>>>>>>> Made routing for category filter
 
+	constructor(props) {
+		super(props)
+		this.state = getInitialState(data)
+	}
+
+	componentDidMount = () => {
+		this.checkUrl()
+		window.addEventListener('popstate', this.checkUrl);
+	}
+
+	componentWillUnmount() {
+    window.removeEventListener('popstate', this.checkUrl);
+  }
+
+	checkUrl = () => {
+		const currentParse = this.getParsedUrl() || []
+
+<<<<<<< HEAD
 	constructor(props) {
 		super(props)
 		this.state = INITIAL_STATE
 >>>>>>> Added reset state button
+=======
+		if (JSON.stringify(currentParse) !== JSON.stringify(this.state.categories)) {
+			const categories = currentParse
+			return this.setState({categories})
+		}
+>>>>>>> Made routing for category filter
 	}
 
-	hasFilterCategory = () => this.state.categories.find(categoryObj => categoryObj.isActive)
+	getParsedUrl = () => {
+		let activeCategories = queryString.parse(window.location.search, {arrayFormat: 'comma'}).category
+		if (typeof activeCategories === 'string') {
+			activeCategories = [activeCategories]
+		}
+		return activeCategories
+	}
 
-	resetFilters = () => this.setState({...INITIAL_STATE, categories: getTotalCategories()})
+	resetFilters = () => {
+		window.history.pushState({}, '', '/')
+		return this.setState({...getInitialState(data)})
+	}
 	
 	handleFilterForm = (name, value) => this.setState(state => ({...state, [name]: value}))
 
@@ -254,27 +279,44 @@ class App extends React.Component {
 =======
 	handleFilterCategory = event => {
 		const categoryName = event.target.innerHTML.toLowerCase()
-		let { categories } = this.state
 
-		const targetObj = categories.findIndex((obj => obj.name === categoryName))
+		const currentParseCategories = this.state.categories
 
-		categories[targetObj].isActive = !categories[targetObj].isActive
+		let url = '/'
 
-		return this.setState({
-			categories
-		})
+		if (currentParseCategories.includes(categoryName)) {
+			if (currentParseCategories.length > 1) {
+				const newCategories = currentParseCategories.filter(category => category !== categoryName)
+				url = `?category=${newCategories.join(',')}`
+			}
+		} else {
+			const newCategories = currentParseCategories.filter(category => category !== categoryName)
+			const params = currentParseCategories.length === 0 ? `${categoryName}` : `${newCategories.join(',')},${categoryName}`
+			url = `?category=${params}`
+		}
 
+		window.history.pushState({}, '', url)
+
+		return this.checkUrl()
+
+	}
+
+	getListOfCategories = () => {
+		const unSortedList = data.reduce((acc, {category}) => {
+			if (category && !acc.find(cat => cat === category)) {
+				acc.push(category)
+			}
+			return acc
+		}, [])
+	
+		return unSortedList.sort((a, b) => (a.name > b.name ? 1 : -1) || 0)
 	}
 
 >>>>>>> Added reset state button
 	getProducts = () => {
-		const {minPrice, maxPrice, discount, categories } = this.state
+		const {minPrice, maxPrice, discount, categories} = this.state
 
-		const filteredByCategory = this.hasFilterCategory()
-			? data.filter(({category}) =>
-				categories.find(categoryObj => 
-						categoryObj.name === category && categoryObj.isActive))
-			: data
+		const filteredByCategory = categories.length !== 0 ? data.filter(({category}) => categories.includes(category)) : data
 		const filteredByPrice = filteredByCategory.filter(({price}) => price >= minPrice && price <= maxPrice)
 		const filteredByDiscount = filteredByPrice.filter(({price}) => price <= maxPrice * (1 - discount / 100))
 
@@ -283,8 +325,10 @@ class App extends React.Component {
 >>>>>>> Fixes after 2nd marks
 
 	render() {
-		const { minPrice, maxPrice, discount } = this.state
+		const { minPrice, maxPrice, discount, categories } = this.state
 		const productList = this.getProducts()
+		const listOfCategories = this.getListOfCategories()
+
 		return (
 			<div className="ProductPage">
 <<<<<<< HEAD
@@ -338,17 +382,17 @@ class App extends React.Component {
 =======
 				<AppContext.Provider 
 					value={{
-						categories: this.state.categories,
+						minPrice,
+						maxPrice,
+						discount,
+						listOfCategories,
+						categories,
+						inputChange: this.handleFilterForm,
 						handleCategoryFoo: this.handleFilterCategory,
 						resetFoo: this.resetFilters
 					}}
 				>
-					<Filters 
-						minPrice={minPrice}
-						maxPrice={maxPrice}
-						discount={discount}
-						inputChange={this.handleFilterForm}
-					/>
+					<Filters />
 				</AppContext.Provider>
 >>>>>>> Added reset state button
 				{
