@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './FilterCategory.module.css'
 import Title from '../Title/Title'
-import { AppContext } from '../../../App'
+import { AppContext } from '../../../AppContext'
 import logRender from '../../../hoc/logRender/logRender'
 
 const FilterCategory = props => {
@@ -12,14 +12,14 @@ const FilterCategory = props => {
 		<div className={styles.FilterCategory}>
 		<Title level='3'>{props.title}</Title>
 		<AppContext.Consumer>
-			{({categories, handleCategoryFoo}) => categories.map((category, index) => {
-				const cls = category.isActive ? styles.isActive : ''
+			{({categories, listOfCategories, handleCategoryFoo}) => listOfCategories.map((category, index) => {
+				const cls = categories.includes(category) ? styles.isActive : '' 
 				return (
-					<button 
-						key={category.name + index} 
+					<button
 						className={cls}
+						key={category + index} 
 						onClick={handleCategoryFoo}>
-							{capitalizeFirstLetter(category.name)}
+							{capitalizeFirstLetter(category)}
 					</button>
 				)
 			})}
