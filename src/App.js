@@ -16,28 +16,24 @@ class App extends React.Component {
 
 	componentDidMount = () => {
 		this.checkUrl()
-		window.addEventListener('popstate', this.checkUrl);
+		window.addEventListener('popstate', this.checkUrl)
 	}
 
 	componentWillUnmount() {
-    window.removeEventListener('popstate', this.checkUrl);
-  }
+		window.removeEventListener('popstate', this.checkUrl)
+	}
 
 	checkUrl = () => {
 		const currentParse = this.getParsedUrl() || []
 
 		if (JSON.stringify(currentParse) !== JSON.stringify(this.state.categories)) {
-			const categories = currentParse
-			return this.setState({categories})
+			this.setState({categories: currentParse})
 		}
 	}
 
 	getParsedUrl = () => {
-		let activeCategories = queryString.parse(window.location.search, {arrayFormat: 'comma'}).category
-		if (typeof activeCategories === 'string') {
-			activeCategories = [activeCategories]
-		}
-		return activeCategories
+		const activeCategories = queryString.parse(window.location.search, {arrayFormat: 'comma'}).category
+		return typeof activeCategories === 'string' ? [activeCategories] : activeCategories
 	}
 
 	resetFilters = () => {
@@ -48,7 +44,7 @@ class App extends React.Component {
 	handleFilterForm = (name, value) => this.setState(state => ({...state, [name]: value}))
 
 	handleFilterCategory = event => {
-		const categoryName = event.target.innerHTML.toLowerCase()
+		const categoryName = event.target.innerHTML
 
 		const currentParseCategories = this.state.categories
 
@@ -61,24 +57,20 @@ class App extends React.Component {
 			}
 		} else {
 			const newCategories = currentParseCategories.filter(category => category !== categoryName)
-			const params = currentParseCategories.length === 0 ? `${categoryName}` : `${newCategories.join(',')},${categoryName}`
+			const params = currentParseCategories.length === 0 ? categoryName : `${newCategories.join(',')},${categoryName}`
 			url = `?category=${params}`
 		}
 
 		window.history.pushState({}, '', url)
 
-		return this.checkUrl()
+		this.checkUrl()
 
 	}
 
 	getListOfCategories = () => {
-		const unSortedList = data.reduce((acc, {category}) => {
-			if (category && !acc.find(cat => cat === category)) {
-				acc.push(category)
-			}
-			return acc
-		}, [])
-	
+		const allCategoriesSet = new Set(data.map(({category}) => category))
+		const unSortedList = [...allCategoriesSet]
+
 		return unSortedList.sort((a, b) => (a.name > b.name ? 1 : -1) || 0)
 	}
 
@@ -107,8 +99,8 @@ class App extends React.Component {
 						listOfCategories,
 						categories,
 						inputChange: this.handleFilterForm,
-						handleCategoryFoo: this.handleFilterCategory,
-						resetFoo: this.resetFilters
+						handleCategoryFilter: this.handleFilterCategory,
+						handleReset: this.resetFilters
 					}}
 				>
 					<Filters />
@@ -116,7 +108,7 @@ class App extends React.Component {
 				{
 					productList.length !== 0
 					? <ProductList products={productList}/>
-					: <div className='nothing'>
+					: <div className="nothing">
 							<Title level="1">Список товаров</Title>
 							<p>Ничего не найдено</p>
 						</div>

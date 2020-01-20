@@ -8,6 +8,10 @@
 	margin-right: 15px;
 }
 
+.FilterCategory button:first-letter { 
+	text-transform: uppercase; 
+}
+
 .FilterCategory .isActive {
 	background-color: #323C48;
 	color: #ffffff;
