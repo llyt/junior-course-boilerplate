@@ -90,7 +90,7 @@ class Filters extends React.Component {
 	render() {
 		return (
 			<AppContext.Consumer>
-				{({minPrice, maxPrice, discount, inputChange, resetFoo}) => (
+				{({minPrice, maxPrice, discount, inputChange, handleReset}) => (
 					<div className={styles.Filters}>
 						<div className={styles.FilterPrice}>
 							<Title level="3">Цена</Title>
@@ -117,8 +117,9 @@ class Filters extends React.Component {
 						/>
 						<FilterCategory title="Категории" />
 						<button 
+							type="button"
 							className={styles.ResetButton} 
-							onClick={resetFoo}>
+							onClick={handleReset}>
 								Сбросить фильтры
 						</button>
 					</div>
