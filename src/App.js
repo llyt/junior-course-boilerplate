@@ -38,7 +38,7 @@ class App extends React.Component {
 
 	resetFilters = () => {
 		window.history.pushState({}, '', '/')
-		return this.setState({...getInitialState(data)})
+		this.setState({...getInitialState(data)})
 	}
 	
 	handleFilterForm = (name, value) => this.setState(state => ({...state, [name]: value}))
