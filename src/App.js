@@ -64,30 +64,42 @@ class App extends React.Component {
 		window.history.pushState({}, '', url)
 
 		this.checkUrl()
-
 	}
 
-	getListOfCategories = () => {
+	getListOfCategories = (data) => {
 		const allCategoriesSet = new Set(data.map(({category}) => category))
 		const unSortedList = [...allCategoriesSet]
 
 		return unSortedList.sort((a, b) => (a.name > b.name ? 1 : -1) || 0)
 	}
 
-	getProducts = () => {
-		const {minPrice, maxPrice, discount, categories} = this.state
+	getFilteredProducts = (products, categories, minPrice, maxPrice, discount) => {
 
-		const filteredByCategory = categories.length !== 0 ? data.filter(({category}) => categories.includes(category)) : data
-		const filteredByPrice = filteredByCategory.filter(({price}) => price >= minPrice && price <= maxPrice)
-		const filteredByDiscount = filteredByPrice.filter(({price}) => price <= maxPrice * (1 - discount / 100))
+		let resultProducts = products
 
-		return filteredByDiscount
+		if (categories && categories.length !== 0) {
+			resultProducts = resultProducts.filter(({category}) => categories.includes(category))
+		}
+
+		if (minPrice) {
+			resultProducts = resultProducts.filter(({price}) => price >= minPrice)
+		}
+
+		if (maxPrice) {
+			resultProducts = resultProducts.filter(({price}) => price <= maxPrice)
+		}
+
+		if (discount) {
+			resultProducts = resultProducts.filter(({price}) => price <= maxPrice * (1 - discount / 100))
+		}
+
+		return resultProducts
 	}
 
 	render() {
 		const { minPrice, maxPrice, discount, categories } = this.state
-		const productList = this.getProducts()
-		const listOfCategories = this.getListOfCategories()
+		const productList = this.getFilteredProducts(data, categories, minPrice, maxPrice, discount)
+		const listOfCategories = this.getListOfCategories(data)
 
 		return (
 			<div className="ProductPage">
