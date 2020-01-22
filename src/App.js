@@ -81,19 +81,9 @@ class App extends React.Component {
 			resultProducts = resultProducts.filter(({category}) => categories.includes(category))
 		}
 
-		if (minPrice) {
-			resultProducts = resultProducts.filter(({price}) => price >= minPrice)
-		}
-
-		if (maxPrice) {
-			resultProducts = resultProducts.filter(({price}) => price <= maxPrice)
-		}
-
-		if (discount) {
-			resultProducts = resultProducts.filter(({price}) => price <= maxPrice * (1 - discount / 100))
-		}
-
-		return resultProducts
+		return resultProducts.filter(({price}) => {
+			return price >= minPrice && price <= maxPrice * (1 - discount / 100)
+		})
 	}
 
 	render() {
