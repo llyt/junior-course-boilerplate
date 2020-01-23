@@ -2,12 +2,6 @@ import React from 'react'
 import { toInt } from 'csssr-school-utils'
 
 export default OriginalComponent => class withValidateNumber extends React.Component {
-		constructor(props) {
-			super(props)
-			this.state = {
-				value: props.value
-			}
-		}
 
 		handleFilterInput = event => {
 
@@ -15,16 +9,12 @@ export default OriginalComponent => class withValidateNumber extends React.Compo
 
 			const filteredValue = toInt(value) // Allow only numbers
 
-			if (value !== '') {
-				this.props.inputChange(name, filteredValue) // Push new value to App.js
-			}
-			return this.setState({
-				value: filteredValue
-			})
-		
+			this.props.inputChange(name, filteredValue)
+
+			return 
 		}
 
 		render() {
-			return <OriginalComponent  {...this.props} value={this.state.value} onChange={this.handleFilterInput} />
+			return <OriginalComponent  {...this.props} value={this.props.value} onChange={this.handleFilterInput} />
 		}
 	}

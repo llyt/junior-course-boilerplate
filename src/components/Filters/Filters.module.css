@@ -4,14 +4,29 @@
 	flex-direction: column;
 }
 
+.Filters h3 {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.Filters .ResetButton {
+	font-size: 14px;
+	margin-top: 25px;
+	padding: 8px 20px;
+	background-color: #fff;
+	border: 1px solid #323C48
+}
+
+.Filters .ResetButton:hover {
+	cursor: pointer;
+	background-color: #323C48;
+	color: #ffffff;
+}
+
 .FilterPrice {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 25px;
-}
-
-.FilterPrice h3{
-	font-size: 22px;
 }
 
 .FilterPrice form {
