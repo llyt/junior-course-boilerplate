@@ -1,10 +1,10 @@
 import React from 'react'
-import styles from './FilterCategory.module.css'
+import styles from './CategoryFilter.module.css'
 import Title from '../Title/Title'
 
-const FilterCategory = props => {
+const CategoryFilter = props => {
 	return ( 
-		<div className={styles.FilterCategory}>
+		<div className={styles.CategoryFilter}>
 			<Title level='3'>{props.title}</Title>
 			{props.listOfCategories.map((category, index) => {
 				const cls = props.categories.includes(category) ? styles.isActive : '' 
@@ -23,4 +23,4 @@ const FilterCategory = props => {
 	 )
 }
  
-export default FilterCategory
+export default CategoryFilter

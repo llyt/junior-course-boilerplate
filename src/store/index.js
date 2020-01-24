@@ -32,6 +32,9 @@ const store = createStore(mainReducer, devTools)
 const checkUrl = () => {
 	const currentParse = getParsedUrl() || []
 
+	console.log('CurrentParse', JSON.stringify(currentParse))
+	console.log('store.categories', JSON.stringify(store.getState().categories))
+
 	if (JSON.stringify(currentParse) !== JSON.stringify(store.getState().categories)) {
 		store.dispatch({type: "CHECK_URL", payload: {activeCategories: currentParse}})
 	}

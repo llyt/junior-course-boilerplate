@@ -1,4 +1,4 @@
-.FilterCategory button {
+.CategoryFilter button {
 	cursor: pointer;
 	padding: 6px 20px;
 	border: 1px solid #7E8FA4;
@@ -8,11 +8,11 @@
 	margin-right: 15px;
 }
 
-.FilterCategory button:first-letter { 
+.CategoryFilter button:first-letter { 
 	text-transform: uppercase; 
 }
 
-.FilterCategory .isActive {
+.CategoryFilter .isActive {
 	background-color: #323C48;
 	color: #ffffff;
 	border-color: #323C48;

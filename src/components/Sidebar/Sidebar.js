@@ -3,7 +3,7 @@ import styles from './Sidebar.module.css'
 import Title from '../UI/Title/Title'
 import PriceInput from '../UI/PriceInput/PriceInput'
 import DiscountForm from 'csssr-school-input-discount'
-import FilterCategory from '../UI/FilterCategory/FilterCategory'
+import CategoryFilter from '../UI/CategoryFilter/CategoryFilter'
 import withValidateNumber from '../../hoc/withValidateNumber/withValidateNumber'
 import logRender from '../../hoc/logRender/logRender'
 
@@ -45,7 +45,7 @@ class Sidebar extends React.PureComponent {
 				inputChange={this.props.inputChange}
 			/>
 
-			<FilterCategory 
+			<CategoryFilter 
 				title="Категории" 
 				listOfCategories={this.props.listOfCategories}
 				categories={this.props.categories} 
