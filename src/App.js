@@ -1,5 +1,6 @@
 import React from 'react'
 import './index.css'
+<<<<<<< HEAD
 import Filters from './components/Filters/Filters'
 <<<<<<< HEAD
 =======
@@ -322,14 +323,16 @@ class App extends React.Component {
 		})
 	}
 >>>>>>> Fixes after 2nd marks
+=======
+import { SidebarConnect } from './containers/SidebarConnect'
+import { ProductListConnect } from './containers/ProductListConnect'
+>>>>>>> Let's start to Reduxing
 
+class App extends React.PureComponent {
 	render() {
-		const { minPrice, maxPrice, discount, categories } = this.state
-		const productList = this.getFilteredProducts(data, categories, minPrice, maxPrice, discount)
-		const listOfCategories = this.getListOfCategories(data)
-
 		return (
 			<div className="ProductPage">
+<<<<<<< HEAD
 <<<<<<< HEAD
 				<Filters 
 <<<<<<< HEAD
@@ -403,6 +406,10 @@ class App extends React.Component {
 						</div>
 				}
 >>>>>>> Added number mask for price filter
+=======
+					<SidebarConnect />
+					<ProductListConnect />
+>>>>>>> Let's start to Reduxing
 			</div>
 		) 
 	}

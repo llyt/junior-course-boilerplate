@@ -72,6 +72,7 @@ const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const ProductList = props => <ul className={styles.ProductList}>{ data.map((item, index) => {
 				return (
 					<li key={index}>
@@ -130,27 +131,47 @@ class ProductList extends React.PureComponent {
 =======
 class ProductList extends React.Component {
 >>>>>>> Added sort for category
+=======
+class ProductList extends React.PureComponent {
+
+	getFilteredProducts = (products, categories, minPrice, maxPrice, discount) => {
+
+		let resultProducts = products
+	
+		if (categories && categories.length !== 0) {
+			resultProducts = resultProducts.filter(({category}) => categories.includes(category))
+		}
+	
+		return resultProducts.filter(({price}) => {
+			return price >= minPrice && price <= maxPrice * (1 - discount / 100)
+		})
+	}
+>>>>>>> Let's start to Reduxing
 
 	render() {
+		const {products, categories, minPrice, maxPrice, discount} = this.props
+		const listOfProducs = this.getFilteredProducts(products, categories, minPrice, maxPrice, discount)
+
 		return (
 			<div className={styles.ProductList}>
 				<Title level="1">Список товаров</Title>
 					<ul>
-					{ this.props.products.map((item, index) => {
-					return (
-						<li key={index}>
-							<ProductItemHOC 
-								isInStock={item.isInStock}
-								img={item.img}
-								title={item.title}
-								price={priceWithSpaces(item.price)}
-								subPriceContent={priceWithSpaces(item.subPriceContent)}
-								maxRating={item.maxRating}
-								rating={item.rating}
-								ratingComponent={ratingComponent}
-							/>
-						</li>
-					)})}
+						{listOfProducs.map((item, index) => {
+							return (
+								<li key={index}>
+									<ProductItem 
+										isInStock={item.isInStock}
+										img={item.img}
+										title={item.title}
+										price={priceWithSpaces(item.price)}
+										subPriceContent={priceWithSpaces(item.subPriceContent)}
+										maxRating={item.maxRating}
+										rating={item.rating}
+										ratingComponent={ratingComponent}
+									/>
+								</li>
+							)})
+						}
 					</ul>
 			</div>
 		)
