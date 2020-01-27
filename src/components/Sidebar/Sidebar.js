@@ -10,13 +10,6 @@ import logRender from '../../hoc/logRender/logRender'
 const DiscountHOC = withValidateNumber(logRender(DiscountForm))
 
 class Sidebar extends React.PureComponent {
-
-	componentDidUpdate() {
-		const categories = this.props.categories || []
-		const url = categories.length !== 0 ? `?category=${categories.join(',')}` : '/'
-		window.history.pushState({}, '', url)
-	}
-
 	render() {
 		return (
 		<div className={styles.Sidebar}>

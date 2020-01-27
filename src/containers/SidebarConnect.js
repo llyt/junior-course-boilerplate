@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import Sidebar from '../components/Sidebar/Sidebar'
 
 const mapStateToProps = (state) => {
-	const {listOfCategories, categories, minPrice, maxPrice, discount} = state
+	const {listOfCategories, filters} = state
+	const {categories, minPrice, maxPrice, discount} = filters
 	return {
 		listOfCategories,
 		categories,
@@ -15,7 +16,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		inputChange: (name, value) => dispatch({type: "INPUT_CHANGE", payload: {name, value}}),
-		handleCategoryFilter: (event) => dispatch({type: "CATEGORY_FILTER", payload: {event}}),
+		handleCategoryFilter: (event) => {
+			event.persist()
+			const categoryName = event.target.innerHTML
+			dispatch({type: "CATEGORY_FILTER", payload: {categoryName}})
+		},
 		handleReset: () => dispatch({type: "RESET_FILTERS"})
 	}
 }
