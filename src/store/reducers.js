@@ -40,11 +40,12 @@ export const mainReducer = (state = initialState, action) => {
 				}
 
 			case 'CHANGED_CATEGORIES_IN_URL':
+				const {categories} = action.payload
 				return {
 					...state,
 					filters: {
 						...state.filters,
-						categories: action.payload.categories
+						categories
 					}
 				}
 

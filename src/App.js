@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.css'
-import { SidebarConnect } from './containers/SidebarConnect'
-import { ProductListConnect } from './containers/ProductListConnect'
+import { SidebarContainer } from './containers/SidebarContainer'
+import { ProductListContainer } from './containers/ProductListContainer'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
 
@@ -46,8 +46,8 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="ProductPage">
-				<SidebarConnect />
-				<ProductListConnect />
+				<SidebarContainer />
+				<ProductListContainer />
 			</div>
 		) 
 	}

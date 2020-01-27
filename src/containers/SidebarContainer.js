@@ -17,11 +17,10 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		inputChange: (name, value) => dispatch({type: "INPUT_CHANGE", payload: {name, value}}),
 		handleCategoryFilter: (event) => {
-			event.persist()
 			const categoryName = event.target.innerHTML
 			dispatch({type: "CATEGORY_FILTER", payload: {categoryName}})
 		},
 		handleReset: () => dispatch({type: "RESET_FILTERS"})
 	}
 }
-export const SidebarConnect = connect(mapStateToProps, mapDispatchToProps)(Sidebar)
+export const SidebarContainer = connect(mapStateToProps, mapDispatchToProps)(Sidebar)
