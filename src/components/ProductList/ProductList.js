@@ -133,6 +133,7 @@ class ProductList extends React.Component {
 >>>>>>> Added sort for category
 =======
 class ProductList extends React.PureComponent {
+<<<<<<< HEAD
 
 	getFilteredProducts = (products, categories, minPrice, maxPrice, discount) => {
 
@@ -148,15 +149,14 @@ class ProductList extends React.PureComponent {
 	}
 >>>>>>> Let's start to Reduxing
 
+=======
+>>>>>>> Fixes after marks
 	render() {
-		const {products, categories, minPrice, maxPrice, discount} = this.props
-		const listOfProducs = this.getFilteredProducts(products, categories, minPrice, maxPrice, discount)
-
 		return (
 			<div className={styles.ProductList}>
 				<Title level="1">Список товаров</Title>
 					<ul>
-						{listOfProducs.map((item, index) => {
+						{this.props.listOfProducts.map((item, index) => {
 							return (
 								<li key={index}>
 									<ProductItem 
