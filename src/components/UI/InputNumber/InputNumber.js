@@ -4,7 +4,7 @@ import logRender from '../../../hoc/logRender/logRender'
 
 const InputNumber = props => (
 	<input className={styles.input}
-		type={props.type || "text"} 
+		type={props.type || 'text'} 
 		name={props.name} 
 		value={props.value}
 		onChange={props.onChange}

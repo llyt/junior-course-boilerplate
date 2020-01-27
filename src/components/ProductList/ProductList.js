@@ -4,11 +4,11 @@ import Title from '../UI/Title/Title'
 import ProductItem from 'csssr-school-product-card'
 import logRender from '../../hoc/logRender/logRender'
 
-const ratingStarStyles = {display: "inline-block", marginRight: 6}
+const ratingStarStyles = {display: 'inline-block', marginRight: 6}
 
 const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyles}>&#9733;</div> : <div style={ratingStarStyles}>&#9734;</div>
 
-const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+const priceWithSpaces = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
 class ProductList extends React.PureComponent {
 	render() {

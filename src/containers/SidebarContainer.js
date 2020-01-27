@@ -15,12 +15,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		inputChange: (name, value) => dispatch({type: "INPUT_CHANGE", payload: {name, value}}),
+		inputChange: (name, value) => dispatch({type: 'INPUT_CHANGE', payload: {name, value}}),
 		handleCategoryFilter: (event) => {
 			const categoryName = event.target.innerHTML
-			dispatch({type: "CATEGORY_FILTER", payload: {categoryName}})
+			dispatch({type: 'CATEGORY_FILTER', payload: {categoryName}})
 		},
-		handleReset: () => dispatch({type: "RESET_FILTERS"})
+		handleReset: () => dispatch({type: 'RESET_FILTERS'})
 	}
 }
 export const SidebarContainer = connect(mapStateToProps, mapDispatchToProps)(Sidebar)

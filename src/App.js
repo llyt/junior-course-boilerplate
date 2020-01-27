@@ -62,7 +62,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		changeCategories: (newCategories) => dispatch({type: "CHANGED_CATEGORIES_IN_URL", payload: {categories: newCategories}})
+		changeCategories: (newCategories) => dispatch({type: 'CHANGED_CATEGORIES_IN_URL', payload: {categories: newCategories}})
 	}
 }
 
