@@ -1,6 +1,7 @@
 import React from 'react'
 import './index.css'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Filters from './components/Filters/Filters'
 <<<<<<< HEAD
 =======
@@ -329,6 +330,10 @@ import { ProductListConnect } from './containers/ProductListConnect'
 <<<<<<< HEAD
 >>>>>>> Let's start to Reduxing
 =======
+=======
+import { SidebarContainer } from './containers/SidebarContainer'
+import { ProductListContainer } from './containers/ProductListContainer'
+>>>>>>> Fixes after 2nd marks
 import { connect } from 'react-redux'
 import queryString from 'query-string'
 
@@ -374,6 +379,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="ProductPage">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -457,6 +463,10 @@ class App extends React.Component {
 				<SidebarConnect />
 				<ProductListConnect />
 >>>>>>> Fixes after marks
+=======
+				<SidebarContainer />
+				<ProductListContainer />
+>>>>>>> Fixes after 2nd marks
 			</div>
 		) 
 	}

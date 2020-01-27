@@ -18,10 +18,9 @@ const mapStateToProps = (state) => {
 	const {products, filters} = state
 	const {categories, minPrice, maxPrice, discount} = filters
 	const listOfProducts = getFilteredProducts(products, categories, minPrice, maxPrice, discount)
-	console.log(listOfProducts)
 	return {
 		listOfProducts
 	}
 }
 
-export const ProductListConnect = connect(mapStateToProps)(ProductList)
+export const ProductListContainer = connect(mapStateToProps)(ProductList)
