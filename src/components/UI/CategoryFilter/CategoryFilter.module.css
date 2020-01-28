@@ -1,19 +1,19 @@
 .CategoryFilter button {
-	cursor: pointer;
-	padding: 6px 20px;
-	border: 1px solid #7E8FA4;
-	border-radius: 15px;
-	background-color: #fff;
-	font-size: 14px;
-	margin-right: 15px;
+  cursor: pointer;
+  padding: 6px 20px;
+  border: 1px solid #7e8fa4;
+  border-radius: 15px;
+  background-color: #fff;
+  font-size: 14px;
+  margin-right: 15px;
 }
 
-.CategoryFilter button:first-letter { 
-	text-transform: uppercase; 
+.CategoryFilter button:first-letter {
+  text-transform: uppercase;
 }
 
 .CategoryFilter .isActive {
-	background-color: #323C48;
-	color: #ffffff;
-	border-color: #323C48;
+  background-color: #323c48;
+  color: #ffffff;
+  border-color: #323c48;
 }

@@ -1,24 +1,25 @@
 body {
-	font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .ProductPage {
-	display: flex;
-	justify-content: center;
-	margin: 0 auto;
-	padding-top: 80px;
-	color: #323C48
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  padding-top: 80px;
+  color: #323c48;
 }
 
-.nothing, .loading {
-	width: 800px; 
-	padding-left: 35px;
+.nothing,
+.loading {
+  width: 800px;
+  padding-left: 35px;
 }
 
 .loading {
-	text-align: center;
+  text-align: center;
 }
 
 .loading h1 {
-	margin-bottom: 40px;
+  margin-bottom: 40px;
 }
