@@ -12,6 +12,7 @@ const getListOfCategories = (data) => {
 
 const initialState = {
 	products: dataJSON,
+	currentPage: 1,
 	listOfCategories: getListOfCategories(dataJSON),
 	filters: {
 		categories: [],

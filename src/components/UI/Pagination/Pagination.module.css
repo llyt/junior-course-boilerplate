@@ -1,0 +1,31 @@
+.Pagination {
+  margin-top: 15px;
+  text-align: center;
+}
+
+a,
+span {
+  border: 1px solid #c5cfde;
+  padding: 8px 15px;
+  box-sizing: border-box;
+  color: #7e8fa4;
+  text-decoration: none;
+  margin: 0 1px;
+}
+
+a:hover {
+  background-color: #7e8fa4;
+  color: #ffffff;
+  border-color: #7e8fa4;
+}
+
+.prevPage,
+.nextPage {
+  margin: 0 16px;
+}
+
+.active {
+  background-color: #5695ed;
+  color: #ffffff;
+  border-color: #5695ed;
+}

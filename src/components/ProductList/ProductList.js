@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './ProductList.module.css'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ProductItem from '../../containers/ProductItem/ProductItem'
 import H1Item from '../../components/UI/H1Item/H1Item'
 import pic1 from '../../img/1.jpg'
@@ -10,6 +11,10 @@ import pic4 from '../../img/4.jpg'
 import pic5 from '../../img/5.jpg'
 import pic6 from '../../img/6.jpg'
 =======
+=======
+import Title from '../UI/Title/Title'
+import { PaginationContainer } from '../../containers/PaginationContainer'
+>>>>>>> start
 import ProductItem from 'csssr-school-product-card'
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -155,24 +160,25 @@ class ProductList extends React.PureComponent {
 		return (
 			<div className={styles.ProductList}>
 				<Title level="1">Список товаров</Title>
-					<ul>
-						{this.props.listOfProducts.map((item, index) => {
-							return (
-								<li key={index}>
-									<ProductItem 
-										isInStock={item.isInStock}
-										img={item.img}
-										title={item.title}
-										price={priceWithSpaces(item.price)}
-										subPriceContent={priceWithSpaces(item.subPriceContent)}
-										maxRating={item.maxRating}
-										rating={item.rating}
-										ratingComponent={ratingComponent}
-									/>
-								</li>
-							)})
-						}
-					</ul>
+				<ul>
+					{this.props.listOfProducts.map((item, index) => {
+						return (
+							<li key={index}>
+								<ProductItem 
+									isInStock={item.isInStock}
+									img={item.img}
+									title={item.title}
+									price={priceWithSpaces(item.price)}
+									subPriceContent={priceWithSpaces(item.subPriceContent)}
+									maxRating={item.maxRating}
+									rating={item.rating}
+									ratingComponent={ratingComponent}
+								/>
+							</li>
+						)})
+					}
+				</ul>
+				<PaginationContainer />
 			</div>
 		)
 	}
