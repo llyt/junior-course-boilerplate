@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './ProductList.module.css'
 import Title from '../UI/Title/Title'
+import { PaginationContainer } from '../../containers/PaginationContainer'
 import ProductItem from 'csssr-school-product-card'
 import logRender from '../../hoc/logRender/logRender'
 
@@ -15,24 +16,25 @@ class ProductList extends React.PureComponent {
 		return (
 			<div className={styles.ProductList}>
 				<Title level="1">Список товаров</Title>
-					<ul>
-						{this.props.listOfProducts.map((item, index) => {
-							return (
-								<li key={index}>
-									<ProductItem 
-										isInStock={item.isInStock}
-										img={item.img}
-										title={item.title}
-										price={priceWithSpaces(item.price)}
-										subPriceContent={priceWithSpaces(item.subPriceContent)}
-										maxRating={item.maxRating}
-										rating={item.rating}
-										ratingComponent={ratingComponent}
-									/>
-								</li>
-							)})
-						}
-					</ul>
+				<ul>
+					{this.props.listOfProducts.map((item, index) => {
+						return (
+							<li key={index}>
+								<ProductItem 
+									isInStock={item.isInStock}
+									img={item.img}
+									title={item.title}
+									price={priceWithSpaces(item.price)}
+									subPriceContent={priceWithSpaces(item.subPriceContent)}
+									maxRating={item.maxRating}
+									rating={item.rating}
+									ratingComponent={ratingComponent}
+								/>
+							</li>
+						)})
+					}
+				</ul>
+				<PaginationContainer />
 			</div>
 		)
 	}

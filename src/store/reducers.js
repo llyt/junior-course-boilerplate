@@ -49,6 +49,13 @@ export const mainReducer = (state = initialState, action) => {
 					}
 				}
 
+			case 'CHANGED_CURRENT_PAGE':
+				const {page} = action.payload
+				return {
+					...state,
+					currentPage: page
+				}
+
 		default:
 			return state
 	}

@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import queryString from 'query-string'
 
 export const getParsedUrl = () => {
-	const activeCategories = queryString.parse(window.location.search, {arrayFormat: 'comma'}).category || []
+	const activeCategories = queryString.parse(window.location.search, {arrayFormat: 'comma'}) || []
 	return typeof activeCategories === 'string' ? [activeCategories] : activeCategories
 }
 
@@ -14,6 +14,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		this.checkUrl()
+		console.log(getParsedUrl())
 		window.addEventListener('popstate', this.checkUrl)
 	}
 
@@ -26,15 +27,21 @@ class App extends React.Component {
 	}
 
 	checkUrl = () => {
-		const currentParse = getParsedUrl() || []
+		const parsedUrl = getParsedUrl()
+		const parsedCategory = parsedUrl.category || []
+		const parsedPage = parseInt(parsedUrl.page) || 1
 	
-		if (JSON.stringify(currentParse) !== JSON.stringify(this.props.categories)) {
-			this.props.changeCategories(currentParse)
+		if (JSON.stringify(parsedCategory) !== JSON.stringify(this.props.categories)) {
+			this.props.changeCategories(parsedCategory)
+		}
+
+		if (parsedPage !== this.props.currentPage) {
+			this.props.changeCurrentPage(parsedPage)
 		}
 	}
 
 	pushStateToBrowser = () => {
-		const currentParse = getParsedUrl() || []
+		const currentParse = getParsedUrl().category || []
 
 		if (JSON.stringify(currentParse) !== JSON.stringify(this.props.categories)) {
 			const categories = this.props.categories || []
@@ -54,15 +61,18 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	const {categories} = state.filters
+	const {currentPage, filters} = state
+	const {categories} = filters
 	return {
-		categories
+		categories,
+		currentPage
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		changeCategories: (newCategories) => dispatch({type: 'CHANGED_CATEGORIES_IN_URL', payload: {categories: newCategories}})
+		changeCategories: (newCategories) => dispatch({type: 'CHANGED_CATEGORIES_IN_URL', payload: {categories: newCategories}}),
+		changeCurrentPage: (newPage) => dispatch({type: 'CHANGED_CURRENT_PAGE', payload: {page: newPage}})
 	}
 }
 
