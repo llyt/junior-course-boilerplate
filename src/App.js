@@ -1,123 +1,69 @@
 import React from 'react'
 import './index.css'
-import Filters from './components/Filters/Filters'
-import Title from './components/UI/Title/Title'
-import ProductList from './components/ProductList/ProductList'
-import data from './products'
-import { getInitialState, AppContext } from './AppContext'
+import { SidebarContainer } from './containers/SidebarContainer'
+import { ProductListContainer } from './containers/ProductListContainer'
+import { connect } from 'react-redux'
 import queryString from 'query-string'
+
+export const getParsedUrl = () => {
+  const activeCategories = queryString.parse(window.location.search, {arrayFormat: 'comma'}).category || []
+  return typeof activeCategories === 'string' ? [activeCategories] : activeCategories
+}
 
 class App extends React.Component {
 
-	constructor(props) {
-		super(props)
-		this.state = getInitialState(data)
-	}
+  componentDidMount() {
+    this.checkUrl()
+    window.addEventListener('popstate', this.checkUrl)
+  }
 
-	componentDidMount = () => {
-		this.checkUrl()
-		window.addEventListener('popstate', this.checkUrl)
-	}
+  componentWillUnmount() {
+    window.removeEventListener('popstate', this.checkUrl)
+  }
 
-	componentWillUnmount() {
-		window.removeEventListener('popstate', this.checkUrl)
-	}
+  componentDidUpdate() {
+    this.pushStateToBrowser()
+  }
 
-	checkUrl = () => {
-		const currentParse = this.getParsedUrl() || []
+  checkUrl = () => {
+    const currentParse = getParsedUrl() || []
 
-		if (JSON.stringify(currentParse) !== JSON.stringify(this.state.categories)) {
-			this.setState({categories: currentParse})
-		}
-	}
+    if (JSON.stringify(currentParse) !== JSON.stringify(this.props.categories)) {
+      this.props.changeCategories(currentParse)
+    }
+  }
 
-	getParsedUrl = () => {
-		const activeCategories = queryString.parse(window.location.search, {arrayFormat: 'comma'}).category
-		return typeof activeCategories === 'string' ? [activeCategories] : activeCategories
-	}
+  pushStateToBrowser = () => {
+    const currentParse = getParsedUrl() || []
 
-	resetFilters = () => {
-		window.history.pushState({}, '', '/')
-		this.setState({...getInitialState(data)})
-	}
-	
-	handleFilterForm = (name, value) => this.setState(state => ({...state, [name]: value}))
+    if (JSON.stringify(currentParse) !== JSON.stringify(this.props.categories)) {
+      const categories = this.props.categories || []
+      const url = categories.length !== 0 ? `?category=${categories.join(',')}` : '/'
+      window.history.pushState({}, '', url)
+    }
+  }
 
-	handleFilterCategory = event => {
-		const categoryName = event.target.innerHTML
-
-		const currentParseCategories = this.state.categories
-
-		let url = '/'
-
-		if (currentParseCategories.includes(categoryName)) {
-			if (currentParseCategories.length > 1) {
-				const newCategories = currentParseCategories.filter(category => category !== categoryName)
-				url = `?category=${newCategories.join(',')}`
-			}
-		} else {
-			const newCategories = currentParseCategories.filter(category => category !== categoryName)
-			const params = currentParseCategories.length === 0 ? categoryName : `${newCategories.join(',')},${categoryName}`
-			url = `?category=${params}`
-		}
-
-		window.history.pushState({}, '', url)
-
-		this.checkUrl()
-	}
-
-	getListOfCategories = (data) => {
-		const allCategoriesSet = new Set(data.map(({category}) => category))
-		const unSortedList = [...allCategoriesSet]
-
-		return unSortedList.sort((a, b) => (a.name > b.name ? 1 : -1) || 0)
-	}
-
-	getFilteredProducts = (products, categories, minPrice, maxPrice, discount) => {
-
-		let resultProducts = products
-
-		if (categories && categories.length !== 0) {
-			resultProducts = resultProducts.filter(({category}) => categories.includes(category))
-		}
-
-		return resultProducts.filter(({price}) => {
-			return price >= minPrice && price <= maxPrice * (1 - discount / 100)
-		})
-	}
-
-	render() {
-		const { minPrice, maxPrice, discount, categories } = this.state
-		const productList = this.getFilteredProducts(data, categories, minPrice, maxPrice, discount)
-		const listOfCategories = this.getListOfCategories(data)
-
-		return (
-			<div className="ProductPage">
-				<AppContext.Provider 
-					value={{
-						minPrice,
-						maxPrice,
-						discount,
-						listOfCategories,
-						categories,
-						inputChange: this.handleFilterForm,
-						handleCategoryFilter: this.handleFilterCategory,
-						handleReset: this.resetFilters
-					}}
-				>
-					<Filters />
-				</AppContext.Provider>
-				{
-					productList.length !== 0
-					? <ProductList products={productList}/>
-					: <div className="nothing">
-							<Title level="1">Список товаров</Title>
-							<p>Ничего не найдено</p>
-						</div>
-				}
-			</div>
-		) 
-	}
+  render() {
+    return (
+      <div className="ProductPage">
+        <SidebarContainer />
+        <ProductListContainer />
+      </div>
+    )
+  }
 }
 
-export default App
+const mapStateToProps = (state) => {
+  const {categories} = state.filters
+  return {
+    categories
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeCategories: (newCategories) => dispatch({type: 'CHANGED_CATEGORIES_IN_URL', payload: {categories: newCategories}})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
