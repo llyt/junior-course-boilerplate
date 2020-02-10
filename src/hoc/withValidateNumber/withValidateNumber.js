@@ -3,18 +3,18 @@ import { toInt } from 'csssr-school-utils'
 
 export default OriginalComponent => class withValidateNumber extends React.Component {
 
-		handleFilterInput = event => {
+  handleFilterInput = event => {
 
-			const { name, value } = event.target
+    const { name, value } = event.target
 
-			const filteredValue = toInt(value) // Allow only numbers
+    const filteredValue = toInt(value) // Allow only numbers
 
-			this.props.inputChange(name, filteredValue)
+    this.props.inputChange(name, filteredValue)
 
-			return 
-		}
+    return
+  }
 
-		render() {
-			return <OriginalComponent  {...this.props} value={this.props.value} onChange={this.handleFilterInput} />
-		}
-	}
+  render() {
+    return <OriginalComponent  {...this.props} value={this.props.value} onChange={this.handleFilterInput} />
+  }
+}
