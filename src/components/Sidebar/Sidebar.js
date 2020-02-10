@@ -10,50 +10,50 @@ import logRender from '../../hoc/logRender/logRender'
 const DiscountHOC = withValidateNumber(logRender(DiscountForm))
 
 class Sidebar extends React.PureComponent {
-	render() {
-		return (
-		<div className={styles.Sidebar}>
-			<div className={styles.FilterPrice}>
-				<Title level="3">Цена</Title>
-				<form>
-					<label htmlFor="minPrice">от</label>
-					<PriceInput 
-						name="minPrice" 
-						value={this.props.minPrice}
-						inputChange={this.props.inputChange}
-					/>
-					<label htmlFor="maxPrice">до</label>
-					<PriceInput 
-						name="maxPrice" 
-						value={this.props.maxPrice}
-						inputChange={this.props.inputChange}
-					/>
-				</form>
-			</div>
+  render() {
+    return (
+      <div className={styles.Sidebar}>
+        <div className={styles.FilterPrice}>
+          <Title level="3">Цена</Title>
+          <form>
+            <label htmlFor="minPrice">от</label>
+            <PriceInput
+              name="minPrice"
+              value={this.props.minPrice}
+              inputChange={this.props.inputChange}
+            />
+            <label htmlFor="maxPrice">до</label>
+            <PriceInput
+              name="maxPrice"
+              value={this.props.maxPrice}
+              inputChange={this.props.inputChange}
+            />
+          </form>
+        </div>
 
-			<DiscountHOC 
-				title="Скидка"
-				name="discount"
-				value={this.props.discount}
-				inputChange={this.props.inputChange}
-			/>
+        <DiscountHOC
+          title="Скидка"
+          name="discount"
+          value={this.props.discount}
+          inputChange={this.props.inputChange}
+        />
 
-			<CategoryFilter 
-				title="Категории" 
-				listOfCategories={this.props.listOfCategories}
-				categories={this.props.categories} 
-				handleCategoryFilter={this.props.handleCategoryFilter}
-			/>
+        <CategoryFilter
+          title="Категории"
+          listOfCategories={this.props.listOfCategories}
+          categories={this.props.categories}
+          handleCategoryFilter={this.props.handleCategoryFilter}
+        />
 
-			<button 
-				type="button"
-				className={styles.ResetButton} 
-				onClick={this.props.handleReset}>
-					Сбросить фильтры
-			</button>			
-		</div>
-		)
-	}
+        <button
+          type="button"
+          className={styles.ResetButton}
+          onClick={this.props.handleReset}>
+          Сбросить фильтры
+        </button>
+      </div>
+    )
+  }
 }
 
 export default logRender(Sidebar)

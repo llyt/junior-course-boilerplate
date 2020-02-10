@@ -13,8 +13,12 @@ import pic6 from '../../img/6.jpg'
 =======
 =======
 import Title from '../UI/Title/Title'
+<<<<<<< HEAD
 import { PaginationContainer } from '../../containers/PaginationContainer'
 >>>>>>> start
+=======
+import Pagination from '../UI/Pagination/Pagination'
+>>>>>>> Added pagination
 import ProductItem from 'csssr-school-product-card'
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -33,6 +37,7 @@ import logRender from '../logRender'
 >>>>>>> Using logRender via inheritance
 =======
 import logRender from '../../hoc/logRender/logRender'
+<<<<<<< HEAD
 >>>>>>> Added shallow compare
 
 const ratingStarStyles = {display: "inline-block", marginRight: 6}
@@ -182,6 +187,42 @@ class ProductList extends React.PureComponent {
 			</div>
 		)
 	}
+=======
+import priceWithSpaces from '../../utils/priceWithSpaces'
+
+const ratingStarStyles = { display: 'inline-block', marginRight: 6 }
+
+const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyles}>&#9733;</div> : <div style={ratingStarStyles}>&#9734;</div>
+
+class ProductList extends React.PureComponent {
+  render() {
+    return (
+      <div className={styles.ProductList}>
+        <Title level="1">Список товаров</Title>
+        <ul>
+          {this.props.productsPerPage.map((item, index) => {
+            return (
+              <li key={index}>
+                <ProductItem
+                  isInStock={item.isInStock}
+                  img={item.img}
+                  title={item.title}
+                  price={priceWithSpaces(item.price)}
+                  subPriceContent={priceWithSpaces(item.subPriceContent)}
+                  maxRating={item.maxRating}
+                  rating={item.rating}
+                  ratingComponent={ratingComponent}
+                />
+              </li>
+            )
+          })
+          }
+        </ul>
+        <Pagination content={this.props.pagination} handleClick={this.props.handlePaginationClick} />
+      </div>
+    )
+  }
+>>>>>>> Added pagination
 }
 
 <<<<<<< HEAD

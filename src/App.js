@@ -337,44 +337,38 @@ import { ProductListContainer } from './containers/ProductListContainer'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
 
-export const getParsedUrl = () => {
-	const activeCategories = queryString.parse(window.location.search, {arrayFormat: 'comma'}) || []
-	return typeof activeCategories === 'string' ? [activeCategories] : activeCategories
+export const getParamsFromUrl = () => {
+  const params = queryString.parse(window.location.search, { arrayFormat: 'comma' })
+  const categoriesFromParams = params.category
+
+  if (typeof categoriesFromParams === 'string') {
+    params.category = [categoriesFromParams]
+  }
+
+  return params
 }
 
 class App extends React.Component {
 
-	componentDidMount() {
-		this.checkUrl()
-		console.log(getParsedUrl())
-		window.addEventListener('popstate', this.checkUrl)
-	}
+  componentDidMount() {
+    this.checkUrl()
+    window.addEventListener('popstate', this.checkUrl)
+  }
 
-	componentWillUnmount() {
-		window.removeEventListener('popstate', this.checkUrl)
-	}
+  componentWillUnmount() {
+    window.removeEventListener('popstate', this.checkUrl)
+  }
 
-	componentDidUpdate() {
-		this.pushStateToBrowser()
-	}
+  componentDidUpdate() {
+    this.pushStateToBrowser()
+  }
 
-	checkUrl = () => {
-		const parsedUrl = getParsedUrl()
-		const parsedCategory = parsedUrl.category || []
-		const parsedPage = parseInt(parsedUrl.page) || 1
-	
-		if (JSON.stringify(parsedCategory) !== JSON.stringify(this.props.categories)) {
-			this.props.changeCategories(parsedCategory)
-		}
+  checkUrl = () => {
+    const params = getParamsFromUrl()
+    this.props.pushRoutingState(params)
+  }
 
-		if (parsedPage !== this.props.currentPage) {
-			this.props.changeCurrentPage(parsedPage)
-		}
-	}
-
-	pushStateToBrowser = () => {
-		const currentParse = getParsedUrl().category || []
-
+<<<<<<< HEAD
 		if (JSON.stringify(currentParse) !== JSON.stringify(this.props.categories)) {
 			const categories = this.props.categories || []
 			const url = categories.length !== 0 ? `?category=${categories.join(',')}` : '/'
@@ -477,18 +471,38 @@ class App extends React.Component {
 			</div>
 		) 
 	}
+=======
+  pushStateToBrowser = () => {
+    const params = this.props.params
+    let url = '/'
+    if (Object.entries(params).length !== 0) {
+      const path = queryString.stringify(params, {arrayFormat: 'comma'})
+      url = `/?${path}` 
+    }
+    window.history.pushState({}, '', url)
+    
+  }
+
+  render() {
+    return (
+      <div className="ProductPage">
+        <SidebarContainer />
+        <ProductListContainer />
+      </div>
+    )
+  }
+>>>>>>> Added pagination
 }
 
 const mapStateToProps = (state) => {
-	const {currentPage, filters} = state
-	const {categories} = filters
-	return {
-		categories,
-		currentPage
-	}
+  const { params } = state.routing
+  return {
+    params
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
+<<<<<<< HEAD
 	return {
 <<<<<<< HEAD
 		changeCategories: (newCategories) => dispatch({type: "CHANGED_CATEGORIES_IN_URL", payload: {categories: newCategories}})
@@ -497,6 +511,11 @@ const mapDispatchToProps = (dispatch) => {
 		changeCurrentPage: (newPage) => dispatch({type: 'CHANGED_CURRENT_PAGE', payload: {page: newPage}})
 >>>>>>> start
 	}
+=======
+  return {
+    pushRoutingState: (params) => dispatch({type: 'PUSH_ROUTING_STATE', payload: {params} }),
+  }
+>>>>>>> Added pagination
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
