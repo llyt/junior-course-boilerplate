@@ -1,16 +1,22 @@
 import { connect } from 'react-redux'
 import Sidebar from '../components/Sidebar/Sidebar'
+import { 
+  getListOfCategories,
+  getActiveCategories,
+  getMinPrice,
+  getMaxPrice,
+  getDiscount
+ } from '../store/modules/sidebar'
 
-const mapStateToProps = (state) => {
-  const { listOfCategories, categories, minPrice, maxPrice, discount } = state.filters
-  return {
-    listOfCategories,
-    categories,
-    minPrice,
-    maxPrice,
-    discount
+const mapStateToProps = (state) => (
+  {
+    listOfCategories: getListOfCategories(state),
+    activeCategories: getActiveCategories(state),
+    minPrice: getMinPrice(state),
+    maxPrice: getMaxPrice(state),
+    discount: getDiscount(state)
   }
-}
+)
 
 const mapDispatchToProps = (dispatch) => {
 <<<<<<< HEAD
