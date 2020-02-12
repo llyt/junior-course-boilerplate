@@ -7,7 +7,6 @@
     "csssr-school-product-card": "git+https://git@github.com/CSSSR-School/junior-course-product-card.git",
     "csssr-school-utils": "git+https://github.com/CSSSR-School/junior-course-utils.git",
     "query-string": "^6.10.1",
-    "ramda": "^0.27.0",
     "react": "^16.12.0",
     "react-addons-shallow-compare": "^15.6.2",
     "react-dom": "^16.12.0",
