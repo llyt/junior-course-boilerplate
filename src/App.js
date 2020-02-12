@@ -336,7 +336,6 @@ import { ProductListContainer } from './containers/ProductListContainer'
 >>>>>>> Fixes after 2nd marks
 import { connect } from 'react-redux'
 import queryString from 'query-string'
-import * as R from 'ramda'
 
 export const getParamsFromUrl = () => {
   const params = queryString.parse(window.location.search, { arrayFormat: 'comma' })
@@ -365,7 +364,6 @@ class App extends React.Component {
   }
 
   checkUrl = () => {
-    const currentParams = this.props.params
     const paramsFromUrl = getParamsFromUrl()
     if (!paramsFromUrl.category) {
       paramsFromUrl['category'] = []
@@ -375,9 +373,7 @@ class App extends React.Component {
       paramsFromUrl['page'] = 1
     }
 
-    if (!R.equals(paramsFromUrl, currentParams)) {
-      this.props.syncStateFromUrl(paramsFromUrl)
-    }
+    this.props.syncStateFromUrl(paramsFromUrl)
   }
 
 <<<<<<< HEAD
