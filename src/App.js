@@ -4,6 +4,7 @@ import { SidebarContainer } from './containers/SidebarContainer'
 import { ProductListContainer } from './containers/ProductListContainer'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
+import * as R from 'ramda'
 
 export const getParamsFromUrl = () => {
   const params = queryString.parse(window.location.search, { arrayFormat: 'comma' })
@@ -32,17 +33,50 @@ class App extends React.Component {
   }
 
   checkUrl = () => {
-    const params = getParamsFromUrl()
-    this.props.pushRoutingState(params)
+    const currentParams = this.props.params
+    const paramsFromUrl = getParamsFromUrl()
+    if (!paramsFromUrl.category) {
+      paramsFromUrl['category'] = []
+    }
+
+    if (!paramsFromUrl.page) {
+      paramsFromUrl['page'] = 1
+    }
+
+    if (!R.equals(paramsFromUrl, currentParams)) {
+      this.props.syncStateFromUrl(paramsFromUrl)
+    }
   }
 
   pushStateToBrowser = () => {
-    const params = this.props.params
+    let params = this.props.params
     let url = '/'
-    if (Object.entries(params).length !== 0) {
+
+    const isEmptyParams = (params) => {
+      let flag = true
+      params.forEach((param) => {
+        if (param.length > 0 || typeof param === 'number') {
+          flag = false
+        }
+      })
+
+      return flag
+    }
+
+    if (params.page === 1) {
+      params = {...Object.keys(params).reduce((acc, param) => {
+          if (param !== 'page') {
+            acc[param] = params[param]
+          }
+          return acc
+        }, {})}
+    }
+
+    if (!isEmptyParams(Object.values(params))) {
       const path = queryString.stringify(params, {arrayFormat: 'comma'})
       url = `/?${path}` 
     }
+
     window.history.pushState({}, '', url)
     
   }
@@ -58,7 +92,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { params } = state.routing
+  const { params } = state.filters
   return {
     params
   }
@@ -66,7 +100,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    pushRoutingState: (params) => dispatch({type: 'PUSH_ROUTING_STATE', payload: {params} }),
+    syncStateFromUrl: (params) => dispatch({type: 'SYNC_STATE_FROM_URL', payload: {params} }),
   }
 }
 

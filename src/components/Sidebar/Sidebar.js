@@ -41,7 +41,7 @@ class Sidebar extends React.PureComponent {
         <CategoryFilter
           title="Категории"
           listOfCategories={this.props.listOfCategories}
-          categories={this.props.categories}
+          categories={this.props.activeCategories}
           handleCategoryFilter={this.props.handleCategoryFilter}
         />
 
