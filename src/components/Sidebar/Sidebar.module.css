@@ -1,31 +1,3 @@
-.FilterPrice {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 25px;
-}
-
-.FilterPrice form {
-  display: flex;
-  align-items: center;
-}
-
-.FilterPrice label {
-  font-size: 14px;
-  margin: 0 8px 0 12px;
-  font-weight: bold;
-}
-
-.FilterPrice label:first-child {
-  margin-left: 0;
-}
-
-.FilterPrice input {
-  height: 20px;
-  width: 60px;
-  padding: 5px 8px 5px 15px;
-  font-size: 14px;
-}
-
 .Sidebar {
   margin-top: 65px;
   display: flex;
