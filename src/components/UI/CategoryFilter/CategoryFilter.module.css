@@ -1,25 +1,18 @@
 .CategoryFilter button {
-  <<<<<<<headcolor: #202020;
-  cursor: pointer;
-  padding: 7px 20px;
-  border: 1px solid #7e8fa4;
-  border-radius: 20px;
-  =======cursor: pointer;
+  color: #202020;
   padding: 6px 20px;
   border: 1px solid #7e8fa4;
   border-radius: 15px;
-  >>>>>>>0fe522bae80f2a300eb710c93a6a7860ec26f6a3background-color: #fff;
+  background-color: #fff;
   font-size: 14px;
   margin-right: 15px;
 }
 
-<<<<<<< head .CategoryFilter button:hover {
+.CategoryFilter button:hover {
   box-shadow: 0px 3px 6px 1px #d8d8d8;
 }
 
-=======>>>>>>>0fe522bae80f2a300eb710c93a6a7860ec26f6a3
-  .CategoryFilter
-  button:first-letter {
+.CategoryFilter button:first-letter {
   text-transform: uppercase;
 }
 
