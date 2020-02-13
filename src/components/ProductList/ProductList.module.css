@@ -1,37 +1,3 @@
-<<<<<<< HEAD
-.ProductList {
-<<<<<<< HEAD
-	width: 800px;
-<<<<<<< HEAD
-	margin: 56px 0 0;
-<<<<<<< HEAD
-}
-
-.ProductList ul {
-	margin: 56px 0 0;
-=======
->>>>>>> Fixes after marks
-=======
-	margin: 56px 0 0 15px;
->>>>>>> Merge prev task
-	padding: 0;
-	list-style: none;
-=======
-	width: 810px;
-	padding: 0 0 0 20px;
-	margin: 0 0 60px;
->>>>>>> Added sort for category
-}
-
-.ProductList h1 {
-	margin-bottom: 35px;
-}
-
-.ProductList li {
-	display: inline-block;
-	margin: 0 15px 45px;
-}
-=======
 .ProductList {
   width: 810px;
   padding: 0 0 0 20px;
@@ -46,4 +12,3 @@
   display: inline-block;
   margin: 0 15px 45px;
 }
->>>>>>> Added pagination
