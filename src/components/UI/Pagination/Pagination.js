@@ -4,17 +4,17 @@ import logRender from '../../../hoc/logRender/logRender'
 
 class Pagination extends React.PureComponent {
   render() {
-    return this.props.content.length > 1
-      ? (
-        <div className={styles.Pagination}>
-          {this.props.content.map(({tag, href, body, currentClass}, index) => {
-            const Tag = `${tag}`
-            return (<Tag key={index} href={href} className={styles[currentClass]} onClick={this.props.handleClick}>{body}</Tag>)
-          })}
-        </div>
-      )
-      : ''
+    return (
+      <div className={styles.Pagination}>
+        {this.props.pagination.map(([body, url, cls], index) => {
+          if (cls === 'active') {
+            return <span key={index + body} className={styles[cls]}>{body}</span>
+          }
+          return <a key={index + body} className={styles[cls]} onClick={this.props.handleClick} href={url}>{body}</a>
+        })}
+      </div>
+    )
   }
 }
 
-export default logRender(Pagination);
+export default logRender(Pagination)

@@ -2,79 +2,47 @@ import React from 'react'
 import './index.css'
 import { SidebarContainer } from './containers/SidebarContainer'
 import { ProductListContainer } from './containers/ProductListContainer'
+import { getParamsFromUrl } from './utils/getParamsFromUrl'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
-
-export const getParamsFromUrl = () => {
-  const params = queryString.parse(window.location.search, { arrayFormat: 'comma' })
-  const categoriesFromParams = params.category
-
-  if (typeof categoriesFromParams === 'string') {
-    params.category = [categoriesFromParams]
-  }
-
-  return params
-}
 
 class App extends React.Component {
 
   componentDidMount() {
-    this.checkUrl()
-    window.addEventListener('popstate', this.checkUrl)
+    this.urlParamsToState()
+    window.addEventListener('popstate', this.urlParamsToState)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('popstate', this.checkUrl)
+    window.removeEventListener('popstate', this.urlParamsToState)
   }
 
   componentDidUpdate() {
-    this.pushStateToBrowser()
-  }
+    this.stateParamsToUrl()
+  } 
 
-  checkUrl = () => {
+  urlParamsToState = () => {
     const paramsFromUrl = getParamsFromUrl()
-    if (!paramsFromUrl.category) {
-      paramsFromUrl['category'] = []
-    }
-
-    if (!paramsFromUrl.page) {
-      paramsFromUrl['page'] = 1
-    }
-
     this.props.syncStateFromUrl(paramsFromUrl)
   }
 
-  pushStateToBrowser = () => {
-    let params = this.props.params
-    let url = '/'
+  stateParamsToUrl = () => {
+    const paramsFromUrl = getParamsFromUrl()
+    let paramsFromState = {...this.props.params}
 
-    const isEmptyParams = (params) => {
-      let flag = true
-      params.forEach((param) => {
-        if (param.length > 0 || typeof param === 'number') {
-          flag = false
-        }
-      })
-
-      return flag
-    }
-
-    if (params.page === 1) {
-      params = {...Object.keys(params).reduce((acc, param) => {
+    if (JSON.stringify(paramsFromUrl) !== JSON.stringify(paramsFromState)) {
+      if (paramsFromState.page === 1) {
+        paramsFromState = Object.keys(paramsFromState).reduce((acc, param) => {
           if (param !== 'page') {
-            acc[param] = params[param]
+            acc[param] = paramsFromState[param]
           }
           return acc
-        }, {})}
-    }
-
-    if (!isEmptyParams(Object.values(params))) {
-      const path = queryString.stringify(params, {arrayFormat: 'comma'})
-      url = `/?${path}` 
-    }
-
-    window.history.pushState({}, '', url)
-    
+        }, {})
+      }
+      const params = queryString.stringify(paramsFromState, {arrayFormat: 'comma'})
+      const url = params ? `/?${params}` : '/'
+      window.history.pushState({}, '', url)
+    } 
   }
 
   render() {

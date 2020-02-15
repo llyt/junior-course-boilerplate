@@ -16,7 +16,7 @@ class ProductList extends React.PureComponent {
       <div className={styles.ProductList}>
         <Title level="1">Список товаров</Title>
         <ul>
-          {this.props.productsPerPage.map((item, index) => {
+          {this.props.list.map((item, index) => {
             return (
               <li key={index}>
                 <ProductItem
@@ -34,7 +34,7 @@ class ProductList extends React.PureComponent {
           })
           }
         </ul>
-        <Pagination content={this.props.pagination} handleClick={this.props.handlePaginationClick} />
+        <Pagination pagination={this.props.pagination} handleClick={this.props.handlePaginationClick} />
       </div>
     )
   }

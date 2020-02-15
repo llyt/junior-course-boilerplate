@@ -11,11 +11,6 @@ const initialState = {
   discount: 0
 }
 
-
-// Actions
-
-/* What should be here? */
-
 // Reducers
 
 export default (state = initialState, action) => {
@@ -79,12 +74,13 @@ export default (state = initialState, action) => {
 
     case 'SYNC_STATE_FROM_URL':
       const { category } = action.payload.params
+      const pageFromUrl = action.payload.params.page
 
       return {
         ...state,
         params: {
           category,
-          page: parseInt(action.payload.params.page)
+          page: pageFromUrl
         }
       }
       

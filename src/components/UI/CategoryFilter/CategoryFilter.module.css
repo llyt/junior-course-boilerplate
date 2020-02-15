@@ -1,4 +1,5 @@
 .CategoryFilter button {
+  cursor: pointer;
   color: #202020;
   padding: 6px 20px;
   border: 1px solid #7e8fa4;

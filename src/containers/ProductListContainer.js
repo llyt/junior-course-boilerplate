@@ -1,11 +1,18 @@
 import { connect } from 'react-redux'
 import ProductList from '../components/ProductList/ProductList'
-import { getPaginationLinks, getProductsList} from '../store/modules/productList'
+import { makeProductList, makePagination } from '../store/modules/productList'
 
-const mapStateToProps = (state) => ({
-  productsPerPage: getProductsList(state),
-  pagination: getPaginationLinks(state)
-})
+const mapStateToProps = (state) => {
+  const { page } = state.filters.params
+
+  const list = makeProductList(state)
+  const pagination = makePagination(state, list.length)
+
+  return {
+    list: list[page - 1] || [],
+    pagination: pagination.length > 1 ? pagination : [] 
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
