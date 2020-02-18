@@ -9,7 +9,7 @@ import queryString from 'query-string'
 class App extends React.Component {
 
   componentDidMount() {
-    this.urlParamsToState()
+    this.urlParamsToState();
     window.addEventListener('popstate', this.urlParamsToState)
   }
 
@@ -19,16 +19,16 @@ class App extends React.Component {
 
   componentDidUpdate() {
     this.stateParamsToUrl()
-  } 
-
-  urlParamsToState = () => {
-    const paramsFromUrl = getParamsFromUrl()
-    this.props.syncStateFromUrl(paramsFromUrl)
   }
 
+  urlParamsToState = () => {
+    const paramsFromUrl = getParamsFromUrl();
+    this.props.syncStateFromUrl(paramsFromUrl)
+  };
+
   stateParamsToUrl = () => {
-    const paramsFromUrl = getParamsFromUrl()
-    let paramsFromState = {...this.props.params}
+    const paramsFromUrl = getParamsFromUrl();
+    let paramsFromState = {...this.props.params};
 
     if (JSON.stringify(paramsFromUrl) !== JSON.stringify(paramsFromState)) {
       if (paramsFromState.page === 1) {
@@ -39,11 +39,11 @@ class App extends React.Component {
           return acc
         }, {})
       }
-      const params = queryString.stringify(paramsFromState, {arrayFormat: 'comma'})
-      const url = params ? `/?${params}` : '/'
+      const params = queryString.stringify(paramsFromState, {arrayFormat: 'comma'});
+      const url = params ? `/?${params}` : '/';
       window.history.pushState({}, '', url)
-    } 
-  }
+    }
+  };
 
   render() {
     return (
@@ -56,16 +56,16 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { params } = state.filters
+  const { params } = state.filters;
   return {
     params
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     syncStateFromUrl: (params) => dispatch({type: 'SYNC_STATE_FROM_URL', payload: {params} }),
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -6,9 +6,9 @@ import ProductItem from 'csssr-school-product-card'
 import logRender from '../../hoc/logRender/logRender'
 import priceWithSpaces from '../../utils/priceWithSpaces'
 
-const ratingStarStyles = { display: 'inline-block', marginRight: 6 }
+const ratingStarStyles = { display: 'inline-block', marginRight: 6 };
 
-const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyles}>&#9733;</div> : <div style={ratingStarStyles}>&#9734;</div>
+const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyles}>&#9733;</div> : <div style={ratingStarStyles}>&#9734;</div>;
 
 class ProductList extends React.PureComponent {
   render() {
@@ -34,7 +34,11 @@ class ProductList extends React.PureComponent {
           })
           }
         </ul>
-        <Pagination pagination={this.props.pagination} handleClick={this.props.handlePaginationClick} />
+        <Pagination
+          paginationLength={this.props.paginationLength}
+          urlParams={this.props.urlParams}
+          handleClick={this.props.handlePaginationClick}
+        />
       </div>
     )
   }

@@ -9,7 +9,7 @@ const app = (
   <Provider store={store}>
     <App />
   </Provider>
-)
+);
 
 ReactDOM.render(app, document.getElementById('root')
 );
