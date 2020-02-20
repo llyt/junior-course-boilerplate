@@ -3,27 +3,28 @@ import './index.css'
 import { SidebarContainer } from './containers/SidebarContainer'
 import { ProductListContainer } from './containers/ProductListContainer'
 import { getParamsFromUrl } from './utils/getParamsFromUrl'
+import { getParamsFromState } from './store/modules/sidebar'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
 
 class App extends React.Component {
 
   componentDidMount() {
-    this.urlParamsToState();
-    window.addEventListener('popstate', this.urlParamsToState)
+    this.initStoreState();
+    window.addEventListener('popstate', this.initStoreState)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('popstate', this.urlParamsToState)
+    window.removeEventListener('popstate', this.initStoreState)
   }
 
   componentDidUpdate() {
     this.stateParamsToUrl()
   }
 
-  urlParamsToState = () => {
+  initStoreState = () => {
     const paramsFromUrl = getParamsFromUrl();
-    this.props.syncStateFromUrl(paramsFromUrl)
+    this.props.pushToStoreParamsFromUrl(paramsFromUrl)
   };
 
   stateParamsToUrl = () => {
@@ -31,7 +32,7 @@ class App extends React.Component {
     let paramsFromState = {...this.props.params};
 
     if (JSON.stringify(paramsFromUrl) !== JSON.stringify(paramsFromState)) {
-      if (paramsFromState.page === 1) {
+      if (paramsFromState.page === '1') {
         paramsFromState = Object.keys(paramsFromState).reduce((acc, param) => {
           if (param !== 'page') {
             acc[param] = paramsFromState[param]
@@ -39,8 +40,10 @@ class App extends React.Component {
           return acc
         }, {})
       }
+
       const params = queryString.stringify(paramsFromState, {arrayFormat: 'comma'});
       const url = params ? `/?${params}` : '/';
+
       window.history.pushState({}, '', url)
     }
   };
@@ -55,16 +58,14 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { params } = state.filters;
-  return {
-    params
+const mapStateToProps = (state) => ({
+    params: getParamsFromState(state)
   }
-};
+);
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    syncStateFromUrl: (params) => dispatch({type: 'SYNC_STATE_FROM_URL', payload: {params} }),
+    pushToStoreParamsFromUrl: (params) => dispatch({type: 'INIT_STORE_STATE', payload: {params} }),
   }
 };
 

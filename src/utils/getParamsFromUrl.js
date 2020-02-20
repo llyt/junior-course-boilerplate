@@ -1,8 +1,8 @@
 import queryString from 'query-string'
 
 export const getParamsFromUrl = () => {
-  const params = queryString.parse(window.location.search, { arrayFormat: 'comma' })
-  const categoriesFromParams = params.category
+  const params = queryString.parse(window.location.search, { arrayFormat: 'comma' });
+  const categoriesFromParams = params.category;
 
   if (typeof categoriesFromParams === 'string') {
     params.category = [categoriesFromParams]
@@ -13,8 +13,11 @@ export const getParamsFromUrl = () => {
   }
 
   if (!params.page) {
-    params.page = 1
+    params.page = '1'
   }
 
-  return params
-}
+  return {
+    category: params.category,
+    page: params.page
+  }
+};

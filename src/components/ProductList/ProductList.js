@@ -11,6 +11,13 @@ const ratingStarStyles = { display: 'inline-block', marginRight: 6 };
 const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyles}>&#9733;</div> : <div style={ratingStarStyles}>&#9734;</div>;
 
 class ProductList extends React.PureComponent {
+
+  handlePaginationClick = (event) => {
+    event.preventDefault();
+    const nextNumberOfPage = event.target.innerHTML;
+    this.props.paginationClick(nextNumberOfPage)
+  };
+
   render() {
     return (
       <div className={styles.ProductList}>
@@ -35,9 +42,8 @@ class ProductList extends React.PureComponent {
           }
         </ul>
         <Pagination
-          paginationLength={this.props.paginationLength}
-          urlParams={this.props.urlParams}
-          handleClick={this.props.handlePaginationClick}
+          pagination={this.props.pagination}
+          handleClick={this.handlePaginationClick}
         />
       </div>
     )

@@ -19,8 +19,8 @@ a:hover {
   border-color: #7e8fa4;
 }
 
-.prevPage,
-.nextPage {
+.prevLink,
+.nextLink {
   margin: 0 16px;
 }
 
