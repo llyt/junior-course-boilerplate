@@ -44,25 +44,11 @@ export default (state = initialState, action) => {
 
     case 'PAGINATION_CLICK':
       const { nextNumberOfPage } = action.payload;
-      const { page } = state.params;
-      const currentPage = parseInt(page);
-      let nextCurrentPage;
-
-      if (typeof parseInt(nextNumberOfPage) === 'number') {
-        nextCurrentPage = parseInt(nextNumberOfPage)
-      }
-      if (nextNumberOfPage === 'Назад') {
-        nextCurrentPage = currentPage - 1
-      }
-      if (nextNumberOfPage === 'Вперед') {
-        nextCurrentPage = currentPage + 1
-      }
-
       return {
         ...state,
         params: {
           ...state.params,
-          page: `${nextCurrentPage}`
+          page: nextNumberOfPage
         }
       };
 
@@ -98,10 +84,10 @@ export const getListOfCategories = (state) => {
   return unSortedList.sort((a, b) => (a.name > b.name ? 1 : -1) || 0)
 };
 
-export const getActiveCategories = (state) => state.filters.params.category;
+export const getActiveCategories = (state) => state.filters.params.category
 
-export const getMinPrice = (state) => state.filters.minPrice;
-export const getMaxPrice = (state) => state.filters.maxPrice;
-export const getDiscount = (state) => state.filters.discount;
+export const getMinPrice = (state) => state.filters.minPrice
+export const getMaxPrice = (state) => state.filters.maxPrice
+export const getDiscount = (state) => state.filters.discount
 
-export const getParamsFromState = (state) => state.filters.params;
+export const getParamsFromState = (state) => state.filters.params

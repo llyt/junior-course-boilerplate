@@ -10,7 +10,7 @@ import queryString from 'query-string'
 class App extends React.Component {
 
   componentDidMount() {
-    this.initStoreState();
+    this.initStoreState()
     window.addEventListener('popstate', this.initStoreState)
   }
 
@@ -23,13 +23,13 @@ class App extends React.Component {
   }
 
   initStoreState = () => {
-    const paramsFromUrl = getParamsFromUrl();
+    const paramsFromUrl = getParamsFromUrl()
     this.props.pushToStoreParamsFromUrl(paramsFromUrl)
-  };
+  }
 
   stateParamsToUrl = () => {
-    const paramsFromUrl = getParamsFromUrl();
-    let paramsFromState = {...this.props.params};
+    const paramsFromUrl = getParamsFromUrl()
+    let paramsFromState = {...this.props.params}
 
     if (JSON.stringify(paramsFromUrl) !== JSON.stringify(paramsFromState)) {
       if (paramsFromState.page === '1') {
@@ -41,8 +41,8 @@ class App extends React.Component {
         }, {})
       }
 
-      const params = queryString.stringify(paramsFromState, {arrayFormat: 'comma'});
-      const url = params ? `/?${params}` : '/';
+      const params = queryString.stringify(paramsFromState, {arrayFormat: 'comma'})
+      const url = params ? `/?${params}` : '/'
 
       window.history.pushState({}, '', url)
     }
@@ -61,12 +61,12 @@ class App extends React.Component {
 const mapStateToProps = (state) => ({
     params: getParamsFromState(state)
   }
-);
+)
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+const mapDispatchToProps = (dispatch) => (
+  {
     pushToStoreParamsFromUrl: (params) => dispatch({type: 'INIT_STORE_STATE', payload: {params} }),
   }
-};
+)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

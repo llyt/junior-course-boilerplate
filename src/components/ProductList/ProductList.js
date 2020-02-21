@@ -5,25 +5,29 @@ import Pagination from '../UI/Pagination/Pagination'
 import ProductItem from 'csssr-school-product-card'
 import logRender from '../../hoc/logRender/logRender'
 import priceWithSpaces from '../../utils/priceWithSpaces'
+import queryString from 'query-string'
 
-const ratingStarStyles = { display: 'inline-block', marginRight: 6 };
+const ratingStarStyles = { display: 'inline-block', marginRight: 6 }
 
-const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyles}>&#9733;</div> : <div style={ratingStarStyles}>&#9734;</div>;
+const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyles}>&#9733;</div> : <div style={ratingStarStyles}>&#9734;</div>
 
 class ProductList extends React.PureComponent {
 
   handlePaginationClick = (event) => {
-    event.preventDefault();
-    const nextNumberOfPage = event.target.innerHTML;
+    event.preventDefault()
+    const nextNumberOfPage = queryString.parse(event.target.search, { arrayFormat: 'comma' }).page
     this.props.paginationClick(nextNumberOfPage)
-  };
+  }
 
   render() {
+    const {list, params} = this.props
+    const {page} = params
+
     return (
       <div className={styles.ProductList}>
         <Title level="1">Список товаров</Title>
         <ul>
-          {this.props.list.map((item, index) => {
+          {(list[page - 1] || []).map((item, index) => {
             return (
               <li key={index}>
                 <ProductItem
@@ -43,6 +47,7 @@ class ProductList extends React.PureComponent {
         </ul>
         <Pagination
           pagination={this.props.pagination}
+          stateParams={this.props.params}
           handleClick={this.handlePaginationClick}
         />
       </div>
