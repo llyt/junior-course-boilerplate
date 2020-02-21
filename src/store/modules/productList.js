@@ -18,7 +18,6 @@ export default (state = initialState, action) => {
 
 // Selectors
 
-// Product List
 export const getPaginatedProductList = (state) => {
   const { perPage } = state.products
 
@@ -45,23 +44,19 @@ export const getPaginatedProductList = (state) => {
   return splitEvery(perPage, filteredProducts)
 }
 
-// Pagination
 export const makePagination = (state) => {
-  const {category, page} = state.filters.params
-  const currentPage = parseInt(page)
+  const {params} = state.filters
   const paginationLength = getPaginatedProductList(state).length
   const paginationSource = []
 
   for (let i = 0; i < paginationLength; i += 1) {
     const newParams = {
-      category,
+      ...params,
       page: i + 1
     }
     const url = queryString.stringify(newParams, {arrayFormat: 'comma'});
-    const cls = currentPage === i + 1 ? 'active' : null
-    paginationSource.push([i + 1, `/?${url}`, cls])
+    paginationSource.push([i + 1, `/?${url}`])
   }
-
 
   return paginationSource.length > 1 ? paginationSource : []
 }

@@ -26,7 +26,6 @@ class Pagination extends React.PureComponent {
 
     return (
       <div className={styles.Pagination}>
-
         {page !== '1' ? this.makeNavLink('Назад', stateParams, handleClick) : null}
 
         {pagination.map(([body, url], index) => {
@@ -37,7 +36,6 @@ class Pagination extends React.PureComponent {
         })}
 
         {page < pagination.length ? this.makeNavLink('Вперед', stateParams, handleClick) : null}
-
       </div>
     )
   }
