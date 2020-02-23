@@ -15,6 +15,18 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case 'INIT_STORE_STATE':
+      const { category } = action.payload.params;
+      const pageFromUrl = action.payload.params.page;
+
+      return {
+        ...state,
+        params: {
+          category,
+          page: pageFromUrl
+        }
+      }
+
     case 'INPUT_CHANGE':
       return {
         ...state,
@@ -55,18 +67,6 @@ export default (state = initialState, action) => {
     case 'RESET_FILTERS':
       return {
         ...initialState
-      };
-
-    case 'INIT_STORE_STATE':
-      const { category } = action.payload.params;
-      const pageFromUrl = action.payload.params.page;
-
-      return {
-        ...state,
-        params: {
-          category,
-          page: pageFromUrl
-        }
       };
 
     default:

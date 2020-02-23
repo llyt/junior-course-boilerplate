@@ -14,12 +14,12 @@ class App extends React.Component {
     window.addEventListener('popstate', this.initStoreState)
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('popstate', this.initStoreState)
-  }
-
   componentDidUpdate() {
     this.stateParamsToUrl()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('popstate', this.initStoreState)
   }
 
   initStoreState = () => {
@@ -58,7 +58,8 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => (
+  {
     params: getParamsFromState(state)
   }
 )
