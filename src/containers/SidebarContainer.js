@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Sidebar from '../components/Sidebar/Sidebar'
-import { 
+import {
   getListOfCategories,
   getActiveCategories,
   getMinPrice,
@@ -18,8 +18,8 @@ const mapStateToProps = (state) => (
   }
 )
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+const mapDispatchToProps = (dispatch) => (
+  {
     inputChange: (name, value) => dispatch({ type: 'INPUT_CHANGE', payload: { name, value } }),
     handleCategoryFilter: (event) => {
       const categoryName = event.target.innerHTML
@@ -27,5 +27,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     handleReset: () => dispatch({ type: 'RESET_FILTERS' })
   }
-}
+)
+
 export const SidebarContainer = connect(mapStateToProps, mapDispatchToProps)(Sidebar)

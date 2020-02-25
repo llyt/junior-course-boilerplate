@@ -19,8 +19,7 @@ a:hover {
   border-color: #7e8fa4;
 }
 
-.prevPage,
-.nextPage {
+.navLink {
   margin: 0 16px;
 }
 

@@ -2,80 +2,51 @@ import React from 'react'
 import './index.css'
 import { SidebarContainer } from './containers/SidebarContainer'
 import { ProductListContainer } from './containers/ProductListContainer'
+import { getParamsFromUrl } from './utils/getParamsFromUrl'
+import { getParamsFromState } from './store/modules/sidebar'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
-
-export const getParamsFromUrl = () => {
-  const params = queryString.parse(window.location.search, { arrayFormat: 'comma' })
-  const categoriesFromParams = params.category
-
-  if (typeof categoriesFromParams === 'string') {
-    params.category = [categoriesFromParams]
-  }
-
-  return params
-}
 
 class App extends React.Component {
 
   componentDidMount() {
-    this.checkUrl()
-    window.addEventListener('popstate', this.checkUrl)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('popstate', this.checkUrl)
+    this.initStoreState()
+    window.addEventListener('popstate', this.initStoreState)
   }
 
   componentDidUpdate() {
-    this.pushStateToBrowser()
+    this.stateParamsToUrl()
   }
 
-  checkUrl = () => {
+  componentWillUnmount() {
+    window.removeEventListener('popstate', this.initStoreState)
+  }
+
+  initStoreState = () => {
     const paramsFromUrl = getParamsFromUrl()
-    if (!paramsFromUrl.category) {
-      paramsFromUrl['category'] = []
-    }
-
-    if (!paramsFromUrl.page) {
-      paramsFromUrl['page'] = 1
-    }
-
-    this.props.syncStateFromUrl(paramsFromUrl)
+    this.props.pushToStoreParamsFromUrl(paramsFromUrl)
   }
 
-  pushStateToBrowser = () => {
-    let params = this.props.params
-    let url = '/'
+  stateParamsToUrl = () => {
+    const paramsFromUrl = getParamsFromUrl()
+    let paramsFromState = {...this.props.params}
 
-    const isEmptyParams = (params) => {
-      let flag = true
-      params.forEach((param) => {
-        if (param.length > 0 || typeof param === 'number') {
-          flag = false
-        }
-      })
-
-      return flag
-    }
-
-    if (params.page === 1) {
-      params = {...Object.keys(params).reduce((acc, param) => {
+    if (JSON.stringify(paramsFromUrl) !== JSON.stringify(paramsFromState)) {
+      if (paramsFromState.page === '1') {
+        paramsFromState = Object.keys(paramsFromState).reduce((acc, param) => {
           if (param !== 'page') {
-            acc[param] = params[param]
+            acc[param] = paramsFromState[param]
           }
           return acc
-        }, {})}
-    }
+        }, {})
+      }
 
-    if (!isEmptyParams(Object.values(params))) {
-      const path = queryString.stringify(params, {arrayFormat: 'comma'})
-      url = `/?${path}` 
-    }
+      const params = queryString.stringify(paramsFromState, {arrayFormat: 'comma'})
+      const url = params ? `/?${params}` : '/'
 
-    window.history.pushState({}, '', url)
-    
-  }
+      window.history.pushState({}, '', url)
+    }
+  };
 
   render() {
     return (
@@ -87,17 +58,16 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { params } = state.filters
-  return {
-    params
+const mapStateToProps = (state) => (
+  {
+    params: getParamsFromState(state)
   }
-}
+)
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    syncStateFromUrl: (params) => dispatch({type: 'SYNC_STATE_FROM_URL', payload: {params} }),
+const mapDispatchToProps = (dispatch) => (
+  {
+    pushToStoreParamsFromUrl: (params) => dispatch({type: 'INIT_STORE_STATE', payload: {params} }),
   }
-}
+)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
