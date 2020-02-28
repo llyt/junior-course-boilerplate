@@ -3,8 +3,8 @@
   text-align: center;
 }
 
-a,
-span {
+.Pagination a,
+.Pagination span {
   border: 1px solid #c5cfde;
   padding: 8px 15px;
   box-sizing: border-box;
@@ -13,17 +13,17 @@ span {
   margin: 0 1px;
 }
 
-a:hover {
+.Pagination a:hover {
   background-color: #7e8fa4;
   color: #ffffff;
   border-color: #7e8fa4;
 }
 
-.navLink {
+.Pagination .navLink {
   margin: 0 16px;
 }
 
-.active {
+.Pagination .active {
   background-color: #5695ed;
   color: #ffffff;
   border-color: #5695ed;

@@ -5,7 +5,7 @@ import Pagination from '../UI/Pagination/Pagination'
 import ProductItem from 'csssr-school-product-card'
 import logRender from '../../hoc/logRender/logRender'
 import priceWithSpaces from '../../utils/priceWithSpaces'
-import queryString from 'query-string'
+import { NavLink } from 'react-router-dom'
 
 const ratingStarStyles = { display: 'inline-block', marginRight: 6 }
 
@@ -13,15 +13,9 @@ const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyle
 
 class ProductList extends React.PureComponent {
 
-  handlePaginationClick = (event) => {
-    event.preventDefault()
-    const nextNumberOfPage = queryString.parse(event.target.search, { arrayFormat: 'comma' }).page
-    this.props.paginationClick(nextNumberOfPage)
-  }
-
   render() {
     const {list, params} = this.props
-    const {page} = params
+    const page = params.page || '1'
 
     return (
       <div className={styles.ProductList}>
@@ -29,18 +23,20 @@ class ProductList extends React.PureComponent {
         <ul>
           {(list[page - 1] || []).map((item, index) => {
             return (
-              <li key={index}>
-                <ProductItem
-                  isInStock={item.isInStock}
-                  img={item.img}
-                  title={item.title}
-                  price={priceWithSpaces(item.price)}
-                  subPriceContent={priceWithSpaces(item.subPriceContent)}
-                  maxRating={item.maxRating}
-                  rating={item.rating}
-                  ratingComponent={ratingComponent}
-                />
-              </li>
+              <NavLink key={index} to={`/product/${item.id}`}>
+                <li>
+                  <ProductItem
+                    isInStock={item.isInStock}
+                    img={item.img}
+                    title={item.title}
+                    price={priceWithSpaces(item.price)}
+                    subPriceContent={priceWithSpaces(item.subPriceContent)}
+                    maxRating={item.maxRating}
+                    rating={item.rating}
+                    ratingComponent={ratingComponent}
+                  />
+                </li>
+              </NavLink>
             )
           })
           }
@@ -48,7 +44,6 @@ class ProductList extends React.PureComponent {
         <Pagination
           pagination={this.props.pagination}
           stateParams={this.props.params}
-          handleClick={this.handlePaginationClick}
         />
       </div>
     )

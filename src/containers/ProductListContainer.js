@@ -11,10 +11,5 @@ const mapStateToProps = (state) => (
   }
 )
 
-const mapDispatchToProps = (dispatch) => (
-  {
-    paginationClick: (nextNumberOfPage) => dispatch({ type: 'PAGINATION_CLICK', payload: { nextNumberOfPage } })
-  }
-)
 
-export const ProductListContainer = connect(mapStateToProps, mapDispatchToProps)(ProductList)
+export const ProductListContainer = connect(mapStateToProps)(ProductList)

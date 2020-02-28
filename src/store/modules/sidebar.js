@@ -1,73 +1,30 @@
 import { maxBy } from 'csssr-school-utils'
 import dataJSON from '../../products'
+import queryString from 'query-string'
+
+const getListOfCategories = (data) => {
+  const allCategoriesSet = new Set(data.map(({ category }) => category));
+  const unSortedList = [...allCategoriesSet];
+
+  return unSortedList.sort((a, b) => (a.name > b.name ? 1 : -1) || 0)
+}
 
 const initialState = {
-  params: {
-    category: [],
-    page: '1'
-  },
+  allCategories: getListOfCategories(dataJSON),
   minPrice: 0,
   maxPrice: maxBy(product => product.price, dataJSON).price,
   discount: 0
-};
+}
 
 // Reducer
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'INIT_STORE_STATE':
-      const { category } = action.payload.params;
-      const pageFromUrl = action.payload.params.page;
-
-      return {
-        ...state,
-        params: {
-          category,
-          page: pageFromUrl
-        }
-      }
-
     case 'INPUT_CHANGE':
       return {
         ...state,
         [action.payload.name]: action.payload.value
-      };
-
-    case 'CATEGORY_FILTER':
-      const categoryName = action.payload.categoryName;
-
-      const currentCategories = state.params.category;
-
-      let newCategories = [];
-
-      if (currentCategories.includes(categoryName)) {
-        newCategories = currentCategories.filter((category) => category !== categoryName)
-      } else {
-        newCategories = [...currentCategories, categoryName]
       }
-
-      return {
-        ...state,
-        params: {
-          category: newCategories,
-          page: '1'
-        }
-      };
-
-    case 'PAGINATION_CLICK':
-      const { nextNumberOfPage } = action.payload;
-      return {
-        ...state,
-        params: {
-          ...state.params,
-          page: nextNumberOfPage
-        }
-      };
-
-    case 'RESET_FILTERS':
-      return {
-        ...initialState
-      };
 
     default:
       return state
@@ -76,18 +33,50 @@ export default (state = initialState, action) => {
 
 // Selectors
 
-export const getListOfCategories = (state) => {
-  const { data } = state.products;
-  const allCategoriesSet = new Set(data.map(({ category }) => category));
-  const unSortedList = [...allCategoriesSet];
 
-  return unSortedList.sort((a, b) => (a.name > b.name ? 1 : -1) || 0)
-};
+export const getListOfSidebarCategories = (state) => {
+  const { allCategories } = state.filters
+  const urlParams = state.router.location.query
+  const urlParamsCategories = urlParams.category ? urlParams.category.split(',') : []
 
-export const getActiveCategories = (state) => state.filters.params.category
+  const makeUrl = (prevParams, categoryName) => {
+    const prevCategories = prevParams.category ? prevParams.category.split(',') : []
+    let newParams = {}
+    if (prevCategories && prevCategories.includes(categoryName)) {
+      const newCategories = prevCategories.filter((category) => category !== categoryName).join(',')
+      if (newCategories !== '') {
+        newParams = {
+          ...prevParams,
+          category: newCategories,
+        }
+      }
+    } else {
+      const newCategories = [...prevCategories, categoryName].join(',')
+      newParams = {
+        ...prevParams,
+        category: newCategories,
+      }
+    }
+    const newParamsToString = queryString.stringify({...newParams}, {arrayFormat: 'comma'})
+
+    return decodeURIComponent(newParamsToString === '' ? '/' : `/?${newParamsToString}`)
+  }
+
+  const sidebarCategories = allCategories.map((categoryName) => {
+    const active = urlParamsCategories.includes(categoryName)
+    const url = makeUrl(urlParams, categoryName)
+    return [categoryName, url, active]
+  })
+
+  return sidebarCategories
+}
 
 export const getMinPrice = (state) => state.filters.minPrice
 export const getMaxPrice = (state) => state.filters.maxPrice
 export const getDiscount = (state) => state.filters.discount
 
-export const getParamsFromState = (state) => state.filters.params
+export const getParamsFromState = (state) => {
+  const params = state.router.location.query
+
+  return params
+}

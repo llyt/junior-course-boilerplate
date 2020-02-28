@@ -1,6 +1,6 @@
 import dataJSON from '../../products'
 import { splitEvery } from 'csssr-school-utils'
-import queryString from 'query-string';
+import queryString from 'query-string'
 
 const initialState = {
   data: dataJSON,
@@ -24,8 +24,9 @@ export const getPaginatedProductList = (state) => {
   const getProductsList = (state) => {
     const { products, filters } = state
     const { data } = products
-    const { params, minPrice, maxPrice, discount } = filters
-    const activeCategories = params.category
+    const { minPrice, maxPrice, discount } = filters
+    const params = state.router.location.query
+    const activeCategories = params.category ? params.category.split(',') : null
 
     let resultProducts = data
 
@@ -45,7 +46,7 @@ export const getPaginatedProductList = (state) => {
 }
 
 export const makePagination = (state) => {
-  const {params} = state.filters
+  const params = state.router.location.query
   const paginationLength = getPaginatedProductList(state).length
   const paginationSource = []
 
@@ -54,7 +55,7 @@ export const makePagination = (state) => {
       ...params,
       page: i + 1
     }
-    const url = queryString.stringify(newParams, {arrayFormat: 'comma'});
+    const url = decodeURIComponent(queryString.stringify(newParams, {arrayFormat: 'comma'}))
     paginationSource.push([i + 1, `/?${url}`])
   }
 
