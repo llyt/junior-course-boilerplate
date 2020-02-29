@@ -1,5 +1,6 @@
 import { maxBy } from 'csssr-school-utils'
 import dataJSON from '../../products'
+import removeObjProperty from '../../utils/removeObjProperty'
 import queryString from 'query-string'
 
 const getListOfCategories = (data) => {
@@ -62,7 +63,8 @@ export const getListOfSidebarCategories = (state) => {
         category: newCategories,
       }
     }
-    const newParamsToString = queryString.stringify({...newParams}, {arrayFormat: 'comma'})
+    const paramsNoPage = removeObjProperty(newParams, 'page')
+    const newParamsToString = queryString.stringify({...paramsNoPage}, {arrayFormat: 'comma'})
 
     return decodeURIComponent(newParamsToString === '' ? '/' : `/?${newParamsToString}`)
   }

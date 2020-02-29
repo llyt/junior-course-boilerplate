@@ -23,8 +23,8 @@ const ProductPage = (props) => {
     <div className={styles.ProductPage}>
       <div className={styles.ProductPageHeader}>
         {props.history.action === 'POP'
-          ? (<NavLink className={styles.BackToHomePage} to={'/'} title='Вернуться назад'>&#8592;</NavLink>)
-          : (<NavLink href='/' className={styles.BackToHomePage} onClick={goToHomePageHandle}>&#8592;</NavLink>)
+          ? (<NavLink className={styles.BackToHomePage} to='/' title='Перейти в каталог' >&#8592;</NavLink>)
+          : (<NavLink className={styles.BackToHomePage} to='/' title='Вернуться назад' onClick={goToHomePageHandle}>&#8592;</NavLink>)
         }
         <h1>{product.title}</h1>
       </div>

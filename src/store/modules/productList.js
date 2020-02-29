@@ -1,4 +1,5 @@
 import dataJSON from '../../products'
+import removeObjProperty from '../../utils/removeObjProperty'
 import { splitEvery } from 'csssr-school-utils'
 import queryString from 'query-string'
 
@@ -51,10 +52,15 @@ export const makePagination = (state) => {
   const paginationSource = []
 
   for (let i = 0; i < paginationLength; i += 1) {
-    const newParams = {
+    let newParams = {
       ...params,
       page: i + 1
     }
+
+    if (newParams.page === 1) {
+      newParams = removeObjProperty(newParams, 'page')
+    }
+
     const url = decodeURIComponent(queryString.stringify(newParams, {arrayFormat: 'comma'}))
     paginationSource.push([i + 1, `/?${url}`])
   }
