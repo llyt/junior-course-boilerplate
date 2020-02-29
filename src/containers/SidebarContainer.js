@@ -19,6 +19,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => (
   {
     inputChange: (name, value) => dispatch({ type: 'INPUT_CHANGE', payload: { name, value } }),
+    resetInputs: () => dispatch( { type: 'RESET_INPUTS' })
   }
 )
 

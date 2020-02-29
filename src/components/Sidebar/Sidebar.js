@@ -47,6 +47,7 @@ class Sidebar extends React.PureComponent {
         <NavLink
           className={styles.ResetButton}
           to='/'
+          onClick={() => this.props.resetInputs()}
         >
           Сбросить фильтры
         </NavLink>

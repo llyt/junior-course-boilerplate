@@ -26,6 +26,11 @@ export default (state = initialState, action) => {
         [action.payload.name]: action.payload.value
       }
 
+    case 'RESET_INPUTS':
+      return {
+        ...initialState
+      }
+
     default:
       return state
   }
