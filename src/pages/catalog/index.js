@@ -6,7 +6,7 @@ import { ProductListContainer } from '../../containers/ProductListContainer'
 class Catalog extends React.PureComponent {
   render() {
     return (
-      <div className={styles.ProductPage}>
+      <div className={styles.Catalog}>
         <SidebarContainer />
         <ProductListContainer />
       </div>
