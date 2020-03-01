@@ -1,14 +1,30 @@
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware} from 'redux'
 import sidebarReducer from './modules/sidebar'
 import productListReducer from './modules/productList'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
+import { createBrowserHistory } from 'history'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
-const reducers = combineReducers({
+const history = createBrowserHistory()
+
+const createRootReducer = (history) => combineReducers({
+  router: connectRouter(history),
   filters: sidebarReducer,
   products: productListReducer,
 })
 
-const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+const configureStore = (preloaderState) => {
+  const store = createStore(
+    createRootReducer(history),
+    preloaderState,
+    composeWithDevTools(
+      applyMiddleware(
+        routerMiddleware(history)
+      )
+    )
+  )
 
-const store = createStore(reducers, devTools)
+  return store
+}
 
-export { store }
+export { configureStore, history }

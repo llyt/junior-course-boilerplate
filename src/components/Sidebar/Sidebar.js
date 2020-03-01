@@ -6,6 +6,7 @@ import DiscountForm from 'csssr-school-input-discount'
 import CategoryFilter from '../UI/CategoryFilter/CategoryFilter'
 import withValidateNumber from '../../hoc/withValidateNumber/withValidateNumber'
 import logRender from '../../hoc/logRender/logRender'
+import { NavLink } from 'react-router-dom'
 
 const DiscountHOC = withValidateNumber(logRender(DiscountForm))
 
@@ -41,16 +42,15 @@ class Sidebar extends React.PureComponent {
         <CategoryFilter
           title="Категории"
           listOfCategories={this.props.listOfCategories}
-          categories={this.props.activeCategories}
-          handleCategoryFilter={this.props.handleCategoryFilter}
         />
 
-        <button
-          type="button"
+        <NavLink
           className={styles.ResetButton}
-          onClick={this.props.handleReset}>
+          to='/'
+          onClick={() => this.props.resetInputs()}
+        >
           Сбросить фильтры
-        </button>
+        </NavLink>
       </div>
     )
   }

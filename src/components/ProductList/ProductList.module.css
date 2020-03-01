@@ -12,3 +12,13 @@
   display: inline-block;
   margin: 0 15px 45px;
 }
+
+.ProductList a {
+  display: inline-block;
+  border: none;
+  padding: 10px 0 0;
+}
+
+.ProductList a:hover {
+  background-color: #d8d8d8;
+}
