@@ -11,7 +11,7 @@ const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyle
 
 const ProductPage = (props) => {
 
-  const goToHomePageHandle = (event) => {
+  const goToHomeWithHistory = (event) => {
     event.preventDefault()
     props.history.goBack()
   }
@@ -24,7 +24,7 @@ const ProductPage = (props) => {
       <div className={styles.ProductPageHeader}>
         {props.history.action === 'POP'
           ? (<NavLink className={styles.BackToHomePage} to='/' title='Перейти в каталог' >&#8592;</NavLink>)
-          : (<NavLink className={styles.BackToHomePage} to='/' title='Вернуться назад' onClick={goToHomePageHandle}>&#8592;</NavLink>)
+          : (<NavLink className={styles.BackToHomePage} to='/' title='Вернуться назад' onClick={goToHomeWithHistory}>&#8592;</NavLink>)
         }
         <h1>{product.title}</h1>
       </div>
