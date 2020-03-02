@@ -5,7 +5,8 @@ import queryString from 'query-string'
 
 const initialState = {
   data: dataJSON,
-  perPage: 6
+  perPage: 6,
+  isLoading: false
 }
 
 // Reducer
@@ -67,3 +68,5 @@ export const makePagination = (state) => {
 
   return paginationSource.length > 1 ? paginationSource : []
 }
+
+export const getLoadingState = (state) => state.products.isLoading
