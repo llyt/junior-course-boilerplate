@@ -22,18 +22,18 @@ class ProductList extends React.PureComponent {
         <Title level="1">Список товаров</Title>
         { list.length !== 0
           ? <ul>
-              {(list[page - 1]).map((item, index) => {
+              {(list[page - 1]).map((item) => {
                 return (
-                  <NavLink key={index} to={`/product/${item.id}`}>
+                  <NavLink key={item.id} to={`/product/${item.id}`}>
                     <li>
                       <ProductItem
-                        isInStock={item.isInStock}
-                        img={item.img}
-                        title={item.title}
+                        isInStock={item.status === 'IN_STOCK'}
+                        img={`../img${item.img}`}
+                        title={item.name}
                         price={priceWithSpaces(item.price)}
-                        subPriceContent={priceWithSpaces(item.subPriceContent)}
-                        maxRating={item.maxRating}
-                        rating={item.rating}
+                        subPriceContent={priceWithSpaces(item.price)}
+                        maxRating={5}
+                        rating={item.stars}
                         ratingComponent={ratingComponent}
                       />
                     </li>

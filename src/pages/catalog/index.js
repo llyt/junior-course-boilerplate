@@ -1,22 +1,54 @@
 import React from 'react'
 import styles from './Catalog.module.css'
 import {
-  getPaginatedProductList,
-  makePagination,
-  getLoadingState
-} from '../../store/modules/productList'
-import {
   getDiscount,
   getListOfSidebarCategories,
   getMaxPrice,
   getMinPrice,
-  getParamsFromState
-} from '../../store/modules/sidebar'
+  getParamsFromState,
+  getPaginatedProductList,
+  makePagination,
+  getLoadingState,
+  getError
+} from '../../store/modules/catalog/index'
 import { connect } from 'react-redux'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
+import Loader from '../../components/UI/Loader/Loader'
+
+const API_URL = 'https://course-api.csssr.school/products'
 
 class Catalog extends React.PureComponent {
+
+  componentDidMount = () => {
+    if (this.props.productList.list.length === 0) {
+      this.props.changeLoaderStatus()
+      // SetTimeout exist only for showing delay data fetching
+      setTimeout(() => {
+        fetch(API_URL)
+          .then(response => {
+            console.log(response)
+            if (response.ok) {
+              return response.json()
+            } else {
+              throw new Error(`Ошибка ${response.status}`)
+            }
+          })
+          .then(data => {
+            if (data.result === 'OK') {
+              this.props.fetchProducts(data.products)
+            } else {
+              throw new Error(data.message)
+            }
+            this.props.changeLoaderStatus()
+          })
+          .catch(error => {
+            this.props.catchError(error.message)
+            this.props.changeLoaderStatus()
+          })
+      }, 800)
+    }
+  }
 
   renderSidebar = () => {
     const { listOfCategories, minPrice, maxPrice, discount } = this.props.sidebar
@@ -47,15 +79,17 @@ class Catalog extends React.PureComponent {
   }
 
   render() {
+    if (this.props.error) {
+      return <div className={styles.Error}>{this.props.error}</div>
+    }
     return (
       this.props.isLoading
-        ? <div className={styles.isLoading}>
-            <div />
-            <div />
-          </div>
+        ? <Loader />
         : <div className={styles.Catalog}>
-            {this.renderSidebar()}
-            {this.renderProductList()}
+            { this.props.productList.list.length !== 0
+              ? this.renderSidebar()
+              : null }
+            { this.renderProductList() }
           </div>
 
     )
@@ -64,6 +98,8 @@ class Catalog extends React.PureComponent {
 
 const mapStateToProps = (state) => (
   {
+    isLoading: getLoadingState(state),
+    error: getError(state),
     sidebar: {
       listOfCategories: getListOfSidebarCategories(state),
       minPrice: getMinPrice(state),
@@ -74,13 +110,15 @@ const mapStateToProps = (state) => (
       list: getPaginatedProductList(state),
       pagination: makePagination(state),
       params: getParamsFromState(state),
-    },
-    isLoading: getLoadingState(state)
+    }
   }
 )
 
 const mapDispatchToProps = (dispatch) => (
   {
+    fetchProducts: (data) => dispatch({ type: 'FETCH_PRODUCTS', payload: { data } }),
+    changeLoaderStatus: () => dispatch( { type: 'CHANGE_LOADER_STATUS' } ),
+    catchError: (error) => dispatch( { type: 'CATCH_ERROR', payload: { error } }),
     inputChange: (name, value) => dispatch({ type: 'INPUT_CHANGE', payload: { name, value } }),
     resetInputs: () => dispatch( { type: 'RESET_INPUTS' })
   }
