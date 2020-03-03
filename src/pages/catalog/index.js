@@ -23,11 +23,11 @@ class Catalog extends React.PureComponent {
   componentDidMount = () => {
     if (this.props.productList.list.length === 0) {
       this.props.changeLoaderStatus(true)
-      // SetTimeout exist only for showing delay data fetching
-      setTimeout(() => {
+
+      // setTimeout exist only for showing delay data fetching
+      this.demoInterval = setTimeout(() => {
         fetch(API_URL)
           .then(response => {
-            console.log(response)
             if (response.ok) {
               return response.json()
             } else {
@@ -47,7 +47,12 @@ class Catalog extends React.PureComponent {
             this.props.changeLoaderStatus(false)
           })
       }, 800)
+
     }
+  }
+
+  componentWillUnmount = () => {
+    clearTimeout(this.demoInterval)
   }
 
   renderSidebar = () => {
