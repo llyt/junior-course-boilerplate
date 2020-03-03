@@ -33,7 +33,7 @@ const mainReducer = (state = initialState, action) => {
     case 'CHANGE_LOADER_STATUS':
       return {
         ...state,
-        isLoading: !state.isLoading
+        isLoading: action.payload.status
       }
 
     case 'CATCH_ERROR':

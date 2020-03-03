@@ -22,7 +22,7 @@ class Catalog extends React.PureComponent {
 
   componentDidMount = () => {
     if (this.props.productList.list.length === 0) {
-      this.props.changeLoaderStatus()
+      this.props.changeLoaderStatus(true)
       // SetTimeout exist only for showing delay data fetching
       setTimeout(() => {
         fetch(API_URL)
@@ -40,11 +40,11 @@ class Catalog extends React.PureComponent {
             } else {
               throw new Error(data.message)
             }
-            this.props.changeLoaderStatus()
+            this.props.changeLoaderStatus(false)
           })
           .catch(error => {
             this.props.catchError(error.message)
-            this.props.changeLoaderStatus()
+            this.props.changeLoaderStatus(false)
           })
       }, 800)
     }
@@ -117,7 +117,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => (
   {
     fetchProducts: (data) => dispatch({ type: 'FETCH_PRODUCTS', payload: { data } }),
-    changeLoaderStatus: () => dispatch( { type: 'CHANGE_LOADER_STATUS' } ),
+    changeLoaderStatus: (status) => dispatch( { type: 'CHANGE_LOADER_STATUS', payload: {status} } ),
     catchError: (error) => dispatch( { type: 'CATCH_ERROR', payload: { error } }),
     inputChange: (name, value) => dispatch({ type: 'INPUT_CHANGE', payload: { name, value } }),
     resetInputs: () => dispatch( { type: 'RESET_INPUTS' })
