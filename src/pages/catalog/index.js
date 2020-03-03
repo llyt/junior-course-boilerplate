@@ -55,46 +55,34 @@ class Catalog extends React.PureComponent {
     clearTimeout(this.demoInterval)
   }
 
-  renderSidebar = () => {
+  render() {
     const { listOfCategories, minPrice, maxPrice, discount } = this.props.sidebar
     const { inputChange, resetInputs } = this.props
-
-    return (
-      <Sidebar
-        listOfCategories={listOfCategories}
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        discount={discount}
-        inputChange={inputChange}
-        resetInputs={resetInputs}
-      />
-    )
-  }
-
-  renderProductList = () => {
     const { list, pagination, params } = this.props.productList
 
-    return (
-      <ProductList
-        list={list}
-        pagination={pagination}
-        params={params}
-      />
-    )
-  }
-
-  render() {
     if (this.props.error) {
       return <div className={styles.Error}>{this.props.error}</div>
     }
+
     return (
       this.props.isLoading
         ? <Loader />
         : <div className={styles.Catalog}>
             { this.props.productList.list.length !== 0
-              ? this.renderSidebar()
+              ? <Sidebar
+                listOfCategories={listOfCategories}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                discount={discount}
+                inputChange={inputChange}
+                resetInputs={resetInputs}
+              />
               : null }
-            { this.renderProductList() }
+            <ProductList
+              list={list}
+              pagination={pagination}
+              params={params}
+            />
           </div>
 
     )
