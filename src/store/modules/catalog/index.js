@@ -1,5 +1,7 @@
 import mainReducer from './reducers'
 
+import * as catalogSelectors from './selectors'
+
 export const initialState = {
   isLoading: false,
   error: null,
@@ -15,16 +17,8 @@ export const initialState = {
   }
 }
 
-export default mainReducer
-
 export {
-  getListOfSidebarCategories,
-  getMinPrice,
-  getMaxPrice,
-  getDiscount,
-  getParamsFromState,
-  getPaginatedProductList,
-  makePagination,
-  getLoadingState,
-  getError
-} from './selectors'
+  catalogSelectors
+}
+
+export default mainReducer

@@ -1,16 +1,6 @@
 import React from 'react'
 import styles from './Catalog.module.css'
-import {
-  getDiscount,
-  getListOfSidebarCategories,
-  getMaxPrice,
-  getMinPrice,
-  getParamsFromState,
-  getPaginatedProductList,
-  makePagination,
-  getLoadingState,
-  getError
-} from '../../store/modules/catalog/index'
+import { catalogSelectors } from '../../store/modules/catalog/index'
 import { connect } from 'react-redux'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
@@ -91,18 +81,18 @@ class Catalog extends React.PureComponent {
 
 const mapStateToProps = (state) => (
   {
-    isLoading: getLoadingState(state),
-    error: getError(state),
+    isLoading: catalogSelectors.getLoadingState(state),
+    error: catalogSelectors.getError(state),
     sidebar: {
-      listOfCategories: getListOfSidebarCategories(state),
-      minPrice: getMinPrice(state),
-      maxPrice: getMaxPrice(state),
-      discount: getDiscount(state),
+      listOfCategories: catalogSelectors.getListOfSidebarCategories(state),
+      minPrice: catalogSelectors.getMinPrice(state),
+      maxPrice: catalogSelectors.getMaxPrice(state),
+      discount: catalogSelectors.getDiscount(state),
     },
     productList: {
-      list: getPaginatedProductList(state),
-      pagination: makePagination(state),
-      params: getParamsFromState(state),
+      list: catalogSelectors.getPaginatedProductList(state),
+      pagination: catalogSelectors.makePagination(state),
+      params: catalogSelectors.getParamsFromState(state),
     }
   }
 )
