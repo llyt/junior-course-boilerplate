@@ -5,7 +5,7 @@ import { maxBy } from 'csssr-school-utils'
 const mainReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_PRODUCTS':
-      const products = action.payload.data
+      const products = action.payload.fetchedData
 
       if (products.length === 0) {
         return {

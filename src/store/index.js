@@ -3,6 +3,7 @@ import catalogReducer from './modules/catalog/index'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
 
 const history = createBrowserHistory()
 
@@ -17,7 +18,8 @@ const configureStore = (preloaderState) => {
     preloaderState,
     composeWithDevTools(
       applyMiddleware(
-        routerMiddleware(history)
+        routerMiddleware(history),
+        thunk
       )
     )
   )

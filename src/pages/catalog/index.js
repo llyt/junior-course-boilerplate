@@ -1,48 +1,19 @@
 import React from 'react'
 import styles from './Catalog.module.css'
-import { catalogSelectors } from '../../store/modules/catalog/index'
+import {
+  catalogSelectors,
+  catalogOperations,
+  catalogActions
+} from '../../store/modules/catalog/index'
 import { connect } from 'react-redux'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
 import Loader from '../../components/UI/Loader/Loader'
 
-const API_URL = 'https://course-api.csssr.school/products'
-
 class Catalog extends React.PureComponent {
 
   componentDidMount = () => {
-    if (this.props.productList.list.length === 0) {
-      this.props.changeLoaderStatus(true)
-
-      // setTimeout exist only for showing delay data fetching
-      this.demoInterval = setTimeout(() => {
-        fetch(API_URL)
-          .then(response => {
-            if (response.ok) {
-              return response.json()
-            } else {
-              throw new Error(`Ошибка ${response.status}`)
-            }
-          })
-          .then(data => {
-            if (data.result === 'OK') {
-              this.props.fetchProducts(data.products)
-            } else {
-              throw new Error(data.message)
-            }
-            this.props.changeLoaderStatus(false)
-          })
-          .catch(error => {
-            this.props.catchError(error.message)
-            this.props.changeLoaderStatus(false)
-          })
-      }, 800)
-
-    }
-  }
-
-  componentWillUnmount = () => {
-    clearTimeout(this.demoInterval)
+    this.props.fetchProducts()
   }
 
   render() {
@@ -99,11 +70,9 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => (
   {
-    fetchProducts: (data) => dispatch({ type: 'FETCH_PRODUCTS', payload: { data } }),
-    changeLoaderStatus: (status) => dispatch( { type: 'CHANGE_LOADER_STATUS', payload: {status} } ),
-    catchError: (error) => dispatch( { type: 'CATCH_ERROR', payload: { error } }),
-    inputChange: (name, value) => dispatch({ type: 'INPUT_CHANGE', payload: { name, value } }),
-    resetInputs: () => dispatch( { type: 'RESET_INPUTS' })
+    fetchProducts: () => dispatch(catalogOperations.getProducts()),
+    inputChange: (name, value) => dispatch(catalogActions.inputChange(name, value)),
+    resetInputs: () => dispatch(catalogActions.resetInputs())
   }
 )
 
