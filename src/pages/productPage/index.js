@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './ProductPage.module.css'
-import ProductPageIsEmpty from '../error/ProductPageIsEmpty/index'
+import EmptyProductPage from '../emptyProductPage'
 import Loader from '../../components/UI/Loader/Loader'
 import priceWithSpaces from '../../utils/priceWithSpaces'
 import ProductItem from 'csssr-school-product-card'
@@ -15,7 +15,8 @@ const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyle
 class ProductPage extends React.PureComponent  {
 
   componentDidMount = () => {
-    if (this.props.products.length === 0) {
+    const { products } = this.props
+    if (products.length === 0) {
       this.props.fetchProducts()
     }
   }
@@ -27,42 +28,44 @@ class ProductPage extends React.PureComponent  {
 
   getProductItem = () => {
     const productId = parseInt(this.props.match.params.id)
-    const productItem = this.props.products.flat().find((product) => product.id === productId)
-    return productItem
+
+    return this.props.products.flat().find((product) => product.id === productId)
   }
 
   render() {
-    const productItem = this.getProductItem()
     const { error, isLoading, history } = this.props
+    const productItem = this.getProductItem()
 
     if (error) {
       return <div className={styles.Error}>{error}</div>
     }
 
+    if (isLoading) {
+      return <Loader />
+    }
+
     return (
-      isLoading
-        ? <Loader />
-        : (productItem
-            ? <div className={styles.ProductPage}>
-                <div className={styles.ProductPageHeader}>
-                  {history.action === 'POP'
-                    ? (<NavLink className={styles.BackToHomePage} to='/' title='Перейти в каталог' >&#8592;</NavLink>)
-                    : (<NavLink className={styles.BackToHomePage} to='/' title='Вернуться назад' onClick={this.goToHomeWithHistory}>&#8592;</NavLink>)
-                  }
-                  <h1>{productItem.name}</h1>
-                </div>
-                <ProductItem
-                  isInStock={productItem.status === 'IN_STOCK'}
-                  img={`../img${productItem.img}`}
-                  title={productItem.name}
-                  price={priceWithSpaces(productItem.price)}
-                  subPriceContent={priceWithSpaces(productItem.price)}
-                  maxRating={5}
-                  rating={productItem.stars}
-                  ratingComponent={ratingComponent}
-                />
-              </div>
-            : <ProductPageIsEmpty />)
+      productItem
+        ? <div className={styles.ProductPage}>
+            <div className={styles.ProductPageHeader}>
+              {history.action === 'POP'
+                ? (<NavLink className={styles.BackToHomePage} to='/' title='Перейти в каталог' >&#8592;</NavLink>)
+                : (<NavLink className={styles.BackToHomePage} to='/' title='Вернуться назад' onClick={this.goToHomeWithHistory}>&#8592;</NavLink>)
+              }
+              <h1>{productItem.name}</h1>
+            </div>
+            <ProductItem
+              isInStock={productItem.status === 'IN_STOCK'}
+              img={`../img${productItem.img}`}
+              title={productItem.name}
+              price={priceWithSpaces(productItem.price)}
+              subPriceContent={priceWithSpaces(productItem.price)}
+              maxRating={5}
+              rating={productItem.stars}
+              ratingComponent={ratingComponent}
+            />
+          </div>
+        : <EmptyProductPage />
     )
   }
 }
@@ -80,7 +83,6 @@ const mapDispatchToProps = (dispatch) => (
     fetchProducts: () => dispatch(catalogOperations.getProducts()),
   }
 )
-
 
 export default connect(
   mapStateToProps,

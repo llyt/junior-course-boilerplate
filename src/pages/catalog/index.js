@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
 import Loader from '../../components/UI/Loader/Loader'
-import CatalogPageIsEmpty from '../error/CatalogPageIsEmpty/index'
+import EmptyCatalogPage from '../emptyCatalogPage'
 
 class Catalog extends React.PureComponent {
 
@@ -25,34 +25,35 @@ class Catalog extends React.PureComponent {
 
   render() {
     const { listOfCategories, minPrice, maxPrice, discount } = this.props.sidebar
-    const { inputChange, resetInputs } = this.props
+    const { inputChange, resetInputs, error, isLoading } = this.props
     const { list, pagination, params } = this.props.productList
 
-    if (this.props.error) {
+    if (error) {
       return <div className={styles.Error}>{this.props.error}</div>
     }
 
-    return (
-      this.props.isLoading
-        ? <Loader />
-        : list.length !== 0
-            ? <div className={styles.Catalog}>
-                <Sidebar
-                  listOfCategories={listOfCategories}
-                  minPrice={minPrice}
-                  maxPrice={maxPrice}
-                  discount={discount}
-                  inputChange={inputChange}
-                  resetInputs={resetInputs}
-                />
-                <ProductList
-                  list={list}
-                  pagination={pagination}
-                  params={params}
-                />
-              </div>
-            : <CatalogPageIsEmpty />
+    if (isLoading) {
+      return <Loader />
+    }
 
+    return (
+      list.length !== 0
+        ? <div className={styles.Catalog}>
+            <Sidebar
+              listOfCategories={listOfCategories}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              discount={discount}
+              inputChange={inputChange}
+              resetInputs={resetInputs}
+            />
+            <ProductList
+              list={list}
+              pagination={pagination}
+              params={params}
+            />
+          </div>
+        : <EmptyCatalogPage />
     )
   }
 }
