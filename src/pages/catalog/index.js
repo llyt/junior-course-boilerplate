@@ -3,8 +3,11 @@ import styles from './Catalog.module.css'
 import {
   catalogSelectors,
   catalogOperations,
-  catalogActions
-} from '../../store/modules/catalog/index'
+} from '../../store/catalog/index'
+import {
+  filtersSelectors,
+  filtersActions
+} from '../../store/filters/index'
 import { connect } from 'react-redux'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
@@ -13,7 +16,10 @@ import Loader from '../../components/UI/Loader/Loader'
 class Catalog extends React.PureComponent {
 
   componentDidMount = () => {
-    this.props.fetchProducts()
+    const { list } = this.props.productList
+    if (list.length === 0) {
+      this.props.fetchProducts()
+    }
   }
 
   render() {
@@ -29,16 +35,14 @@ class Catalog extends React.PureComponent {
       this.props.isLoading
         ? <Loader />
         : <div className={styles.Catalog}>
-            { this.props.productList.list.length !== 0
-              ? <Sidebar
-                listOfCategories={listOfCategories}
-                minPrice={minPrice}
-                maxPrice={maxPrice}
-                discount={discount}
-                inputChange={inputChange}
-                resetInputs={resetInputs}
-              />
-              : null }
+            <Sidebar
+              listOfCategories={listOfCategories}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              discount={discount}
+              inputChange={inputChange}
+              resetInputs={resetInputs}
+            />
             <ProductList
               list={list}
               pagination={pagination}
@@ -55,10 +59,10 @@ const mapStateToProps = (state) => (
     isLoading: catalogSelectors.getLoadingState(state),
     error: catalogSelectors.getError(state),
     sidebar: {
-      listOfCategories: catalogSelectors.getListOfSidebarCategories(state),
-      minPrice: catalogSelectors.getMinPrice(state),
-      maxPrice: catalogSelectors.getMaxPrice(state),
-      discount: catalogSelectors.getDiscount(state),
+      listOfCategories: filtersSelectors.getListOfSidebarCategories(state),
+      minPrice: filtersSelectors.getMinPrice(state),
+      maxPrice: filtersSelectors.getMaxPrice(state),
+      discount: filtersSelectors.getDiscount(state),
     },
     productList: {
       list: catalogSelectors.getPaginatedProductList(state),
@@ -71,8 +75,8 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => (
   {
     fetchProducts: () => dispatch(catalogOperations.getProducts()),
-    inputChange: (name, value) => dispatch(catalogActions.inputChange(name, value)),
-    resetInputs: () => dispatch(catalogActions.resetInputs())
+    inputChange: (name, value) => dispatch(filtersActions.inputChange(name, value)),
+    resetInputs: () => dispatch(filtersActions.resetInputs())
   }
 )
 

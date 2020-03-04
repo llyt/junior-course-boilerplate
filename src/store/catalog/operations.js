@@ -3,7 +3,7 @@ import * as actions from './actions'
 const API_URL = 'https://course-api.csssr.school/products'
 
 export const getProducts = () => (dispatch) => {
-  dispatch(actions.changeLoaderStatus(true))
+  dispatch(actions.onLoader())
 
   fetch(API_URL)
     .then(response => {
@@ -20,10 +20,10 @@ export const getProducts = () => (dispatch) => {
       } else {
         throw new Error(data.message)
       }
-      dispatch(actions.changeLoaderStatus(false))
+      dispatch(actions.offLoader())
     })
     .catch(error => {
       dispatch(actions.catchError(error))
-      dispatch(actions.changeLoaderStatus(false))
+      dispatch(actions.offLoader())
     })
 }
