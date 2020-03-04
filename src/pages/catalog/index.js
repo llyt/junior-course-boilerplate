@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
 import Loader from '../../components/UI/Loader/Loader'
+import CatalogPageIsEmpty from '../error/CatalogPageIsEmpty/index'
 
 class Catalog extends React.PureComponent {
 
@@ -34,21 +35,23 @@ class Catalog extends React.PureComponent {
     return (
       this.props.isLoading
         ? <Loader />
-        : <div className={styles.Catalog}>
-            <Sidebar
-              listOfCategories={listOfCategories}
-              minPrice={minPrice}
-              maxPrice={maxPrice}
-              discount={discount}
-              inputChange={inputChange}
-              resetInputs={resetInputs}
-            />
-            <ProductList
-              list={list}
-              pagination={pagination}
-              params={params}
-            />
-          </div>
+        : list.length !== 0
+            ? <div className={styles.Catalog}>
+                <Sidebar
+                  listOfCategories={listOfCategories}
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
+                  discount={discount}
+                  inputChange={inputChange}
+                  resetInputs={resetInputs}
+                />
+                <ProductList
+                  list={list}
+                  pagination={pagination}
+                  params={params}
+                />
+              </div>
+            : <CatalogPageIsEmpty />
 
     )
   }

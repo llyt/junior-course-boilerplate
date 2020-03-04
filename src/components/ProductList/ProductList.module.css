@@ -6,6 +6,7 @@
 
 .ProductList h1 {
   margin-bottom: 35px;
+  font-weight: normal;
 }
 
 .ProductList li {

@@ -1,4 +1,4 @@
-.NotExist {
+.ProductNotExist {
   width: 600px;
   margin: 80px auto;
 }
@@ -7,11 +7,11 @@
   margin-top: 40px;
 }
 
-.NotExistHeader {
+.ProductNotExistHeader {
   display: flex;
 }
 
-.NotExistHeader h1 {
+.ProductNotExistHeader h1 {
   margin-left: 20px;
   font-weight: 300;
 }

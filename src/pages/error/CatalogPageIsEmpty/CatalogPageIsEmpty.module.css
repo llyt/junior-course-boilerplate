@@ -1,0 +1,10 @@
+.CatalogPageNotExist {
+  width: 400px;
+  margin: 180px auto;
+  text-align: center;
+}
+
+.CatalogPageNotExist h1 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+}
