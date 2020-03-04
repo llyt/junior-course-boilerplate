@@ -59,3 +59,4 @@ export const makePagination = (state) => {
 
 export const getLoadingState = (state) => state.catalog.isLoading
 export const getError = (state) => state.catalog.error
+export const getAllProducts = (state) => state.catalog.products.data

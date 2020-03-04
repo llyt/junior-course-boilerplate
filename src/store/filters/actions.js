@@ -10,9 +10,12 @@ const inputChange = (name, value) => (
   }
 )
 
-const resetInputs = () => (
+const resetInputs = (allProducts) => (
   {
     type: types.RESET_INPUTS,
+    payload: {
+      allProducts
+    }
   }
 )
 

@@ -12,7 +12,8 @@ import { connect } from 'react-redux'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
 import Loader from '../../components/UI/Loader/Loader'
-import EmptyCatalogPage from '../emptyCatalogPage'
+import queryString from 'query-string'
+import removeObjProperty from '../../utils/removeObjProperty'
 
 class Catalog extends React.PureComponent {
 
@@ -23,9 +24,27 @@ class Catalog extends React.PureComponent {
     }
   }
 
+  handleResetInputs = () => {
+    const { allProducts } = this.props
+    this.props.resetInputs(allProducts)
+  }
+
+  handleInputChange = (name, value) => {
+    const params = this.props.history.location.search
+    if (params !== '') {
+      const paramsObj = queryString.parse(params, {arrayFormat: 'comma'})
+      const paramsNoPage = removeObjProperty(paramsObj, 'page')
+      const urlParams = queryString.stringify(paramsNoPage, {arrayFormat: 'comma'})
+
+      this.props.history.push(urlParams !== '' ? `?${urlParams}` : '/')
+    }
+
+    this.props.inputChange(name, value)
+  }
+
   render() {
     const { listOfCategories, minPrice, maxPrice, discount } = this.props.sidebar
-    const { inputChange, resetInputs, error, isLoading } = this.props
+    const { error, isLoading } = this.props
     const { list, pagination, params } = this.props.productList
 
     if (error) {
@@ -37,23 +56,21 @@ class Catalog extends React.PureComponent {
     }
 
     return (
-      list.length !== 0
-        ? <div className={styles.Catalog}>
-            <Sidebar
-              listOfCategories={listOfCategories}
-              minPrice={minPrice}
-              maxPrice={maxPrice}
-              discount={discount}
-              inputChange={inputChange}
-              resetInputs={resetInputs}
-            />
-            <ProductList
-              list={list}
-              pagination={pagination}
-              params={params}
-            />
-          </div>
-        : <EmptyCatalogPage />
+      <div className={styles.Catalog}>
+        <Sidebar
+          listOfCategories={listOfCategories}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          discount={discount}
+          inputChange={this.handleInputChange}
+          resetInputs={this.handleResetInputs}
+        />
+        <ProductList
+          list={list}
+          pagination={pagination}
+          params={params}
+        />
+      </div>
     )
   }
 }
@@ -62,6 +79,7 @@ const mapStateToProps = (state) => (
   {
     isLoading: catalogSelectors.getLoadingState(state),
     error: catalogSelectors.getError(state),
+    allProducts: catalogSelectors.getAllProducts(state),
     sidebar: {
       listOfCategories: filtersSelectors.getListOfSidebarCategories(state),
       minPrice: filtersSelectors.getMinPrice(state),
@@ -80,7 +98,7 @@ const mapDispatchToProps = (dispatch) => (
   {
     fetchProducts: () => dispatch(catalogOperations.getProducts()),
     inputChange: (name, value) => dispatch(filtersActions.inputChange(name, value)),
-    resetInputs: () => dispatch(filtersActions.resetInputs())
+    resetInputs: (allProducts) => dispatch(filtersActions.resetInputs(allProducts)),
   }
 )
 
