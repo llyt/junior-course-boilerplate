@@ -1,8 +1,9 @@
 import { initialState } from './index'
+import * as types from './types'
 
 const mainReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_PRODUCTS':
+    case types.FETCH_PRODUCTS:
       const products = action.payload.fetchedData
 
       if (products.length === 0) {
@@ -17,19 +18,19 @@ const mainReducer = (state = initialState, action) => {
         },
       }
 
-    case 'ON_LOADER':
+    case types.ON_LOADER:
       return {
         ...state,
         isLoading: true
       }
 
-    case 'OFF_LOADER':
+    case types.OFF_LOADER:
       return {
         ...state,
         isLoading: false
       }
 
-    case 'CATCH_ERROR':
+    case types.CATCH_ERROR:
       return {
         ...state,
         error: action.payload.error
