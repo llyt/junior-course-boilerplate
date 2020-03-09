@@ -44,7 +44,7 @@ class Catalog extends React.PureComponent {
 
   render() {
     const { listOfCategories, minPrice, maxPrice, discount } = this.props.sidebar
-    const { error, isLoading } = this.props
+    const { resetInputs, error, isLoading } = this.props
     const { list, pagination, params } = this.props.productList
 
     if (error) {
@@ -63,7 +63,7 @@ class Catalog extends React.PureComponent {
           maxPrice={maxPrice}
           discount={discount}
           inputChange={this.handleInputChange}
-          resetInputs={this.handleResetInputs}
+          resetInputs={resetInputs}
         />
         <ProductList
           list={list}
@@ -98,7 +98,7 @@ const mapDispatchToProps = (dispatch) => (
   {
     fetchProducts: () => dispatch(catalogOperations.getProducts()),
     inputChange: (name, value) => dispatch(filtersActions.inputChange(name, value)),
-    resetInputs: (allProducts) => dispatch(filtersActions.resetInputs(allProducts)),
+    resetInputs: () => dispatch(filtersActions.resetInputs()),
   }
 )
 

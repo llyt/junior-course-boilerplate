@@ -7,15 +7,20 @@ const mainReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_PRODUCTS:
       const products = action.payload.fetchedData
-
+      const allCategories = getListOfCategories(products)
+      const maxPrice = maxBy(product => product.price, products).price
       if (products.length === 0) {
         return state
       }
 
       return {
         ...state,
-        allCategories: getListOfCategories(products),
-        maxPrice: maxBy(product => product.price, products).price
+        initialValues: {
+          allCategories,
+          maxPrice
+        },
+        allCategories,
+        maxPrice
       }
 
     case types.INPUT_CHANGE:
@@ -25,11 +30,11 @@ const mainReducer = (state = initialState, action) => {
       }
 
     case types.RESET_INPUTS:
-      const { allProducts } = action.payload
       return {
         ...initialState,
-        allCategories: state.allCategories,
-        maxPrice: maxBy(product => product.price, allProducts).price
+        initialValues: state.initialValues,
+        allCategories: state.initialValues.allCategories,
+        maxPrice: state.initialValues.maxPrice
       }
 
     default:

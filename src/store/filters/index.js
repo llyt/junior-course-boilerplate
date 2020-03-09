@@ -4,6 +4,7 @@ import * as filtersSelectors from './selectors'
 import * as filtersActions from './actions'
 
 export const initialState = {
+  initialValues: null,
   allCategories: [],
   minPrice: 0,
   maxPrice: 0,
