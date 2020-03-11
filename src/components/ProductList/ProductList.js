@@ -22,7 +22,7 @@ class ProductList extends React.PureComponent {
         <Title level="1">Список товаров</Title>
         { list.length !== 0
             ? <ul>
-                {(list[page - 1]).map((item) => {
+                {(list[page - 1] || []).map((item) => {
                   return (
                     <NavLink key={item.id} to={`/product/${item.id}`}>
                       <li>

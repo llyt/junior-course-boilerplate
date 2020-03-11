@@ -24,27 +24,25 @@ class Catalog extends React.PureComponent {
     }
   }
 
-  handleResetInputs = () => {
-    const { allProducts } = this.props
-    this.props.resetInputs(allProducts)
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const productsLength = this.props.productList.list.length
+    const paramsObj = queryString.parse(this.props.history.location.search, {arrayFormat: 'comma'})
+    const currentPage = paramsObj.page
+    if (productsLength < currentPage) {
+      this.resetPage(paramsObj)
+    }
   }
 
-  handleInputChange = (name, value) => {
-    const params = this.props.history.location.search
-    if (params !== '') {
-      const paramsObj = queryString.parse(params, {arrayFormat: 'comma'})
-      const paramsNoPage = removeObjProperty(paramsObj, 'page')
-      const urlParams = queryString.stringify(paramsNoPage, {arrayFormat: 'comma'})
+  resetPage = (paramsObj) => {
+    const paramsNoPage = removeObjProperty(paramsObj, 'page')
+    const urlParams = queryString.stringify(paramsNoPage, {arrayFormat: 'comma'})
 
-      this.props.history.push(urlParams !== '' ? `?${urlParams}` : '/')
-    }
-
-    this.props.inputChange(name, value)
+    this.props.history.push(urlParams !== '' ? `?${urlParams}` : '/')
   }
 
   render() {
     const { listOfCategories, minPrice, maxPrice, discount } = this.props.sidebar
-    const { resetInputs, error, isLoading } = this.props
+    const { resetInputs, inputChange, error, isLoading } = this.props
     const { list, pagination, params } = this.props.productList
 
     if (error) {
@@ -62,7 +60,7 @@ class Catalog extends React.PureComponent {
           minPrice={minPrice}
           maxPrice={maxPrice}
           discount={discount}
-          inputChange={this.handleInputChange}
+          inputChange={inputChange}
           resetInputs={resetInputs}
         />
         <ProductList
