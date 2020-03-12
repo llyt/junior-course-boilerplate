@@ -13,7 +13,6 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
 import Loader from '../../components/UI/Loader/Loader'
 import queryString from 'query-string'
-import removeObjProperty from '../../utils/removeObjProperty'
 
 class Catalog extends React.PureComponent {
 
@@ -27,17 +26,16 @@ class Catalog extends React.PureComponent {
   componentDidUpdate(prevProps, prevState, snapshot) {
     const productsLength = this.props.productList.list.length
     const paramsObj = queryString.parse(this.props.history.location.search, {arrayFormat: 'comma'})
-    const currentPage = paramsObj.page
+    const {page: currentPage, ...otherParams} = paramsObj
+
     if (productsLength < currentPage) {
-      this.resetPage(paramsObj)
+      this.resetPage(otherParams)
     }
   }
 
-  resetPage = (paramsObj) => {
-    const paramsNoPage = removeObjProperty(paramsObj, 'page')
-    const urlParams = queryString.stringify(paramsNoPage, {arrayFormat: 'comma'})
-
-    this.props.history.push(urlParams !== '' ? `?${urlParams}` : '/')
+  resetPage = (paramsNoPage) => {
+    const urlParamsStr = queryString.stringify(paramsNoPage, {arrayFormat: 'comma'})
+    this.props.history.push(urlParamsStr !== '' ? `?${urlParamsStr}` : '/')
   }
 
   render() {
