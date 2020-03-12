@@ -23,12 +23,12 @@ class Catalog extends React.PureComponent {
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const productsLength = this.props.productList.list.length
+  componentDidUpdate() {
+    const currentProductListLength = this.props.productList.list.length
     const paramsObj = queryString.parse(this.props.history.location.search, {arrayFormat: 'comma'})
     const {page: currentPage, ...otherParams} = paramsObj
 
-    if (productsLength < currentPage) {
+    if (currentProductListLength < currentPage) {
       this.resetPage(otherParams)
     }
   }
