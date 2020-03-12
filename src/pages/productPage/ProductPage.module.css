@@ -1,17 +1,21 @@
 .ProductPage {
-  width: 600px;
+  width: 800px;
+  display: flex;
+  justify-content: space-between;
   margin: 80px auto;
 }
 
-.ProductPage > div:nth-child(2) {
+Product {
+}
+.Product > div:nth-child(2) {
   margin-top: 40px;
 }
 
-.ProductPageHeader {
+.ProductHeader {
   display: flex;
 }
 
-.ProductPageHeader h1 {
+.ProductHeader h1 {
   margin-left: 20px;
   font-weight: 300;
 }
@@ -37,6 +41,11 @@
   font-size: 24px;
   text-decoration: none;
   color: #fff;
+}
+
+.BusketButton {
+  width: 224px;
+  margin-top: 12px;
 }
 
 .Error {
