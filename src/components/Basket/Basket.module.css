@@ -1,0 +1,43 @@
+.Basket {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  margin-top: 65px;
+  flex-grow: 1;
+}
+
+.Basket > button {
+  margin-bottom: 10px;
+}
+
+.BasketHeader {
+  display: flex;
+  align-items: baseline;
+}
+
+.BasketHeader svg {
+  margin-right: 10px;
+}
+
+.BasketHeader h3 {
+  margin: 0 12px 10px 0;
+}
+
+.BasketHeader span {
+  margin-right: 10px;
+}
+
+.BasketBody {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 15px;
+}
+
+.BasketBody span {
+  margin: 4px 0;
+}
+
+.BasketBody span > strong {
+  font-size: 20px;
+  margin-left: 8px;
+}

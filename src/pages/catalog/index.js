@@ -3,6 +3,7 @@ import styles from './Catalog.module.css'
 import {
   catalogSelectors,
   catalogOperations,
+  catalogActions
 } from '../../store/catalog/index'
 import {
   filtersSelectors,
@@ -12,6 +13,8 @@ import { connect } from 'react-redux'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
 import Loader from '../../components/UI/Loader/Loader'
+import Basket from '../../components/Basket/Basket'
+import compareArrays from '../../utils/compareArrays'
 import queryString from 'query-string'
 
 class Catalog extends React.PureComponent {
@@ -39,8 +42,18 @@ class Catalog extends React.PureComponent {
   }
 
   render() {
+    const {
+      resetInputs,
+      inputChange,
+      error,
+      isLoading,
+      addToBasket,
+      removeFromBasket,
+      saveBasket,
+      cleanBasket
+    } = this.props
     const { listOfCategories, minPrice, maxPrice, discount } = this.props.sidebar
-    const { resetInputs, inputChange, error, isLoading } = this.props
+    const { addedItems, savedItems, totalAmount, isSaving} = this.props.basket
     const { list, pagination, params } = this.props.productList
 
     if (error) {
@@ -65,6 +78,18 @@ class Catalog extends React.PureComponent {
           list={list}
           pagination={pagination}
           params={params}
+          productsInBasket={addedItems}
+          isBasketSaving={isSaving}
+          addToBusketHandle={addToBasket}
+          removeFromBusketHandle={removeFromBasket}
+        />
+        <Basket
+          addedItems={addedItems}
+          totalAmount={totalAmount}
+          isBasketSaving={isSaving}
+          isBasketSaved={compareArrays(addedItems, savedItems)}
+          saveBasketHandle={saveBasket}
+          cleanBasketHandle={cleanBasket}
         />
       </div>
     )
@@ -76,6 +101,12 @@ const mapStateToProps = (state) => (
     isLoading: catalogSelectors.getLoadingState(state),
     error: catalogSelectors.getError(state),
     allProducts: catalogSelectors.getAllProducts(state),
+    basket: {
+      addedItems: catalogSelectors.getAddedItems(state),
+      savedItems: catalogSelectors.getSavedItems(state),
+      totalAmount: catalogSelectors.getTotalAmount(state),
+      isSaving: catalogSelectors.getSavingStatus(state)
+    },
     sidebar: {
       listOfCategories: filtersSelectors.getListOfSidebarCategories(state),
       minPrice: filtersSelectors.getMinPrice(state),
@@ -86,7 +117,7 @@ const mapStateToProps = (state) => (
       list: catalogSelectors.getPaginatedProductList(state),
       pagination: catalogSelectors.makePagination(state),
       params: catalogSelectors.getParamsFromState(state),
-    }
+    },
   }
 )
 
@@ -95,6 +126,10 @@ const mapDispatchToProps = (dispatch) => (
     fetchProducts: () => dispatch(catalogOperations.getProducts()),
     inputChange: (name, value) => dispatch(filtersActions.inputChange(name, value)),
     resetInputs: () => dispatch(filtersActions.resetInputs()),
+    addToBasket: (productId) => dispatch(catalogActions.addToBasket(productId)),
+    removeFromBasket: (productId) => dispatch(catalogActions.removeFromBasket(productId)),
+    saveBasket: (basketData) => dispatch(catalogOperations.saveBasket(basketData)),
+    cleanBasket: () => dispatch(catalogActions.cleanBasket())
   }
 )
 

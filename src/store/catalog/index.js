@@ -10,6 +10,11 @@ export const initialState = {
   products: {
     data: [],
     perPage: 6,
+  },
+  basket: {
+    addedItems: [],
+    savedItems: [],
+    isSaving: false
   }
 }
 

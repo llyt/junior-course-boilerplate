@@ -6,12 +6,21 @@ import ProductItem from 'csssr-school-product-card'
 import logRender from '../../hoc/logRender/logRender'
 import priceWithSpaces from '../../utils/priceWithSpaces'
 import { NavLink } from 'react-router-dom'
+import Button from '../UI/Button/Button'
 
 const ratingStarStyles = { display: 'inline-block', marginRight: 6 }
 
 const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyles}>&#9733;</div> : <div style={ratingStarStyles}>&#9734;</div>
 
 class ProductList extends React.PureComponent {
+
+  addProductToBusket = (event) => {
+    this.props.addToBusketHandle(parseInt(event.target.parentElement.dataset.productid))
+  }
+
+  removeProductFromBasket = (event) => {
+    this.props.removeFromBusketHandle(parseInt(event.target.parentElement.dataset.productid))
+  }
 
   render() {
     const {list, params, pagination} = this.props
@@ -23,9 +32,11 @@ class ProductList extends React.PureComponent {
         { list.length !== 0
             ? <ul>
                 {(list[page - 1] || []).map((item) => {
+                  const inBasket = this.props.productsInBasket.includes(item.id)
+
                   return (
-                    <NavLink key={item.id} to={`/product/${item.id}`}>
-                      <li>
+                    <li key={item.id}>
+                      <NavLink to={`/product/${item.id}`}>
                         <ProductItem
                           isInStock={item.status === 'IN_STOCK'}
                           img={`../img${item.img}`}
@@ -36,8 +47,18 @@ class ProductList extends React.PureComponent {
                           rating={item.stars}
                           ratingComponent={ratingComponent}
                         />
-                      </li>
-                    </NavLink>
+                      </NavLink>
+                      { item.status === 'IN_STOCK'
+                        ? <div data-productid={item.id} className={styles.BusketButton}>
+                          <Button
+                            disabled={this.props.isBasketSaving}
+                            text={inBasket ? 'Удалить из корзины' : 'Добавить в корзину'}
+                            clickHandle={inBasket ? this.removeProductFromBasket : this.addProductToBusket}
+                          />
+                        </div>
+                        : null
+                      }
+                    </li>
                   )
                 })}
               </ul>

@@ -1,7 +1,7 @@
 .ProductList {
-  width: 810px;
-  padding: 0 0 0 20px;
-  margin: 0 0 60px;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .ProductList h1 {
@@ -9,17 +9,26 @@
   font-weight: 300;
 }
 
+.ProductList ul {
+  min-width: 290px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
 .ProductList li {
   display: inline-block;
-  margin: 0 15px 45px;
+  margin-bottom: 45px;
+  margin-right: 20px;
 }
 
 .ProductList a {
   display: inline-block;
   border: none;
-  padding: 10px 0 0;
+  padding: 10px 10px;
 }
 
-.ProductList a:hover {
-  background-color: #d8d8d8;
+.BusketButton {
+  margin-top: 12px;
 }

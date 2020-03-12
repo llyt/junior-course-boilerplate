@@ -1,0 +1,47 @@
+import React from 'react'
+import styles from './Basket.module.css'
+import Title from '../UI/Title/Title'
+import { ReactComponent as BasketImg } from '../../static/basket.svg'
+import { ReactComponent as BasketSaved } from '../../static/tick.svg'
+import Button from '../UI/Button/Button'
+
+class Basket extends React.PureComponent {
+
+  render() {
+    const { isBasketSaved, isBasketSaving } = this.props
+
+    return (
+      <div className={styles.Basket}>
+        <div className={styles.BasketHeader}>
+          <BasketImg />
+          <Title level="3">Корзина</Title>
+          {
+            isBasketSaved
+              ? <BasketSaved />
+              : null
+          }
+        </div>
+
+        <div className={styles.BasketBody}>
+          <span>Товаров <strong>{this.props.addedItems.length}</strong></span>
+          <span>Всего <strong>{this.props.totalAmount} ₽</strong></span>
+        </div>
+
+        <Button
+          disabled={isBasketSaving}
+          text='Очистить корзину'
+          clickHandle={this.props.cleanBasketHandle}
+        />
+
+        <Button
+          disabled={isBasketSaving}
+          text='Сохранить корзину'
+          clickHandle={ () => this.props.saveBasketHandle(this.props.addedItems) }
+        />
+
+      </div>
+    )
+  }
+}
+
+export default Basket
