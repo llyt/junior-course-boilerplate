@@ -1,30 +1,19 @@
-import dataJSON from '../../products'
 import removeObjProperty from '../../utils/removeObjProperty'
-import { splitEvery } from 'csssr-school-utils'
 import queryString from 'query-string'
+import { splitEvery } from 'csssr-school-utils'
 
-const initialState = {
-  data: dataJSON,
-  perPage: 6
+export const getParamsFromState = (state) => {
+  const params = state.router.location.query
+
+  return params
 }
-
-// Reducer
-
-export default (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state
-  }
-}
-
-// Selectors
 
 export const getPaginatedProductList = (state) => {
-  const { perPage } = state.products
+  const { perPage } = state.catalog.products
 
   const getProductsList = (state) => {
-    const { products, filters } = state
-    const { data } = products
+    const { catalog, filters } = state
+    const { data } = catalog.products
     const { minPrice, maxPrice, discount } = filters
     const params = state.router.location.query
     const activeCategories = params.category ? params.category.split(',') : null
@@ -67,3 +56,7 @@ export const makePagination = (state) => {
 
   return paginationSource.length > 1 ? paginationSource : []
 }
+
+export const getLoadingState = (state) => state.catalog.isLoading
+export const getError = (state) => state.catalog.error
+export const getAllProducts = (state) => state.catalog.products.data

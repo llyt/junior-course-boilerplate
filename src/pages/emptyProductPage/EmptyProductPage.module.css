@@ -1,17 +1,13 @@
-.NotExist {
+.EmptyProductPage {
   width: 600px;
   margin: 80px auto;
 }
 
-.NotExist > div:nth-child(2) {
-  margin-top: 40px;
-}
-
-.NotExistHeader {
+.EmptyProductPageHeader {
   display: flex;
 }
 
-.NotExistHeader h1 {
+.EmptyProductPageHeader h1 {
   margin-left: 20px;
   font-weight: 300;
 }

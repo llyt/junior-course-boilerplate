@@ -21,28 +21,27 @@ class ProductList extends React.PureComponent {
       <div className={styles.ProductList}>
         <Title level="1">Список товаров</Title>
         { list.length !== 0
-          ? <ul>
-              {(list[page - 1]).map((item, index) => {
-                return (
-                  <NavLink key={index} to={`/product/${item.id}`}>
-                    <li>
-                      <ProductItem
-                        isInStock={item.isInStock}
-                        img={item.img}
-                        title={item.title}
-                        price={priceWithSpaces(item.price)}
-                        subPriceContent={priceWithSpaces(item.subPriceContent)}
-                        maxRating={item.maxRating}
-                        rating={item.rating}
-                        ratingComponent={ratingComponent}
-                      />
-                    </li>
-                  </NavLink>
-                )
-              })}
-            </ul>
-          : 'Список пуст'
-        }
+            ? <ul>
+                {(list[page - 1] || []).map((item) => {
+                  return (
+                    <NavLink key={item.id} to={`/product/${item.id}`}>
+                      <li>
+                        <ProductItem
+                          isInStock={item.status === 'IN_STOCK'}
+                          img={`../img${item.img}`}
+                          title={item.name}
+                          price={priceWithSpaces(item.price)}
+                          subPriceContent={priceWithSpaces(item.price)}
+                          maxRating={5}
+                          rating={item.stars}
+                          ratingComponent={ratingComponent}
+                        />
+                      </li>
+                    </NavLink>
+                  )
+                })}
+              </ul>
+            : 'Список пуст'}
 
         <Pagination
           pagination={pagination}
