@@ -30,7 +30,7 @@ class ProductPage extends React.PureComponent  {
   }
 
   getProductItem = () => {
-    const productId = parseInt(this.props.match.params.id)
+    const productId = Number(this.props.match.params.id)
 
     return this.props.products.flat().find((product) => product.id === productId)
   }
