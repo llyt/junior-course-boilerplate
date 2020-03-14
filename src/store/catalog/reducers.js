@@ -36,63 +36,6 @@ const mainReducer = (state = initialState, action) => {
         error: action.payload.error
       }
 
-    case types.ADD_TO_BASKET:
-      return {
-        ...state,
-        basket: {
-          ...state.basket,
-          addedItems: [...state.basket.addedItems, action.payload.productId],
-        }
-      }
-
-    case types.REMOVE_FROM_BASKET:
-      const {productId: idToDelete} = action.payload
-      const newBasketIds = state.basket.addedItems.filter(productId => productId !== idToDelete)
-
-      return {
-        ...state,
-        basket: {
-          ...state.basket,
-          addedItems: newBasketIds,
-        }
-      }
-
-    case types.SAVE_BASKET:
-      return {
-        ...state,
-        basket: {
-          ...state.basket,
-          savedItems: [...state.basket.addedItems]
-        }
-      }
-
-    case types.ON_SAVING:
-      return {
-        ...state,
-        basket: {
-          ...state.basket,
-          isSaving: true
-        }
-      }
-
-    case types.OFF_SAVING:
-      return {
-        ...state,
-        basket: {
-          ...state.basket,
-          isSaving: false
-        }
-      }
-
-    case types.CLEAN_BASKET:
-      return {
-        ...state,
-        basket: {
-          ...initialState.basket,
-          savedItems: state.basket.savedItems
-        }
-      }
-
     default:
       return state
   }

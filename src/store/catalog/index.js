@@ -11,11 +11,6 @@ export const initialState = {
     data: [],
     perPage: 6,
   },
-  basket: {
-    addedItems: [],
-    savedItems: [],
-    isSaving: false
-  }
 }
 
 export {

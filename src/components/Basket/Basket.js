@@ -8,7 +8,11 @@ import Button from '../UI/Button/Button'
 class Basket extends React.PureComponent {
 
   render() {
-    const { isBasketSaved, isBasketSaving } = this.props
+    const { isBasketSaved, isBasketSaving, error} = this.props
+
+    if (error) {
+      return error
+    }
 
     return (
       <div className={styles.Basket}>
@@ -38,7 +42,6 @@ class Basket extends React.PureComponent {
           text='Сохранить корзину'
           clickHandle={ () => this.props.saveBasketHandle(this.props.addedItems) }
         />
-
       </div>
     )
   }

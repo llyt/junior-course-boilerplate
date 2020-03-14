@@ -60,19 +60,3 @@ export const makePagination = (state) => {
 export const getLoadingState = (state) => state.catalog.isLoading
 export const getError = (state) => state.catalog.error
 export const getAllProducts = (state) => state.catalog.products.data
-
-// Basket
-export const getSavingStatus = (state) => state.catalog.basket.isSaving
-export const getAddedItems = (state) => state.catalog.basket.addedItems
-export const getSavedItems = (state) => state.catalog.basket.savedItems
-export const getTotalAmount = (state) => {
-  const { data: allProducts } = state.catalog.products
-  const basketProductsId = getAddedItems(state)
-  const basketProducts = allProducts.filter(product => basketProductsId.includes(product.id))
-
-  return basketProducts.reduce((acc, product) => {
-    acc = acc + product.price
-    return acc
-  }, 0)
-
-}

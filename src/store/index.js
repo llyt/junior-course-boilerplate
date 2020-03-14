@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware} from 'redux'
-import catalogReducer from './catalog/index'
-import filtersReducer from './filters/index'
+import catalogReducer from './catalog'
+import filtersReducer from './filters'
+import basketReducer from './basket'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -11,7 +12,8 @@ const history = createBrowserHistory()
 const createRootReducer = (history) => combineReducers({
   router: connectRouter(history),
   catalog: catalogReducer,
-  filters: filtersReducer
+  filters: filtersReducer,
+  basket: basketReducer
 })
 
 const configureStore = (preloaderState) => {

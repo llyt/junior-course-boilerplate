@@ -1,15 +1,15 @@
 import React from 'react'
 import styles from './ProductPage.module.css'
-import EmptyProductPage from '../emptyProductPage'
-import Loader from '../../components/UI/Loader/Loader'
 import priceWithSpaces from '../../utils/priceWithSpaces'
 import ProductItem from 'csssr-school-product-card'
 import { NavLink } from 'react-router-dom'
-import { catalogActions, catalogOperations, catalogSelectors } from '../../store/catalog'
 import { connect } from 'react-redux'
+import EmptyProductPage from '../emptyProductPage'
+import Loader from '../../components/UI/Loader/Loader'
 import Button from '../../components/UI/Button/Button'
-import Basket from '../../components/Basket/Basket'
-import compareArrays from '../../utils/compareArrays'
+import BasketContainer from '../../containers/basketContainer'
+import { catalogOperations, catalogSelectors } from '../../store/catalog'
+import { basketSelectors, basketActions } from '../../store/basket'
 
 const ratingStarStyles = { display: 'inline-block', marginRight: 6 }
 
@@ -41,11 +41,9 @@ class ProductPage extends React.PureComponent  {
       history,
       addToBasket,
       removeFromBasket,
-      saveBasket,
-      cleanBasket
     } = this.props
     const productItem = this.getProductItem()
-    const { addedItems, savedItems, totalAmount, isSaving} = this.props.basket
+    const { addedItems, isSaving} = this.props.basket
     const productId = parseInt(this.props.match.params.id)
     const inBasket = addedItems.includes(productId)
 
@@ -87,14 +85,7 @@ class ProductPage extends React.PureComponent  {
               </div>
             </div>
             <div className={styles.Basket}>
-              <Basket
-                addedItems={addedItems}
-                totalAmount={totalAmount}
-                isBasketSaving={isSaving}
-                isBasketSaved={compareArrays(addedItems, savedItems)}
-                saveBasketHandle={saveBasket}
-                cleanBasketHandle={cleanBasket}
-              />
+              <BasketContainer />
             </div>
           </div>
         : <EmptyProductPage />
@@ -108,10 +99,10 @@ const mapStateToProps = (state) => (
     error: catalogSelectors.getError(state),
     products: catalogSelectors.getPaginatedProductList(state),
     basket: {
-      addedItems: catalogSelectors.getAddedItems(state),
-      savedItems: catalogSelectors.getSavedItems(state),
-      totalAmount: catalogSelectors.getTotalAmount(state),
-      isSaving: catalogSelectors.getSavingStatus(state)
+      addedItems: basketSelectors.getAddedItems(state),
+      savedItems: basketSelectors.getSavedItems(state),
+      totalAmount: basketSelectors.getTotalAmount(state),
+      isSaving: basketSelectors.getSavingStatus(state)
     },
   }
 )
@@ -119,10 +110,8 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => (
   {
     fetchProducts: () => dispatch(catalogOperations.getProducts()),
-    addToBasket: (productId) => dispatch(catalogActions.addToBasket(productId)),
-    removeFromBasket: (productId) => dispatch(catalogActions.removeFromBasket(productId)),
-    saveBasket: (basketData) => dispatch(catalogOperations.saveBasket(basketData)),
-    cleanBasket: () => dispatch(catalogActions.cleanBasket())
+    addToBasket: (productId) => dispatch(basketActions.addToBasket(productId)),
+    removeFromBasket: (productId) => dispatch(basketActions.removeFromBasket(productId)),
   }
 )
 
