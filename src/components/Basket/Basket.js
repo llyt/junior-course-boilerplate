@@ -8,7 +8,7 @@ import Button from '../UI/Button/Button'
 class Basket extends React.PureComponent {
 
   render() {
-    const { isBasketSaved, isBasketSaving, error} = this.props
+    const {addedItems, totalAmount, isBasketSaved, isBasketSaving, error } = this.props
 
     if (error) {
       return error
@@ -19,29 +19,27 @@ class Basket extends React.PureComponent {
         <div className={styles.BasketHeader}>
           <BasketImg />
           <Title level="3">Корзина</Title>
-          {
-            isBasketSaved
-              ? <BasketSaved />
-              : null
-          }
+          { isBasketSaved && <BasketSaved /> }
         </div>
 
         <div className={styles.BasketBody}>
-          <span>Товаров <strong>{this.props.addedItems.length}</strong></span>
-          <span>Всего <strong>{this.props.totalAmount} ₽</strong></span>
+          <span>Товаров <strong>{addedItems.length}</strong></span>
+          <span>Всего <strong>{totalAmount} ₽</strong></span>
         </div>
 
         <Button
           disabled={isBasketSaving}
-          text='Очистить корзину'
           clickHandle={this.props.cleanBasketHandle}
-        />
+        >
+          Очистить корзину
+        </Button>
 
         <Button
           disabled={isBasketSaving}
-          text='Сохранить корзину'
           clickHandle={ () => this.props.saveBasketHandle(this.props.addedItems) }
-        />
+        >
+          Сохранить корзину
+        </Button>
       </div>
     )
   }

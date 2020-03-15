@@ -14,12 +14,12 @@ const ratingComponent = ({ isFilled }) => isFilled ? <div style={ratingStarStyle
 
 class ProductList extends React.PureComponent {
 
-  addProductToBusket = (event) => {
-    this.props.addToBusketHandle(parseInt(event.target.parentElement.dataset.productid))
+  addProductToBasket = (event) => {
+    this.props.addToBasketHandle(Number(event.target.dataset.tag))
   }
 
   removeProductFromBasket = (event) => {
-    this.props.removeFromBusketHandle(parseInt(event.target.parentElement.dataset.productid))
+    this.props.removeFromBasketHandle(Number(event.target.dataset.tag))
   }
 
   render() {
@@ -49,14 +49,15 @@ class ProductList extends React.PureComponent {
                         />
                       </NavLink>
                       { item.status === 'IN_STOCK'
-                        ? <div data-productid={item.id} className={styles.BusketButton}>
-                          <Button
-                            disabled={this.props.isBasketSaving}
-                            text={inBasket ? 'Удалить из корзины' : 'Добавить в корзину'}
-                            clickHandle={inBasket ? this.removeProductFromBasket : this.addProductToBusket}
-                          />
-                        </div>
-                        : null
+                          && <div className={styles.BusketButton}>
+                               <Button
+                                 data={item.id}
+                                 disabled={this.props.isBasketSaving}
+                                 clickHandle={inBasket ? this.removeProductFromBasket : this.addProductToBasket}
+                                >
+                                  {inBasket ? 'Удалить из корзины' : 'Добавить в корзину'}
+                                </Button>
+                             </div>
                       }
                     </li>
                   )

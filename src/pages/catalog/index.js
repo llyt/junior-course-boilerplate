@@ -80,8 +80,8 @@ class Catalog extends React.PureComponent {
           params={params}
           productsInBasket={addedItems}
           isBasketSaving={isSaving}
-          addToBusketHandle={addToBasket}
-          removeFromBusketHandle={removeFromBasket}
+          addToBasketHandle={addToBasket}
+          removeFromBasketHandle={removeFromBasket}
         />
         <BasketContainer/>
       </div>

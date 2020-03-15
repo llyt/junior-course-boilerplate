@@ -35,12 +35,19 @@ class ProductPage extends React.PureComponent  {
     return this.props.products.flat().find((product) => product.id === productId)
   }
 
+  addProductToBasket = (event) => {
+    this.props.addToBasket(Number(event.target.dataset.tag))
+  }
+
+  removeProductFromBasket = (event) => {
+    this.props.removeFromBasket(Number(event.target.dataset.tag))
+  }
+
   render() {
-    const { error,
+    const {
+      error,
       isLoading,
       history,
-      addToBasket,
-      removeFromBasket,
     } = this.props
     const productItem = this.getProductItem()
     const { addedItems, isSaving} = this.props.basket
@@ -78,10 +85,12 @@ class ProductPage extends React.PureComponent  {
               />
               <div className={styles.BusketButton}>
                 <Button
+                  data={productId}
                   disabled={isSaving}
-                  text={inBasket ? 'Удалить из корзины' : 'Добавить в корзину'}
-                  clickHandle={inBasket ? (() => removeFromBasket(productId)) : (() => addToBasket(productId))}
-                />
+                  clickHandle={inBasket ? this.removeProductFromBasket : this.addProductToBasket}
+                >
+                  {inBasket ? 'Удалить из корзины' : 'Добавить в корзину'}
+                </Button>
               </div>
             </div>
             <div className={styles.Basket}>
