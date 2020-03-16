@@ -30,7 +30,6 @@ const catchError = (error) => (
   }
 )
 
-
 export {
   fetchProducts,
   onLoader,

@@ -1,8 +1,7 @@
 import * as actions from './actions'
 
-const API_URL = 'https://course-api.csssr.school/products'
-
 export const getProducts = () => (dispatch) => {
+  const API_URL = 'https://course-api.csssr.school/products'
   dispatch(actions.onLoader())
 
   fetch(API_URL)

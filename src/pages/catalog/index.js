@@ -1,5 +1,7 @@
 import React from 'react'
 import styles from './Catalog.module.css'
+import { connect } from 'react-redux'
+import queryString from 'query-string'
 import {
   catalogSelectors,
   catalogOperations,
@@ -7,12 +9,15 @@ import {
 import {
   filtersSelectors,
   filtersActions
-} from '../../store/filters/index'
-import { connect } from 'react-redux'
+} from '../../store/filters'
+import {
+  basketSelectors,
+  basketActions
+} from '../../store/basket'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ProductList from '../../components/ProductList/ProductList'
 import Loader from '../../components/UI/Loader/Loader'
-import queryString from 'query-string'
+import BasketContainer from '../../containers/basketContainer'
 
 class Catalog extends React.PureComponent {
 
@@ -39,8 +44,16 @@ class Catalog extends React.PureComponent {
   }
 
   render() {
+    const {
+      resetInputs,
+      inputChange,
+      error,
+      isLoading,
+      addToBasket,
+      removeFromBasket,
+    } = this.props
     const { listOfCategories, minPrice, maxPrice, discount } = this.props.sidebar
-    const { resetInputs, inputChange, error, isLoading } = this.props
+    const { addedItems, isSaving} = this.props.basket
     const { list, pagination, params } = this.props.productList
 
     if (error) {
@@ -65,7 +78,12 @@ class Catalog extends React.PureComponent {
           list={list}
           pagination={pagination}
           params={params}
+          productsInBasket={addedItems}
+          isBasketSaving={isSaving}
+          addToBasketHandle={addToBasket}
+          removeFromBasketHandle={removeFromBasket}
         />
+        <BasketContainer/>
       </div>
     )
   }
@@ -86,6 +104,10 @@ const mapStateToProps = (state) => (
       list: catalogSelectors.getPaginatedProductList(state),
       pagination: catalogSelectors.makePagination(state),
       params: catalogSelectors.getParamsFromState(state),
+    },
+    basket: {
+      addedItems: basketSelectors.getAddedItems(state),
+      isSaving: basketSelectors.getSavingStatus(state)
     }
   }
 )
@@ -95,6 +117,8 @@ const mapDispatchToProps = (dispatch) => (
     fetchProducts: () => dispatch(catalogOperations.getProducts()),
     inputChange: (name, value) => dispatch(filtersActions.inputChange(name, value)),
     resetInputs: () => dispatch(filtersActions.resetInputs()),
+    addToBasket: (productId) => dispatch(basketActions.addToBasket(productId)),
+    removeFromBasket: (productId) => dispatch(basketActions.removeFromBasket(productId)),
   }
 )
 

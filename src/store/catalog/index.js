@@ -10,7 +10,7 @@ export const initialState = {
   products: {
     data: [],
     perPage: 6,
-  }
+  },
 }
 
 export {

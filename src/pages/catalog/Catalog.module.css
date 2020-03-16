@@ -1,8 +1,8 @@
 .Catalog {
   display: flex;
-  justify-content: center;
+  max-width: 1360px;
   margin: 0 auto;
-  padding-top: 80px;
+  padding: 80px 20px 0;
   color: #323c48;
 }
 
@@ -10,4 +10,12 @@
   width: 600px;
   margin: 300px auto;
   text-align: center;
+}
+
+.Catalog h1 {
+  font-size: 36px;
+}
+
+.Catalog h3 {
+  font-size: 20px;
 }
