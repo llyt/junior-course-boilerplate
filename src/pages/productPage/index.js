@@ -10,6 +10,7 @@ import Button from '../../components/UI/Button/Button'
 import BasketContainer from '../../containers/basketContainer'
 import { catalogOperations, catalogSelectors } from '../../store/catalog'
 import { basketSelectors, basketActions } from '../../store/basket'
+import Price from '../../components/UI/Price/Price'
 
 const ratingStarStyles = { display: 'inline-block', marginRight: 6 }
 
@@ -77,25 +78,25 @@ class ProductPage extends React.PureComponent  {
                 isInStock={productItem.status === 'IN_STOCK'}
                 img={`../img${productItem.img}`}
                 title={productItem.name}
-                price={priceWithSpaces(productItem.price)}
-                subPriceContent={priceWithSpaces(productItem.price)}
+                price={<Price price={priceWithSpaces(productItem.price)}/>}
+                subPriceContent={<Price type='sub' price={priceWithSpaces(productItem.price)}/>}
                 maxRating={5}
                 rating={productItem.stars}
                 ratingComponent={ratingComponent}
               />
-              <div className={styles.BusketButton}>
-                <Button
-                  data={productId}
-                  disabled={isSaving}
-                  clickHandle={inBasket ? this.removeProductFromBasket : this.addProductToBasket}
-                >
-                  {inBasket ? 'Удалить из корзины' : 'Добавить в корзину'}
-                </Button>
-              </div>
+              { productItem.status === 'IN_STOCK'
+              && <div className={styles.BusketButton}>
+                  <Button
+                    data={productId}
+                    disabled={isSaving}
+                    clickHandle={inBasket ? this.removeProductFromBasket : this.addProductToBasket}
+                  >
+                    {inBasket ? 'Удалить из корзины' : 'Добавить в корзину'}
+                  </Button>
+                </div>
+              }
             </div>
-            <div className={styles.Basket}>
-              <BasketContainer />
-            </div>
+            <BasketContainer />
           </div>
         : <EmptyProductPage />
     )
@@ -106,7 +107,7 @@ const mapStateToProps = (state) => (
   {
     isLoading: catalogSelectors.getLoadingState(state),
     error: catalogSelectors.getError(state),
-    products: catalogSelectors.getPaginatedProductList(state),
+    products: catalogSelectors.getFilteredProductsList(state),
     basket: {
       addedItems: basketSelectors.getAddedItems(state),
       savedItems: basketSelectors.getSavedItems(state),

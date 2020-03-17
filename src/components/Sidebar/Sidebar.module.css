@@ -1,9 +1,8 @@
 .Sidebar {
-  min-width: 250px;
+  grid-area: filters;
+  max-width: 320px;
   margin-top: 65px;
-  padding-right: 30px;
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
 }
 
@@ -54,4 +53,10 @@
   width: 60px;
   padding: 5px 8px 5px 15px;
   font-size: 14px;
+}
+
+@media all and (max-width: 575px) {
+  .Sidebar {
+    padding: 0 15px;
+  }
 }
