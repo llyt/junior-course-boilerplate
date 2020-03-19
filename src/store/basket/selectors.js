@@ -21,3 +21,10 @@ export const getTotalAmount = (state) => {
   }, 0)
 
 }
+
+export const getProductsInBasket = (state) => {
+  const allProducts = state.catalog.products.data
+  const productsInBasketIds = state.basket.addedItems
+
+  return allProducts.filter(({id}) => productsInBasketIds.includes(id))
+}

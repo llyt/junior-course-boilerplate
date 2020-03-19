@@ -7,6 +7,7 @@ import logRender from '../../hoc/logRender/logRender'
 import priceWithSpaces from '../../utils/priceWithSpaces'
 import { NavLink } from 'react-router-dom'
 import Button from '../UI/Button/Button'
+import Price from '../UI/Price/Price'
 
 const ratingStarStyles = { display: 'inline-block', marginRight: 6 }
 
@@ -23,15 +24,27 @@ class ProductList extends React.PureComponent {
   }
 
   render() {
-    const {list, params, pagination} = this.props
-    const page = params.page || '1'
+    const { list, urlSearchParams, pagination, children } = this.props
 
     return (
       <div className={styles.ProductList}>
-        <Title level="1">Список товаров</Title>
+        <div className={styles.ProductListHeader}>
+          {
+            this.props.backToPageHandle
+            && <NavLink
+                className={styles.BackToPrevPage}
+                to='/'
+                title='Вернуться назад'
+                onClick={this.props.backToPageHandle}
+                >
+                  &#8592;
+                </NavLink>
+          }
+          <Title level="1">{children}</Title>
+        </div>
         { list.length !== 0
             ? <ul>
-                {(list[page - 1] || []).map((item) => {
+                {list.map((item) => {
                   const inBasket = this.props.productsInBasket.includes(item.id)
 
                   return (
@@ -41,8 +54,8 @@ class ProductList extends React.PureComponent {
                           isInStock={item.status === 'IN_STOCK'}
                           img={`../img${item.img}`}
                           title={item.name}
-                          price={priceWithSpaces(item.price)}
-                          subPriceContent={priceWithSpaces(item.price)}
+                          price={<Price price={priceWithSpaces(item.price)}/>}
+                          subPriceContent={<Price type='sub' price={priceWithSpaces(item.price)}/>}
                           maxRating={5}
                           rating={item.stars}
                           ratingComponent={ratingComponent}
@@ -67,7 +80,7 @@ class ProductList extends React.PureComponent {
 
         <Pagination
           pagination={pagination}
-          stateParams={params}
+          urlSearchParams={urlSearchParams}
         />
       </div>
     )

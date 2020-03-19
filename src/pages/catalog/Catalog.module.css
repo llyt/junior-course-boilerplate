@@ -1,8 +1,10 @@
 .Catalog {
-  display: flex;
-  max-width: 1360px;
+  display: grid;
+  grid-template-areas: "filters productList basket";
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-gap: 2vw;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 80px 20px 0;
   color: #323c48;
 }
 
@@ -18,4 +20,15 @@
 
 .Catalog h3 {
   font-size: 20px;
+}
+
+@media all and (max-width: 575px) {
+  .Catalog {
+    max-width: 360px;
+    grid-template-areas:
+      "filters"
+      "productList"
+      "basket";
+    grid-template-columns: 1fr;
+  }
 }

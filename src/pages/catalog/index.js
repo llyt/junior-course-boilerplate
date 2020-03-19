@@ -22,14 +22,14 @@ import BasketContainer from '../../containers/basketContainer'
 class Catalog extends React.PureComponent {
 
   componentDidMount = () => {
-    const { list } = this.props.productList
-    if (list.length === 0) {
+    const { byPage } = this.props.productList
+    if (byPage.length === 0) {
       this.props.fetchProducts()
     }
   }
 
   componentDidUpdate() {
-    const currentProductListLength = this.props.productList.list.length
+    const currentProductListLength = this.props.productList.allProductListLength
     const paramsObj = queryString.parse(this.props.history.location.search, {arrayFormat: 'comma'})
     const {page: currentPage, ...otherParams} = paramsObj
 
@@ -54,7 +54,7 @@ class Catalog extends React.PureComponent {
     } = this.props
     const { listOfCategories, minPrice, maxPrice, discount } = this.props.sidebar
     const { addedItems, isSaving} = this.props.basket
-    const { list, pagination, params } = this.props.productList
+    const { byPage, pagination, urlSearchParams } = this.props.productList
 
     if (error) {
       return <div className={styles.Error}>{this.props.error}</div>
@@ -75,14 +75,16 @@ class Catalog extends React.PureComponent {
           resetInputs={resetInputs}
         />
         <ProductList
-          list={list}
+          list={byPage}
           pagination={pagination}
-          params={params}
+          urlSearchParams={urlSearchParams}
           productsInBasket={addedItems}
           isBasketSaving={isSaving}
           addToBasketHandle={addToBasket}
           removeFromBasketHandle={removeFromBasket}
-        />
+        >
+          Список продуктов
+        </ProductList>
         <BasketContainer/>
       </div>
     )
@@ -101,9 +103,10 @@ const mapStateToProps = (state) => (
       discount: filtersSelectors.getDiscount(state),
     },
     productList: {
-      list: catalogSelectors.getPaginatedProductList(state),
+      byPage: catalogSelectors.getProductListByPage(state),
+      allProductListLength: catalogSelectors.getAllProductListLength(state),
       pagination: catalogSelectors.makePagination(state),
-      params: catalogSelectors.getParamsFromState(state),
+      urlSearchParams: catalogSelectors.getParamsFromState(state),
     },
     basket: {
       addedItems: basketSelectors.getAddedItems(state),

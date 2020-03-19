@@ -1,0 +1,16 @@
+.Price {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.SubPrice {
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.Price::after,
+.SubPrice::after {
+  content: "\20BD";
+  margin-left: 6px;
+}

@@ -1,16 +1,45 @@
 .ProductList {
-  flex-grow: 2;
+  grid-area: productList;
+  min-width: 740px;
   display: flex;
   flex-direction: column;
+  padding-bottom: 40px;
+}
+
+.ProductListHeader {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+}
+
+.BackToPrevPage {
+  width: 32px;
+  height: 40px;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+  color: #000;
+  padding: 0 0 0 8px;
+  margin-right: 20px;
+  transition: all ease 0.25s;
+}
+
+.BackToPrevPage:hover {
+  cursor: pointer;
+  background-color: #424242;
+  font-size: 24px;
+  text-decoration: none;
+  color: #fff;
 }
 
 .ProductList h1 {
-  margin-bottom: 35px;
   font-weight: 300;
 }
 
 .ProductList ul {
-  min-width: 290px;
   display: flex;
   flex-wrap: wrap;
   margin: 0;
@@ -18,17 +47,34 @@
 }
 
 .ProductList li {
-  display: inline-block;
-  margin-bottom: 45px;
-  margin-right: 20px;
+  display: block;
+  max-width: 224px;
+  padding: 10px 11px;
 }
 
 .ProductList a {
   display: inline-block;
   border: none;
-  padding: 10px 10px;
 }
 
 .BusketButton {
   margin-top: 12px;
+}
+
+@media all and (max-width: 575px) {
+  .ProductList {
+    margin: 30px 0 0;
+    padding: 0 15px;
+    min-width: 290px;
+  }
+
+  .ProductList ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ProductList li {
+    margin: 25px 0 0;
+  }
 }
